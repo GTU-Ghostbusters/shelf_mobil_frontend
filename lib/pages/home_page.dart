@@ -8,41 +8,39 @@ class HomePage extends StatefulWidget {
   HomePage({super.key});
 
   final List<Category> categoryList = <Category>[
-    Category("WORLD CLASSICS", " ", "description", 6),
-    Category("NOVEL", " ", "description", 14),
+    Category("POLITICS", " ", "description", 32),
+    Category("EDUCATION", " ", "description", 29),
     Category("LITERATURE", " ", "description", 23),
     Category("STORY", " ", "description", 21),
-    Category("SELF-HELP", " ", "description", 3),
-    Category("KIDS", " ", "description", 7),
-    Category("POLITICS", " ", "description", 32),
-    Category("POEM", " ", "description", 2),
-    Category("BIOGRAPHIES", " ", "description", 6),
-    Category("HISTORY", " ", "description", 8),
-    Category("ECONOMY", " ", "description", 4),
-    Category("ART", " ", "description", 5),
-    Category("EDUCATION", " ", "description", 29),
     Category("SCIENCE-FICTION", " ", "description", 15),
+    Category("NOVEL", " ", "description", 14),
+    Category("HISTORY", " ", "description", 8),
+    Category("KIDS", " ", "description", 7),
+    Category("BIOGRAPHIES", " ", "description", 6),
+    Category("WORLD CLASSICS", " ", "description", 6),
+    Category("ART", " ", "description", 5),
     Category("PHILOSOPHY", " ", "description", 5),
-    Category("ENTERTAINMENT", " ", "description", 3)
+    Category("ECONOMY", " ", "description", 4),
+    Category("SELF-HELP", " ", "description", 3),
+    Category("ENTERTAINMENT", " ", "description", 1),
+    Category("POEM", " ", "description", 0),
   ];
+
+  void sortCategoryByNumberOfBooks() {
+    categoryList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
+  }
+
+  void sortCategoryByName() {
+    categoryList
+        .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+  }
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  void sortCategoryByNumberOfBooks() {
-    widget.categoryList
-        .sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
-  }
-
-  void sortCategoryByName() {
-    widget.categoryList
-        .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
-  }
-
-  CategorySort _categorySort = CategorySort.numberOfBooks;
-
+  static CategorySort _categorySort = CategorySort.alphabetic;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,14 +88,16 @@ class _HomePageState extends State<HomePage> {
                   width: 55,
                   child: ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        _categorySort == CategorySort.numberOfBooks
-                            ? _categorySort = CategorySort.alphabetic
-                            : _categorySort = CategorySort.numberOfBooks;
-                        _categorySort == CategorySort.numberOfBooks
-                            ? sortCategoryByName()
-                            : sortCategoryByNumberOfBooks();
-                      });
+                      setState(
+                        () {
+                          _categorySort == CategorySort.numberOfBooks
+                              ? _categorySort = CategorySort.alphabetic
+                              : _categorySort = CategorySort.numberOfBooks;
+                          _categorySort == CategorySort.numberOfBooks
+                              ? widget.sortCategoryByName()
+                              : widget.sortCategoryByNumberOfBooks();
+                        },
+                      );
                     },
                     child: _categorySort == CategorySort.numberOfBooks
                         ? const Icon(Icons.sort_by_alpha)
@@ -108,18 +108,20 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 10),
             const Divider(),
+            const SizedBox(height: 10),
             SizedBox(
-              height: 500,
+              height: 480,
               child: ScrollSnapList(
                 clipBehavior: Clip.none,
                 itemBuilder: _buildListItem,
                 itemCount: widget.categoryList.length,
                 itemSize: 235,
                 onItemFocus: (index) {},
+                initialIndex: 0,
                 dynamicItemSize: true,
                 updateOnScroll: true,
                 scrollDirection: Axis.horizontal,
-                dynamicItemOpacity: 0.9,
+                dynamicItemOpacity: 0.8,
               ),
             ),
           ],
@@ -134,23 +136,46 @@ class _HomePageState extends State<HomePage> {
       width: 235,
       height: 170,
       child: Card(
+        elevation: 10,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              category.title,
-              style: const TextStyle(fontSize: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+              child: Text(
+                category.title,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            Image.asset(
-              "images/category_template.jpg",
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Image.asset(
+                alignment: Alignment.center,
+                "images/category_template.jpg",
+              ),
             ),
-            const Text(
-              "description of category",
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Text(
+                category.numberOfBooks > 1 ? "${category.numberOfBooks} Books": category.numberOfBooks == 1 ? "1 Book": "No Book Found",
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
             ),
-            ElevatedButton(
-              onPressed: (() {}),
-              child: const Text("See Books"),
-            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+              child: category.numberOfBooks <= 0 ? const Text("") : ElevatedButton(
+                onPressed: (() {}),
+                child: category.numberOfBooks > 1 ? const Text("See Books") :const Text("See Book"),
+              ),
+            )
           ],
         ),
       ),
