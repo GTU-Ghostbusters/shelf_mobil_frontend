@@ -1,0 +1,1 @@
+enum CategorySort{alphabetic, numberOfBooks}
