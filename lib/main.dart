@@ -34,51 +34,59 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int _currentPage = 0;
-  List<Widget> pages = [ HomePage(), const GetBookPage(), const ShareBookPage()];
+  final List<Widget> pages = [
+    HomePage(),
+    const GetBookPage(),
+    const ShareBookPage()
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      bottomNavigationBar: GNav(
-        iconSize: 24,
-        padding: const EdgeInsets.all(16),
-        backgroundColor: const Color.fromARGB(20, 69, 69, 69),
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        duration: const Duration(milliseconds: 200),
-        gap: 10,
-        tabBackgroundColor: const Color.fromARGB(30, 69, 69, 69),
-        tabs: const [
-          GButton(
-            icon: Icons.account_balance,
-            text: "Home",
-          ),
-          GButton(
-            icon: Icons.menu_book_outlined,
-            text: "Get Book",
-          ),
-          GButton(
-            icon: Icons.people_rounded,
-            text: "Share Book",
-          ),
-        ],
-        onTabChange: (int index) {
-          setState(() {
-            _currentPage = index;
-          });
-        },
-        selectedIndex: _currentPage,
-      ),
-      body: Container(
+      bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            tileMode: TileMode.mirror,
-            colors: [
-              Colors.grey.shade100,
-              Colors.grey.shade400,
-            ],
+          color: Colors.white,
+          border: Border.all(
+            width: 0.05,
+            color: const Color.fromARGB(240, 37, 37, 37),
           ),
         ),
+        child: GNav(
+          style: GnavStyle.oldSchool,
+          padding: const EdgeInsets.all(2.5),
+          tabMargin: const EdgeInsets.all(2.5),
+          duration: const Duration(milliseconds: 300),
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          iconSize: 27,
+          textSize: 11,
+          gap: 3,
+          tabBorderRadius: 10,
+          activeColor: const Color.fromARGB(240, 45, 160, 232),
+          color: const Color.fromARGB(240, 37, 37, 37),
+          tabs: const [
+            GButton(
+              icon: Icons.account_balance,
+              text: "Home",
+            ),
+            GButton(
+              icon: Icons.menu_book_outlined,
+              text: "Get Book",
+            ),
+            GButton(
+              icon: Icons.people_rounded,
+              text: "Share Book",
+            ),
+          ],
+          onTabChange: (int index) {
+            setState(() {
+              _currentPage = index;
+            });
+          },
+          selectedIndex: _currentPage,
+        ),
+      ),
+      body: Container(
         child: pages[_currentPage],
       ),
     );

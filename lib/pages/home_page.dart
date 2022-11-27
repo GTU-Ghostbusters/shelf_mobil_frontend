@@ -70,11 +70,12 @@ class _HomePageState extends State<HomePage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(
-                      width: 2,
+                      width: 1.5,
                       color: const Color.fromARGB(200, 37, 37, 37),
                     ),
                   ),
                   child: IconButton(
+                    color: const Color.fromARGB(230, 37, 37, 37),
                     onPressed: () {
                       setState(
                         () {
@@ -129,13 +130,13 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-                category.title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+              category.title,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
               ),
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.5,
               height: MediaQuery.of(context).size.height * 0.35,
@@ -145,32 +146,36 @@ class _HomePageState extends State<HomePage> {
                 "images/category_template.jpg",
               ),
             ),
-            Text(
-              category.numberOfBooks > 1
-                  ? "${category.numberOfBooks} Books"
-                  : category.numberOfBooks == 1
-                      ? "1 Book"
-                      : "No Book Found",
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.black,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-            SizedBox(
-              child: category.numberOfBooks <= 0
-                  ? const Text("")
-                  : TextButton(
-                      onPressed: (() {}),
-                      style: TextButton.styleFrom(
-                        foregroundColor: const Color.fromARGB(200, 37, 37, 37),
-                        backgroundColor: const Color.fromARGB(50, 76, 185, 252),
+            Column(
+              children: [
+                Text(
+                  category.numberOfBooks > 1
+                      ? "${category.numberOfBooks} Books"
+                      : category.numberOfBooks == 1
+                          ? "1 Book"
+                          : "No Book Found",
+                  style: const TextStyle(
+                    fontSize: 15,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                category.numberOfBooks <= 0
+                    ? const Text("")
+                    : TextButton(
+                        onPressed: (() {}),
+                        style: TextButton.styleFrom(
+                          foregroundColor:
+                              const Color.fromARGB(200, 37, 37, 37),
+                          backgroundColor:
+                              const Color.fromARGB(50, 76, 185, 252),
+                        ),
+                        child: category.numberOfBooks > 1
+                            ? const Text("See Books")
+                            : const Text("See Book"),
                       ),
-                      child: category.numberOfBooks > 1
-                          ? const Text("See Books")
-                          : const Text("See Book"),
-                    ),
-            )
+              ],
+            ),
           ],
         ),
       ),
