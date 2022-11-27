@@ -46,27 +46,29 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Flexible(
                   flex: 1,
-                  child: TextField(
-                    cursorColor: Colors.grey,
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none),
-                      hintText: 'Search Category',
-                      hintStyle:
-                          const TextStyle(color: Colors.grey, fontSize: 18),
-                      prefixIcon: Container(
-                        width: 18,
-                        padding: const EdgeInsets.all(5),
-                        child: const Icon(Icons.search_rounded),
+                  child: SizedBox(height: 50,
+                    child: TextField(textAlignVertical: TextAlignVertical.bottom,
+                      cursorColor: Colors.grey,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none),
+                        hintText: 'Search Category',
+                        hintStyle:
+                            const TextStyle(color: Colors.grey, fontSize: 18),
+                        prefixIcon: Container(
+                          width: 18,
+                          padding: const EdgeInsets.all(5),
+                          child: const Icon(size: 20,Icons.search_rounded),
+                        ),
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 10),
-                Container(
+                Container(height: 45,width: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(
@@ -127,7 +129,7 @@ class _HomePageState extends State<HomePage> {
       child: Card(
         elevation: 10,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
               category.title,
