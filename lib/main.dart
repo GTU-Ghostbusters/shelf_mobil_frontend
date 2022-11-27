@@ -36,7 +36,7 @@ class _RootPageState extends State<RootPage> {
   int _currentPage = 0;
   final List<Widget> pages = [
     HomePage(),
-    const GetBookPage(),
+    GetBookPage(),
     const ShareBookPage()
   ];
 
