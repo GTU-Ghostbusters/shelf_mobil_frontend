@@ -7,24 +7,7 @@ import '../types/category.dart';
 class HomePage extends StatefulWidget {
   HomePage({super.key});
 
-  final List<Category> categoryList = <Category>[
-    Category("POLITICS", " ", "description", 32),
-    Category("EDUCATION", " ", "description", 29),
-    Category("LITERATURE", " ", "description", 23),
-    Category("STORY", " ", "description", 21),
-    Category("SCIENCE-FICTION", " ", "description", 15),
-    Category("NOVEL", " ", "description", 14),
-    Category("HISTORY", " ", "description", 8),
-    Category("KIDS", " ", "description", 7),
-    Category("BIOGRAPHIES", " ", "description", 6),
-    Category("WORLD CLASSICS", " ", "description", 6),
-    Category("ART", " ", "description", 5),
-    Category("PHILOSOPHY", " ", "description", 5),
-    Category("ECONOMY", " ", "description", 4),
-    Category("SELF-HELP", " ", "description", 3),
-    Category("ENTERTAINMENT", " ", "description", 1),
-    Category("POEM", " ", "description", 0),
-  ];
+  List<Category> categoryList = Category.getCategoryList();
 
   void sortCategoryByNumberOfBooks() {
     categoryList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
@@ -82,11 +65,16 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 5),
-                SizedBox(
-                  height: 55,
-                  width: 55,
-                  child: ElevatedButton(
+                const SizedBox(width: 10),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      width: 2,
+                      color: const Color.fromARGB(200, 37, 37, 37),
+                    ),
+                  ),
+                  child: IconButton(
                     onPressed: () {
                       setState(
                         () {
@@ -99,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                         },
                       );
                     },
-                    child: _categorySort == CategorySort.numberOfBooks
+                    icon: _categorySort == CategorySort.numberOfBooks
                         ? const Icon(Icons.sort_by_alpha)
                         : const Icon(Icons.sort),
                   ),
@@ -161,7 +149,11 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: Text(
-                category.numberOfBooks > 1 ? "${category.numberOfBooks} Books": category.numberOfBooks == 1 ? "1 Book": "No Book Found",
+                category.numberOfBooks > 1
+                    ? "${category.numberOfBooks} Books"
+                    : category.numberOfBooks == 1
+                        ? "1 Book"
+                        : "No Book Found",
                 style: const TextStyle(
                   fontSize: 15,
                   color: Colors.black,
@@ -171,10 +163,18 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-              child: category.numberOfBooks <= 0 ? const Text("") : ElevatedButton(
-                onPressed: (() {}),
-                child: category.numberOfBooks > 1 ? const Text("See Books") :const Text("See Book"),
-              ),
+              child: category.numberOfBooks <= 0
+                  ? const Text("")
+                  : TextButton(
+                      onPressed: (() {}),
+                      style: TextButton.styleFrom(
+                        foregroundColor: const Color.fromARGB(200, 37, 37, 37),
+                        backgroundColor: const Color.fromARGB(50, 76, 185, 252),
+                      ),
+                      child: category.numberOfBooks > 1
+                          ? const Text("See Books")
+                          : const Text("See Book"),
+                    ),
             )
           ],
         ),
