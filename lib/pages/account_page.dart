@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ShareBookPage extends StatefulWidget {
-  const ShareBookPage({super.key});
+class AccountPage extends StatefulWidget {
+  const AccountPage({super.key});
 
   @override
-  State<ShareBookPage> createState() => _ShareBookPageState();
+  State<AccountPage> createState() => _AccountPageState();
 }
 
-class _ShareBookPageState extends State<ShareBookPage> {
+class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

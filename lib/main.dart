@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/get_book_page.dart';
 import 'package:shelf_mobil_frontend/pages/home_page.dart';
 import 'package:shelf_mobil_frontend/pages/share_book_page.dart';
@@ -36,14 +37,17 @@ class _RootPageState extends State<RootPage> {
   int _currentPage = 0;
   final List<Widget> pages = [
     HomePage(),
-    GetBookPage(),
-    const ShareBookPage()
+    const GetBookPage(),
+    const ShareBookPage(),
+    const AccountPage()
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(240, 45, 160, 232),
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -76,6 +80,10 @@ class _RootPageState extends State<RootPage> {
             GButton(
               icon: Icons.people_rounded,
               text: "Share Book",
+            ),
+            GButton(
+              icon: Icons.account_box,
+              text: "Account",
             ),
           ],
           onTabChange: (int index) {
