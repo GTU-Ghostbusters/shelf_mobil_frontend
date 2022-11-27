@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Column(
           children: [
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Row(
               children: [
                 Flexible(
@@ -94,16 +94,16 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             const Divider(),
             const SizedBox(height: 10),
             SizedBox(
-              height: 480,
+              height: MediaQuery.of(context).size.height * 0.55,
               child: ScrollSnapList(
                 clipBehavior: Clip.none,
                 itemBuilder: _buildListItem,
                 itemCount: widget.categoryList.length,
-                itemSize: 235,
+                itemSize: MediaQuery.of(context).size.width * 0.6,
                 onItemFocus: (index) {},
                 initialIndex: 0,
                 dynamicItemSize: true,
@@ -120,17 +120,15 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildListItem(BuildContext context, int index) {
     Category category = widget.categoryList[index];
-    return SizedBox(
-      width: 235,
-      height: 170,
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: MediaQuery.of(context).size.width * 0.6,
       child: Card(
         elevation: 10,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-              child: Text(
+            Text(
                 category.title,
                 style: const TextStyle(
                   fontSize: 20,
@@ -138,31 +136,28 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.5,
+              height: MediaQuery.of(context).size.height * 0.35,
               child: Image.asset(
+                fit: BoxFit.fitHeight,
                 alignment: Alignment.center,
                 "images/category_template.jpg",
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Text(
-                category.numberOfBooks > 1
-                    ? "${category.numberOfBooks} Books"
-                    : category.numberOfBooks == 1
-                        ? "1 Book"
-                        : "No Book Found",
-                style: const TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w300,
-                ),
+            Text(
+              category.numberOfBooks > 1
+                  ? "${category.numberOfBooks} Books"
+                  : category.numberOfBooks == 1
+                      ? "1 Book"
+                      : "No Book Found",
+              style: const TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+                fontWeight: FontWeight.w300,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+            SizedBox(
               child: category.numberOfBooks <= 0
                   ? const Text("")
                   : TextButton(
