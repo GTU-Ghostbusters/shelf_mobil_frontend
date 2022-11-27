@@ -15,6 +15,7 @@ class Category implements Comparable<Category> {
     }
   }
 
+  //FAKE DATABASE
   static final List<Category> _categoryList = <Category>[
     Category("POLITICS", " ", "description", 32),
     Category("EDUCATION", " ", "description", 29),
@@ -35,6 +36,22 @@ class Category implements Comparable<Category> {
   ];
 
   static List<Category> getCategoryList() {
-    return _categoryList;
+    int num = 0;
+    List<Category> retList = [];
+    for (var element in _categoryList) {
+      num += element.numberOfBooks;
+    }
+    retList.add(Category("ALL BOOKS", " ", "description", num));
+    retList.addAll(_categoryList);
+    return retList;
+  }
+
+  static List<String> getCategoryNameList(){
+    List<String> categoryNameList = [];
+    for (var element in getCategoryList()) {
+      categoryNameList.add(element.title);
+    }
+    categoryNameList.sort(((a, b) => a.toLowerCase().compareTo(b.toLowerCase())));
+    return categoryNameList;
   }
 }

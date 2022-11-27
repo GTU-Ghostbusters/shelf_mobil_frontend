@@ -46,8 +46,10 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Flexible(
                   flex: 1,
-                  child: SizedBox(height: 50,
-                    child: TextField(textAlignVertical: TextAlignVertical.bottom,
+                  child: SizedBox(
+                    height: 50,
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical.bottom,
                       cursorColor: Colors.grey,
                       decoration: InputDecoration(
                         fillColor: Colors.white,
@@ -61,14 +63,16 @@ class _HomePageState extends State<HomePage> {
                         prefixIcon: Container(
                           width: 18,
                           padding: const EdgeInsets.all(5),
-                          child: const Icon(size: 20,Icons.search_rounded),
+                          child: const Icon(size: 20, Icons.search_rounded),
                         ),
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 10),
-                Container(height: 45,width: 45,
+                Container(
+                  height: 45,
+                  width: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(
@@ -170,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                           foregroundColor:
                               const Color.fromARGB(200, 37, 37, 37),
                           backgroundColor:
-                              const Color.fromARGB(50, 76, 185, 252),
+                              const Color.fromARGB(40, 45, 160, 232),
                         ),
                         child: category.numberOfBooks > 1
                             ? const Text("See Books")
