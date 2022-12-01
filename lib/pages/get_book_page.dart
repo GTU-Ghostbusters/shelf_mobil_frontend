@@ -44,8 +44,6 @@ class _GetBookPageState extends State<GetBookPage> {
                       });
                     },
                     style: ButtonStyle(
-                      fixedSize: MaterialStatePropertyAll(
-                          Size(MediaQuery.of(context).size.width * 0.27, 40)),
                       foregroundColor:
                           GetBookPage.categoryNameList.elementAt(0) ==
                                   _selectedCategory
