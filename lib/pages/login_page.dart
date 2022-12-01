@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
@@ -134,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(140, 10),
+                      fixedSize: Size(MediaQuery.of(context).size.width * 0.35, 40),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
