@@ -208,6 +208,10 @@ class _GetBookPageState extends State<GetBookPage> {
                 width: constraints.maxWidth * 0.8,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(220, 255, 255, 255),
+                  border: Border.all(
+                    width: 0.5,
+                    color: Colors.grey.shade500,
+                  ),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Image.asset(
@@ -221,6 +225,10 @@ class _GetBookPageState extends State<GetBookPage> {
                 width: constraints.maxWidth * 0.9,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(220, 255, 255, 255),
+                  border: Border.all(
+                    width: 0.5,
+                    color: Colors.grey.shade500,
+                  ),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Row(
@@ -230,7 +238,7 @@ class _GetBookPageState extends State<GetBookPage> {
                         Container(
                           alignment: Alignment.center,
                           height: constraints.maxHeight * 0.115,
-                          width: constraints.maxWidth * 0.67,
+                          width: constraints.maxWidth * 0.665,
                           child: Text(
                             "BOOK NAME",
                             maxLines: 1,
@@ -243,8 +251,8 @@ class _GetBookPageState extends State<GetBookPage> {
                           ),
                         ),
                         SizedBox(
-                          height: constraints.maxHeight * 0.075,
-                          width: constraints.maxWidth * 0.67,
+                          height: constraints.maxHeight * 0.07,
+                          width: constraints.maxWidth * 0.665,
                           child: Text(
                             "AUTHOR NAME",
                             maxLines: 1,
@@ -259,13 +267,12 @@ class _GetBookPageState extends State<GetBookPage> {
                       ],
                     ),
                     Container(
-                      color: const Color.fromARGB(25, 0, 0, 0),
-                      width: constraints.maxWidth * 0.008,
+                      color: Colors.grey.shade400,
+                      width: constraints.maxWidth * 0.004,
                     ),
                     SizedBox(
                       width: constraints.maxWidth * 0.22,
                       child: IconButton(
-                          alignment: Alignment.centerLeft,
                           onPressed: () {},
                           icon: const Icon(Icons.favorite_outline_outlined)),
                     )

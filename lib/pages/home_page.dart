@@ -6,7 +6,6 @@ import '../types/category.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
-  
   List<Category> categoryList = Category.getCategoryListNumberOfBooksSorted();
 
   void sortCategoryByNumberOfBooks() {
