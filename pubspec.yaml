@@ -38,6 +38,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   scroll_snap_list: ^0.9.1
   google_nav_bar: ^5.0.6
+  toggle_switch: ^2.0.1
+  email_validator: '^2.1.16'
+  wc_form_validators: ^1.0.0
 
 dev_dependencies:
   flutter_test:

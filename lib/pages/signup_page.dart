@@ -17,7 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
           gradient: LinearGradient(
             tileMode: TileMode.mirror,
             colors: [
-              Color.fromARGB(70, 121, 120, 121),
+              Color.fromARGB(70, 255, 131, 220),
               Color.fromARGB(70, 246, 238, 243),
               Color.fromARGB(70, 76, 185, 252),
             ],
