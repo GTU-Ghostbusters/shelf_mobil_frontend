@@ -159,7 +159,9 @@ class _LoginPageState extends State<LoginPage> {
         return AlertDialog(
           title: const Text("Password Reset"),
           content: const Text(
-              "Please enter the phone number to which the password reset code will be sent without 0 at the beginning."),
+            "Please enter the phone number to which the password reset code will be sent without 0 at the beginning.",
+            style: TextStyle(fontSize: 18),
+          ),
           actions: <Widget>[
             TextFormField(
               controller: phoneNum,
@@ -182,6 +184,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 TextButton(
                   onPressed: () {
+                    phoneNum.clear();
                     Navigator.of(context).pop();
                   },
                   child: const Text(
@@ -193,7 +196,19 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (phoneNum.text.length == 10) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return ForgotPassword(
+                              phoneNumber: int.parse(phoneNum.text),
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  },
                   child: const Text(
                     "Send",
                     style: TextStyle(
@@ -207,6 +222,175 @@ class _LoginPageState extends State<LoginPage> {
           ],
         );
       },
+    );
+  }
+}
+
+class ForgotPassword extends StatefulWidget {
+  int? phoneNumber;
+  ForgotPassword({super.key, this.phoneNumber});
+
+  @override
+  State<ForgotPassword> createState() => _ForgotPasswordState();
+}
+
+class _ForgotPasswordState extends State<ForgotPassword> {
+  bool _showPassword = true;
+  bool _showPassword_1 = true;
+  String _password = "";
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Forgot Password"),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(35),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            tileMode: TileMode.mirror,
+            colors: [
+              Color.fromARGB(70, 255, 131, 220),
+              Color.fromARGB(70, 246, 238, 243),
+              Color.fromARGB(70, 76, 185, 252),
+            ],
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                children: [
+                  Text(
+                    "The reset code was sent to the phone number: +90${widget.phoneNumber}",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(
+                      labelText: "Please enter the code",
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    validator: Validators.compose(
+                      [
+                        Validators.patternRegExp(
+                            RegExp(
+                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'),
+                            "Password must contain at least one uppercase letter, one lowercase letter, one number and must be at least 8 characters long.")
+                      ],
+                    ),
+                    onChanged: (value) {
+                      _password = value;
+                    },
+                    maxLength: 15,
+                    obscureText: _showPassword,
+                    decoration: InputDecoration(
+                      filled: true,
+                      errorMaxLines: 3,
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
+                        icon: Icon(
+                          _showPassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                      ),
+                      labelText: "New password",
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      hintText: "Please enter your password",
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  TextFormField(
+                    obscureText: _showPassword_1,
+                    validator: (value) {
+                      if (value != _password) {
+                        return 'Password is not matching!';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      filled: true,
+                      errorMaxLines: 3,
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showPassword_1 = !_showPassword_1;
+                          });
+                        },
+                        icon: Icon(
+                          _showPassword_1
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                      ),
+                      labelText: "New password again",
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      hintText: "Please enter password again",
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(100, 10),
+                    ),
+                    onPressed: () {},
+                    child: const Text(
+                      "SAVE",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
