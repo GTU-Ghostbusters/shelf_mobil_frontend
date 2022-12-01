@@ -6,8 +6,9 @@ import '../types/category.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
+  HomePage.setCurrentPage(int index);
 
-  List<Category> categoryList = Category.getCategoryList();
+  List<Category> categoryList = Category.getCategoryListNumberOfBooksSorted();
 
   void sortCategoryByNumberOfBooks() {
     categoryList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
@@ -169,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                 category.numberOfBooks <= 0
                     ? const Text("")
                     : TextButton(
-                        onPressed: (() {}),
+                        onPressed: (){},
                         style: TextButton.styleFrom(
                           foregroundColor:
                               const Color.fromARGB(200, 37, 37, 37),

@@ -35,7 +35,7 @@ class Category implements Comparable<Category> {
     Category("POEM", " ", "description", 0),
   ];
 
-  static List<Category> getCategoryList() {
+  static List<Category> getCategoryListNumberOfBooksSorted() {
     int num = 0;
     List<Category> retList = [];
     for (var element in _categoryList) {
@@ -43,15 +43,27 @@ class Category implements Comparable<Category> {
     }
     retList.add(Category("ALL BOOKS", " ", "description", num));
     retList.addAll(_categoryList);
+    retList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
+    return retList;
+  }
+
+  static List<Category> getCategoryListAlphabeticSorted() {
+    int num = 0;
+    List<Category> retList = [];
+    for (var element in _categoryList) {
+      num += element.numberOfBooks;
+    }
+    retList.add(Category("ALL BOOKS", " ", "description", num));
+    retList.addAll(_categoryList);
+    retList.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
     return retList;
   }
 
   static List<String> getCategoryNameList(){
     List<String> categoryNameList = [];
-    for (var element in getCategoryList()) {
+    for (var element in getCategoryListAlphabeticSorted()) {
       categoryNameList.add(element.title);
     }
-    categoryNameList.sort(((a, b) => a.toLowerCase().compareTo(b.toLowerCase())));
     return categoryNameList;
   }
 }

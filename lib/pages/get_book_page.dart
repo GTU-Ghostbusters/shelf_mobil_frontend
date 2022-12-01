@@ -4,12 +4,15 @@ import 'package:shelf_mobil_frontend/types/category.dart';
 class GetBookPage extends StatefulWidget {
   const GetBookPage({super.key});
   static final List<String> categoryNameList = Category.getCategoryNameList();
+  static final List<Category> categoryList =
+      Category.getCategoryListAlphabeticSorted();
   @override
   State<GetBookPage> createState() => _GetBookPageState();
 }
 
 class _GetBookPageState extends State<GetBookPage> {
   static String _selectedCategory = GetBookPage.categoryNameList.elementAt(0);
+  static int _selectedCategoryIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,7 @@ class _GetBookPageState extends State<GetBookPage> {
                     onPressed: () {
                       setState(() {
                         _selectedCategory = "ALL BOOKS";
+                        _selectedCategoryIndex = 0;
                       });
                     },
                     style: ButtonStyle(
@@ -132,15 +136,30 @@ class _GetBookPageState extends State<GetBookPage> {
             const Divider(),
             const SizedBox(height: 5),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.8,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10),
-                itemBuilder: _buildGridItem,
-                itemCount: 20,
-              ),
+              child: GetBookPage.categoryList
+                          .elementAt(_selectedCategoryIndex)
+                          .numberOfBooks >
+                      0
+                  ? GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.8,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10),
+                      itemBuilder: _buildGridItem,
+                      itemCount: GetBookPage.categoryList
+                          .elementAt(_selectedCategoryIndex)
+                          .numberOfBooks,
+                    )
+                  : Text(
+                      "NO BOOK FOUND",
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
             ),
           ],
         ),
@@ -153,6 +172,7 @@ class _GetBookPageState extends State<GetBookPage> {
       onPressed: () {
         setState(() {
           _selectedCategory = GetBookPage.categoryNameList.elementAt(index + 1);
+          _selectedCategoryIndex = index + 1;
         });
       },
       style: ButtonStyle(
@@ -174,30 +194,39 @@ class _GetBookPageState extends State<GetBookPage> {
   }
 
   Widget _buildGridItem(BuildContext context, int index) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(25, 0, 0, 0),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Stack(children: [
-        FractionallySizedBox(
-          widthFactor: 1,
-          heightFactor: 0.8,
-          alignment: Alignment.topCenter,
-          child: Image.asset(
-            fit: BoxFit.fitHeight,
-            alignment: Alignment.center,
-            "images/category_template.jpg",
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(25, 0, 0, 0),
+            borderRadius: BorderRadius.circular(10),
           ),
-        ),
-        const Positioned(
-          bottom: 1,
-          left: 60,
-          child: Text(
-              style: TextStyle(), 'Kitap Adı', textAlign: TextAlign.center),
-        )
-      ]),
+          child: Column(
+            children: [
+              SizedBox(height: constraints.maxHeight * 0.03),
+              Container(
+                height: constraints.maxHeight * 0.725,
+                width: constraints.maxWidth * 0.85,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(244, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+              SizedBox(height: constraints.maxHeight * 0.02),
+              Container(
+                height: constraints.maxHeight * 0.19,
+                width: constraints.maxWidth * 0.85,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(244, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Text("${index + 1}"),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
