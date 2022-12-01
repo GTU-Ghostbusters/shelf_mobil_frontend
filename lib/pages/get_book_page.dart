@@ -199,7 +199,7 @@ class _GetBookPageState extends State<GetBookPage> {
         return Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(25, 0, 0, 0),
+            color: const Color.fromARGB(20, 0, 0, 0),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
@@ -207,21 +207,72 @@ class _GetBookPageState extends State<GetBookPage> {
               SizedBox(height: constraints.maxHeight * 0.03),
               Container(
                 height: constraints.maxHeight * 0.725,
-                width: constraints.maxWidth * 0.85,
+                width: constraints.maxWidth * 0.8,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(244, 255, 255, 255),
+                  color: const Color.fromARGB(220, 255, 255, 255),
                   borderRadius: BorderRadius.circular(5),
+                ),
+                child: Image.asset(
+                  "images/category_template.jpg",
+                  fit: BoxFit.contain,
                 ),
               ),
               SizedBox(height: constraints.maxHeight * 0.02),
               Container(
                 height: constraints.maxHeight * 0.19,
-                width: constraints.maxWidth * 0.85,
+                width: constraints.maxWidth * 0.9,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(244, 255, 255, 255),
+                  color: const Color.fromARGB(220, 255, 255, 255),
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: Text("${index + 1}"),
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          height: constraints.maxHeight * 0.115,
+                          width: constraints.maxWidth * 0.67,
+                          child: Text(
+                            "BOOK NAME",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.grey.shade800,
+                                fontSize: 13.5,
+                                fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        SizedBox(
+                          height: constraints.maxHeight * 0.075,
+                          width: constraints.maxWidth * 0.67,
+                          child: Text(
+                            "AUTHOR NAME",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.grey.shade800,
+                              fontSize: 10,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      color: const Color.fromARGB(25, 0, 0, 0),
+                      width: constraints.maxWidth * 0.008,
+                    ),
+                    SizedBox(
+                      width: constraints.maxWidth * 0.22,
+                      child: IconButton(
+                          alignment: Alignment.centerLeft,
+                          onPressed: () {},
+                          icon: const Icon(Icons.favorite_outline_outlined)),
+                    )
+                  ],
+                ),
               ),
             ],
           ),

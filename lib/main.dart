@@ -94,7 +94,7 @@ class _RootPageState extends State<RootPage> {
           selectedIndex: _currentPage,
         ),
       ),
-      body: Container(
+      body: Center(
         child: pages[_currentPage],
       ),
     );
