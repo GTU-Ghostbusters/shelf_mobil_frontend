@@ -127,7 +127,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 Container(
                   padding: const EdgeInsets.only(left: 10),
                   width: MediaQuery.of(context).size.width * 0.65,
-                  height: MediaQuery.of(context).size.height * 0.1225,
+                  height: MediaQuery.of(context).size.height * 0.15,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(220, 255, 255, 255),
                     border: Border.all(
@@ -138,7 +138,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
+                        height: MediaQuery.of(context).size.height * 0.0365,
                         child: Row(
                           children: const [
                             Icon(Icons.menu_book_rounded),
@@ -151,7 +151,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         ),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
+                        height: MediaQuery.of(context).size.height * 0.0365,
                         child: Row(
                           children: const [
                             Icon(Icons.person),
@@ -164,7 +164,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         ),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
+                        height: MediaQuery.of(context).size.height * 0.0365,
                         child: Row(
                           children: const [
                             Icon(Icons.description),
@@ -177,7 +177,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         ),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
+                        height: MediaQuery.of(context).size.height * 0.0365,
                         child: Row(
                           children: const [
                             Icon(Icons.library_books),
@@ -263,6 +263,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
               ],
             ),
