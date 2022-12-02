@@ -34,7 +34,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
             child: Column(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height*0.3,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   width: double.infinity,
                   child: PageView.builder(
                     onPageChanged: (index) {
@@ -73,7 +73,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   children: [
                     Container(
                       height: 45,
-                      width: MediaQuery.of(context).size.width*0.36,
+                      width: MediaQuery.of(context).size.width * 0.36,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(220, 255, 255, 255),
@@ -97,7 +97,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     ),
                     Container(
                       height: 45,
-                      width: MediaQuery.of(context).size.width*0.43,
+                      width: MediaQuery.of(context).size.width * 0.43,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(220, 255, 255, 255),
@@ -126,8 +126,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(left: 10),
-                  width: MediaQuery.of(context).size.width*0.65,
-                  height: MediaQuery.of(context).size.height*0.12,
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  height: MediaQuery.of(context).size.height * 0.1225,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(220, 255, 255, 255),
                     border: Border.all(
@@ -137,7 +137,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   ),
                   child: Column(
                     children: [
-                      IntrinsicHeight(
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.03,
                         child: Row(
                           children: const [
                             Icon(Icons.menu_book_rounded),
@@ -149,7 +150,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           ],
                         ),
                       ),
-                      IntrinsicHeight(
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.03,
                         child: Row(
                           children: const [
                             Icon(Icons.person),
@@ -161,7 +163,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           ],
                         ),
                       ),
-                      IntrinsicHeight(
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.03,
                         child: Row(
                           children: const [
                             Icon(Icons.description),
@@ -173,7 +176,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           ],
                         ),
                       ),
-                      IntrinsicHeight(
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.03,
                         child: Row(
                           children: const [
                             Icon(Icons.library_books),
@@ -193,8 +197,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(left: 10, top: 5),
-                  width: MediaQuery.of(context).size.width*0.65,
-                  height: MediaQuery.of(context).size.height*0.12,
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  height: MediaQuery.of(context).size.height * 0.12,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(220, 255, 255, 255),
                     border: Border.all(
@@ -209,8 +213,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(left: 10),
-                  width: MediaQuery.of(context).size.width*0.5,
-                  height: MediaQuery.of(context).size.height*0.05,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.05,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(220, 255, 255, 255),
                     border: Border.all(
