@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
@@ -135,7 +134,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      fixedSize: Size(MediaQuery.of(context).size.width * 0.35, 40),
+                      fixedSize:
+                          Size(MediaQuery.of(context).size.width * 0.35, 40),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
@@ -375,7 +375,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      fixedSize: Size(MediaQuery.of(context).size.width * 0.35, 40),
+                      fixedSize:
+                          Size(MediaQuery.of(context).size.width * 0.35, 40),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
