@@ -1,38 +1,28 @@
-class Category implements Comparable<Category> {
+class Category {
   String title;
   String imagePath;
-  String description;
   int numberOfBooks;
 
-  Category(this.title, this.imagePath, this.description, this.numberOfBooks);
-
-  @override
-  int compareTo(Category other) {
-    if (numberOfBooks > other.numberOfBooks) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
+  Category(this.title, this.imagePath, this.numberOfBooks);
 
   //FAKE DATABASE
   static final List<Category> _categoryList = <Category>[
-    Category("POLITICS", " ", "description", 32),
-    Category("EDUCATION", " ", "description", 29),
-    Category("LITERATURE", " ", "description", 23),
-    Category("STORY", " ", "description", 21),
-    Category("SCIENCE-FICTION", " ", "description", 15),
-    Category("NOVEL", " ", "description", 14),
-    Category("HISTORY", " ", "description", 8),
-    Category("KIDS", " ", "description", 7),
-    Category("BIOGRAPHIES", " ", "description", 6),
-    Category("WORLD CLASSICS", " ", "description", 6),
-    Category("ART", " ", "description", 5),
-    Category("PHILOSOPHY", " ", "description", 5),
-    Category("ECONOMY", " ", "description", 4),
-    Category("SELF-HELP", " ", "description", 3),
-    Category("ENTERTAINMENT", " ", "description", 1),
-    Category("POEM", " ", "description", 0),
+    Category("POLITICS", " ", 32),
+    Category("EDUCATION", " ", 29),
+    Category("LITERATURE", " ", 23),
+    Category("STORY", " ", 21),
+    Category("SCIENCE-FICTION", " ", 15),
+    Category("NOVEL", " ", 14),
+    Category("HISTORY", " ", 8),
+    Category("KIDS", " ", 7),
+    Category("BIOGRAPHIES", " ", 6),
+    Category("WORLD CLASSICS", " ", 6),
+    Category("ART", " ", 5),
+    Category("PHILOSOPHY", " ", 5),
+    Category("ECONOMY", " ", 4),
+    Category("SELF-HELP", " ", 3),
+    Category("ENTERTAINMENT", " ", 1),
+    Category("POEM", " ", 0),
   ];
 
   static List<Category> getCategoryListNumberOfBooksSorted() {
@@ -41,7 +31,7 @@ class Category implements Comparable<Category> {
     for (var element in _categoryList) {
       num += element.numberOfBooks;
     }
-    retList.add(Category("ALL BOOKS", " ", "description", num));
+    retList.add(Category("ALL BOOKS", " ", num));
     retList.addAll(_categoryList);
     retList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
     return retList;
@@ -53,17 +43,10 @@ class Category implements Comparable<Category> {
     for (var element in _categoryList) {
       num += element.numberOfBooks;
     }
-    retList.add(Category("ALL BOOKS", " ", "description", num));
+    retList.add(Category("ALL BOOKS", " ", num));
     retList.addAll(_categoryList);
-    retList.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+    retList
+        .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
     return retList;
-  }
-
-  static List<String> getCategoryNameList(){
-    List<String> categoryNameList = [];
-    for (var element in getCategoryListAlphabeticSorted()) {
-      categoryNameList.add(element.title);
-    }
-    return categoryNameList;
   }
 }

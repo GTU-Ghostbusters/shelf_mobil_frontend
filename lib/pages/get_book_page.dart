@@ -3,16 +3,21 @@ import 'package:shelf_mobil_frontend/types/category.dart';
 
 class GetBookPage extends StatefulWidget {
   const GetBookPage({super.key});
-  static final List<String> categoryNameList = Category.getCategoryNameList();
   static final List<Category> categoryList =
       Category.getCategoryListAlphabeticSorted();
+  static void setCategory(Category category) {
+
+    category.title == "ALL BOOKS"
+        ? _GetBookPageState._selectedCategory = categoryList.first
+        : _GetBookPageState._selectedCategory = category;
+  }
+
   @override
   State<GetBookPage> createState() => _GetBookPageState();
 }
 
 class _GetBookPageState extends State<GetBookPage> {
-  static String _selectedCategory = GetBookPage.categoryNameList.elementAt(0);
-  static int _selectedCategoryIndex = 0;
+  static Category _selectedCategory = GetBookPage.categoryList.elementAt(0);
 
   @override
   Widget build(BuildContext context) {
@@ -39,24 +44,21 @@ class _GetBookPageState extends State<GetBookPage> {
                   OutlinedButton(
                     onPressed: () {
                       setState(() {
-                        _selectedCategory = "ALL BOOKS";
-                        _selectedCategoryIndex = 0;
+                        _selectedCategory = GetBookPage.categoryList.first;
                       });
                     },
                     style: ButtonStyle(
-                      foregroundColor:
-                          GetBookPage.categoryNameList.elementAt(0) ==
-                                  _selectedCategory
-                              ? const MaterialStatePropertyAll(Colors.white)
-                              : const MaterialStatePropertyAll(
-                                  Color.fromARGB(200, 37, 37, 37),
-                                ),
-                      backgroundColor:
-                          GetBookPage.categoryNameList.elementAt(0) ==
-                                  _selectedCategory
-                              ? const MaterialStatePropertyAll(
-                                  Color.fromARGB(255, 95, 186, 242))
-                              : const MaterialStatePropertyAll(Colors.white),
+                      foregroundColor: GetBookPage.categoryList.elementAt(0) ==
+                              _selectedCategory
+                          ? const MaterialStatePropertyAll(Colors.white)
+                          : const MaterialStatePropertyAll(
+                              Color.fromARGB(200, 37, 37, 37),
+                            ),
+                      backgroundColor: GetBookPage.categoryList.elementAt(0) ==
+                              _selectedCategory
+                          ? const MaterialStatePropertyAll(
+                              Color.fromARGB(255, 95, 186, 242))
+                          : const MaterialStatePropertyAll(Colors.white),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0))),
                     ),
@@ -72,7 +74,7 @@ class _GetBookPageState extends State<GetBookPage> {
                     flex: 1,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: GetBookPage.categoryNameList.length - 1,
+                      itemCount: GetBookPage.categoryList.length - 1,
                       itemBuilder: _buildCategoryItem,
                       separatorBuilder: ((context, index) {
                         return const SizedBox(
@@ -134,10 +136,7 @@ class _GetBookPageState extends State<GetBookPage> {
             const Divider(),
             const SizedBox(height: 5),
             Expanded(
-              child: GetBookPage.categoryList
-                          .elementAt(_selectedCategoryIndex)
-                          .numberOfBooks >
-                      0
+              child: _selectedCategory.numberOfBooks > 0
                   ? GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -146,9 +145,7 @@ class _GetBookPageState extends State<GetBookPage> {
                               crossAxisSpacing: 10,
                               mainAxisSpacing: 10),
                       itemBuilder: _buildGridItem,
-                      itemCount: GetBookPage.categoryList
-                          .elementAt(_selectedCategoryIndex)
-                          .numberOfBooks,
+                      itemCount: _selectedCategory.numberOfBooks,
                     )
                   : Text(
                       "NO BOOK FOUND",
@@ -169,25 +166,24 @@ class _GetBookPageState extends State<GetBookPage> {
     return OutlinedButton(
       onPressed: () {
         setState(() {
-          _selectedCategory = GetBookPage.categoryNameList.elementAt(index + 1);
-          _selectedCategoryIndex = index + 1;
+          _selectedCategory = GetBookPage.categoryList.elementAt(index + 1);
         });
       },
       style: ButtonStyle(
-        foregroundColor: GetBookPage.categoryNameList.elementAt(index + 1) ==
-                _selectedCategory
-            ? const MaterialStatePropertyAll(Colors.white)
-            : const MaterialStatePropertyAll(
-                Color.fromARGB(200, 37, 37, 37),
-              ),
-        backgroundColor: GetBookPage.categoryNameList.elementAt(index + 1) ==
+        foregroundColor:
+            GetBookPage.categoryList.elementAt(index + 1) == _selectedCategory
+                ? const MaterialStatePropertyAll(Colors.white)
+                : const MaterialStatePropertyAll(
+                    Color.fromARGB(200, 37, 37, 37),
+                  ),
+        backgroundColor: GetBookPage.categoryList.elementAt(index + 1) ==
                 _selectedCategory
             ? const MaterialStatePropertyAll(Color.fromARGB(255, 95, 186, 242))
             : const MaterialStatePropertyAll(Colors.white),
         shape: MaterialStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
       ),
-      child: Text(GetBookPage.categoryNameList.elementAt(index + 1)),
+      child: Text(GetBookPage.categoryList.elementAt(index + 1).title),
     );
   }
 
