@@ -15,7 +15,7 @@ class Category {
     Category("NOVEL", " ", 14),
     Category("HISTORY", " ", 8),
     Category("KIDS", " ", 7),
-    Category("BIOGRAPHIES", " ", 6),
+    Category("BIOGRAPHY", " ", 6),
     Category("WORLD CLASSICS", " ", 6),
     Category("ART", " ", 5),
     Category("PHILOSOPHY", " ", 5),
@@ -31,7 +31,7 @@ class Category {
     for (var element in _categoryList) {
       num += element.numberOfBooks;
     }
-    retList.add(Category("ALL BOOKS", " ", num));
+    retList.add(Category("ALL", " ", num));
     retList.addAll(_categoryList);
     retList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
     return retList;
@@ -43,7 +43,7 @@ class Category {
     for (var element in _categoryList) {
       num += element.numberOfBooks;
     }
-    retList.add(Category("ALL BOOKS", " ", num));
+    retList.add(Category("ALL", " ", num));
     retList.addAll(_categoryList);
     retList
         .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
