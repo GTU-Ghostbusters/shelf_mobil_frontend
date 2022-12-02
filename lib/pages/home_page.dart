@@ -7,6 +7,7 @@ import '../types/category.dart';
 import 'account_page.dart';
 import 'get_book_page.dart';
 import 'share_book_page.dart';
+import 'book_detail_page.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
@@ -29,7 +30,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<Widget> pages = [
     const GetBookPage(),
-    const ShareBookPage(),
+    const BookDetailPage(),
     const AccountPage()
   ];
   static int _currentPageIndex = 0;
