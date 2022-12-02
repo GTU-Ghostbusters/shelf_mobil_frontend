@@ -6,8 +6,7 @@ class GetBookPage extends StatefulWidget {
   static final List<Category> categoryList =
       Category.getCategoryListAlphabeticSorted();
   static void setCategory(Category category) {
-
-    category.title == "ALL BOOKS"
+    category.title == "ALL"
         ? _GetBookPageState._selectedCategory = categoryList.first
         : _GetBookPageState._selectedCategory = category;
   }
@@ -41,28 +40,28 @@ class _GetBookPageState extends State<GetBookPage> {
               height: 50,
               child: Row(
                 children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      setState(() {
-                        _selectedCategory = GetBookPage.categoryList.first;
-                      });
-                    },
-                    style: ButtonStyle(
-                      foregroundColor: GetBookPage.categoryList.elementAt(0) ==
-                              _selectedCategory
-                          ? const MaterialStatePropertyAll(Colors.white)
-                          : const MaterialStatePropertyAll(
-                              Color.fromARGB(200, 37, 37, 37),
-                            ),
-                      backgroundColor: GetBookPage.categoryList.elementAt(0) ==
-                              _selectedCategory
-                          ? const MaterialStatePropertyAll(
-                              Color.fromARGB(255, 95, 186, 242))
-                          : const MaterialStatePropertyAll(Colors.white),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0))),
+                  SizedBox(
+                    height: 40,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        setState(() {
+                          _selectedCategory = GetBookPage.categoryList.first;
+                        });
+                      },
+                      style: ButtonStyle(
+                        foregroundColor:
+                            const MaterialStatePropertyAll(Colors.white),
+                        backgroundColor: const MaterialStatePropertyAll(
+                            Color.fromARGB(255, 95, 186, 242)),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0))),
+                      ),
+                      child: Text(
+                        overflow: TextOverflow.ellipsis,
+                        _selectedCategory.title,
+                        maxLines: 1,
+                      ),
                     ),
-                    child: const Text("ALL BOOKS"),
                   ),
                   const VerticalDivider(
                     width: 10,
@@ -74,11 +73,22 @@ class _GetBookPageState extends State<GetBookPage> {
                     flex: 1,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: GetBookPage.categoryList.length - 1,
+                      itemCount: GetBookPage.categoryList.length,
                       itemBuilder: _buildCategoryItem,
                       separatorBuilder: ((context, index) {
-                        return const SizedBox(
-                          width: 10,
+                        return SizedBox(
+                          width: _selectedCategory.title ==
+                                      GetBookPage.categoryList
+                                          .elementAt(index)
+                                          .title ||
+                                  GetBookPage.categoryList
+                                          .elementAt(index)
+                                          .title ==
+                                      GetBookPage.categoryList
+                                          .elementAt(0)
+                                          .title
+                              ? 0
+                              : 5,
                         );
                       }),
                     ),
@@ -163,28 +173,34 @@ class _GetBookPageState extends State<GetBookPage> {
   }
 
   Widget _buildCategoryItem(BuildContext context, int index) {
-    return OutlinedButton(
-      onPressed: () {
-        setState(() {
-          _selectedCategory = GetBookPage.categoryList.elementAt(index + 1);
-        });
-      },
-      style: ButtonStyle(
-        foregroundColor:
-            GetBookPage.categoryList.elementAt(index + 1) == _selectedCategory
-                ? const MaterialStatePropertyAll(Colors.white)
-                : const MaterialStatePropertyAll(
-                    Color.fromARGB(200, 37, 37, 37),
-                  ),
-        backgroundColor: GetBookPage.categoryList.elementAt(index + 1) ==
-                _selectedCategory
-            ? const MaterialStatePropertyAll(Color.fromARGB(255, 95, 186, 242))
-            : const MaterialStatePropertyAll(Colors.white),
-        shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
-      ),
-      child: Text(GetBookPage.categoryList.elementAt(index + 1).title),
-    );
+    return _selectedCategory.title ==
+                GetBookPage.categoryList.elementAt(index).title ||
+            GetBookPage.categoryList.elementAt(index).title ==
+                GetBookPage.categoryList.elementAt(0).title
+        ? const SizedBox()
+        : OutlinedButton(
+            onPressed: () {
+              setState(() {
+                _selectedCategory = GetBookPage.categoryList.elementAt(index);
+              });
+            },
+            style: ButtonStyle(
+              foregroundColor:
+                  GetBookPage.categoryList.elementAt(index) == _selectedCategory
+                      ? const MaterialStatePropertyAll(Colors.white)
+                      : const MaterialStatePropertyAll(
+                          Color.fromARGB(200, 37, 37, 37),
+                        ),
+              backgroundColor:
+                  GetBookPage.categoryList.elementAt(index) == _selectedCategory
+                      ? const MaterialStatePropertyAll(
+                          Color.fromARGB(255, 95, 186, 242))
+                      : const MaterialStatePropertyAll(Colors.white),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0))),
+            ),
+            child: Text(GetBookPage.categoryList.elementAt(index).title),
+          );
   }
 
   Widget _buildGridItem(BuildContext context, int index) {
