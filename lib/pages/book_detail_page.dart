@@ -14,8 +14,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("BOOK NAME"),
+      ),
       body: Container(
-        padding: const EdgeInsets.all(35),
+        padding: const EdgeInsets.all(25),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             tileMode: TileMode.mirror,
@@ -31,23 +34,26 @@ class _BookDetailPageState extends State<BookDetailPage> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 200,
+                  height: MediaQuery.of(context).size.height*0.3,
                   width: double.infinity,
-                  child: PageView.builder(onPageChanged: (index) {
-                    setState(() {
-                      currentIndex = index % images.length;
-                    });
-                  }, itemBuilder: ((context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: SizedBox(
-                        child: Image.network(
-                          images[index % images.length].toString(),
-                          fit: BoxFit.contain,
+                  child: PageView.builder(
+                    onPageChanged: (index) {
+                      setState(() {
+                        currentIndex = index % images.length;
+                      });
+                    },
+                    itemBuilder: ((context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: SizedBox(
+                          child: Image.network(
+                            images[index % images.length].toString(),
+                            fit: BoxFit.contain,
+                          ),
                         ),
-                      ),
-                    );
-                  })),
+                      );
+                    }),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -66,7 +72,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      width: 160,
+                      height: 45,
+                      width: MediaQuery.of(context).size.width*0.36,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(220, 255, 255, 255),
@@ -81,7 +88,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           icon: const Icon(Icons.add_shopping_cart,
                               color: Colors.black),
                           label: const Text(
-                            "Add to shelf",
+                            "Add to Shelf",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -89,6 +96,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           )),
                     ),
                     Container(
+                      height: 45,
+                      width: MediaQuery.of(context).size.width*0.43,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(220, 255, 255, 255),
@@ -103,7 +112,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           icon: const Icon(Icons.favorite_border,
                               color: Colors.black),
                           label: const Text(
-                            "Add to favorites",
+                            "Add to Favorites",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -117,8 +126,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(left: 10),
-                  width: 230,
-                  height: 100,
+                  width: MediaQuery.of(context).size.width*0.65,
+                  height: MediaQuery.of(context).size.height*0.12,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(220, 255, 255, 255),
                     border: Border.all(
@@ -184,8 +193,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(left: 10, top: 5),
-                  width: 230,
-                  height: 100,
+                  width: MediaQuery.of(context).size.width*0.65,
+                  height: MediaQuery.of(context).size.height*0.12,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(220, 255, 255, 255),
                     border: Border.all(
@@ -200,8 +209,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.only(left: 10),
-                  width: 230,
-                  height: 40,
+                  width: MediaQuery.of(context).size.width*0.5,
+                  height: MediaQuery.of(context).size.height*0.05,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(220, 255, 255, 255),
                     border: Border.all(
@@ -226,7 +235,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   height: 20,
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 10),
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(220, 255, 255, 255),
                     border: Border.all(

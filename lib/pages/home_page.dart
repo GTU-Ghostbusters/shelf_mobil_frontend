@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:shelf_mobil_frontend/pages/share_book_page.dart';
 import 'package:shelf_mobil_frontend/types/enums.dart';
 
 import '../types/category.dart';
 import 'account_page.dart';
 import 'get_book_page.dart';
-import 'book_detail_page.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
@@ -29,7 +29,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List<Widget> pages = [
     const GetBookPage(),
-    const BookDetailPage(),
+    const ShareBookPage(),
     const AccountPage()
   ];
   static int _currentPageIndex = 0;

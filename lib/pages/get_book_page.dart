@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
 import 'package:shelf_mobil_frontend/types/category.dart';
 
 class GetBookPage extends StatefulWidget {
@@ -197,17 +198,28 @@ class _GetBookPageState extends State<GetBookPage> {
         ),
         child: Column(children: [
           SizedBox(height: constraints.maxHeight * 0.03),
-          Container(
-            height: constraints.maxHeight * 0.725,
-            width: constraints.maxWidth * 0.8,
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(220, 255, 255, 255),
-              border: Border.all(width: 0.5, color: Colors.grey.shade500),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Image.asset(
-              "images/category_template.jpg",
-              fit: BoxFit.contain,
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return const BookDetailPage();
+                  },
+                ),
+              );
+            },
+            child: Container(
+              height: constraints.maxHeight * 0.725,
+              width: constraints.maxWidth * 0.8,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(220, 255, 255, 255),
+                border: Border.all(width: 0.5, color: Colors.grey.shade500),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Image.asset(
+                "images/category_template.jpg",
+                fit: BoxFit.contain,
+              ),
             ),
           ),
           SizedBox(height: constraints.maxHeight * 0.02),
