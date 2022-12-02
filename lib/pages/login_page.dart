@@ -290,7 +290,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 7,
                   ),
                   TextFormField(
                     validator: Validators.compose(
@@ -375,7 +375,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(100, 10),
+                      fixedSize: Size(MediaQuery.of(context).size.width * 0.35, 40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
                     ),
                     onPressed: () {},
                     child: const Text(

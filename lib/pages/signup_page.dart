@@ -13,7 +13,7 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _showPassword = true;
   bool _showPassword_1 = true;
   String _password = "";
-
+  final _formKey = GlobalKey<FormState>();
   TextEditingController phoneNum = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class _SignUpPageState extends State<SignUpPage> {
         title: const Text("SIGN UP"),
       ),
       body: Container(
-        padding: const EdgeInsets.all(17),
+        padding: const EdgeInsets.all(35),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             tileMode: TileMode.mirror,
@@ -36,6 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Center(
           child: SingleChildScrollView(
             child: Form(
+              key: _formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -233,13 +234,118 @@ class _SignUpPageState extends State<SignUpPage> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return Confirmation(
+                                phoneNumber: int.parse(phoneNum.text));
+                          },
+                        ),
+                      );
+                    },
                     child: const Text(
                       "SIGN UP",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Confirmation extends StatefulWidget {
+  int? phoneNumber;
+  Confirmation({super.key, this.phoneNumber});
+
+  @override
+  State<Confirmation> createState() => _ConfirmationState();
+}
+
+class _ConfirmationState extends State<Confirmation> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("CONFIRMATION"),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(35),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            tileMode: TileMode.mirror,
+            colors: [
+              Color.fromARGB(70, 255, 131, 220),
+              Color.fromARGB(70, 246, 238, 243),
+              Color.fromARGB(70, 76, 185, 252),
+            ],
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              child: Column(
+                children: [
+                  Text(
+                    "The confirmation code was sent to the phone number: +90${widget.phoneNumber}",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(
+                      labelText: "Please enter the code",
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      fixedSize:
+                          Size(MediaQuery.of(context).size.width * 0.4, 40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+                    child: const Text(
+                      "CONFIRM",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      fixedSize:
+                          Size(MediaQuery.of(context).size.width * 0.4, 40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+                    child: const Text(
+                      "SEND AGAIN",
+                      style: TextStyle(fontSize: 16),
                     ),
                   ),
                 ],
