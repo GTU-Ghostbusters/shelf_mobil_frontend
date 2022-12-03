@@ -65,59 +65,61 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       buildIndicator(currentIndex == i)
                   ],
                 ),
-                const SizedBox(
-                  height: 18,
-                ),
+                const SizedBox(height: 18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      height: 45,
-                      width: MediaQuery.of(context).size.width * 0.36,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(220, 255, 255, 255),
-                        border: Border.all(
-                          color: Colors.black,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                    SizedBox(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width * 0.35,
                       child: TextButton.icon(
-                          style: const ButtonStyle(),
-                          onPressed: () {},
-                          icon: const Icon(Icons.add_shopping_cart,
-                              color: Colors.black),
-                          label: const Text(
-                            "Add to Shelf",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          )),
+                        style: ButtonStyle(
+                          elevation: const MaterialStatePropertyAll(5),
+                          foregroundColor:
+                              const MaterialStatePropertyAll(Colors.white),
+                          backgroundColor: const MaterialStatePropertyAll(
+                              Color.fromARGB(255, 47, 175, 255)),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      width: 0.2, color: Colors.grey.shade800),
+                                  borderRadius: BorderRadius.circular(5))),
+                        ),
+                        onPressed: () {},
+                        icon: const Icon(Icons.add_shopping_cart),
+                        label: const Text(
+                          "Add to Shelf",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
-                    Container(
-                      height: 45,
-                      width: MediaQuery.of(context).size.width * 0.43,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(220, 255, 255, 255),
-                        border: Border.all(
-                          color: Colors.black,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                    SizedBox(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width * 0.41,
                       child: TextButton.icon(
-                          style: const ButtonStyle(),
-                          onPressed: () {},
-                          icon: const Icon(Icons.favorite_border,
-                              color: Colors.black),
-                          label: const Text(
-                            "Add to Favorites",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          )),
+                        style: ButtonStyle(
+                          elevation: const MaterialStatePropertyAll(5),
+                          foregroundColor:
+                              const MaterialStatePropertyAll(Colors.white),
+                          backgroundColor: const MaterialStatePropertyAll(
+                              Color.fromARGB(255, 47, 175, 255)),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      width: 0.2, color: Colors.grey.shade800),
+                                  borderRadius: BorderRadius.circular(5))),
+                        ),
+                        onPressed: () {},
+                        icon: const Icon(Icons.add_shopping_cart),
+                        label: const Text(
+                          "Add to Favorites",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
