@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
+import 'package:shelf_mobil_frontend/pages/cart.dart';
 import 'package:shelf_mobil_frontend/types/category.dart';
 
 class GetBookPage extends StatefulWidget {
@@ -23,7 +24,9 @@ class _GetBookPageState extends State<GetBookPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("GET BOOK"), centerTitle: true),
+      appBar:
+          AppBar(title: const Text("GET BOOK"), centerTitle: true, actions: const [CartButton()
+      ]),
       body: Container(
         padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(

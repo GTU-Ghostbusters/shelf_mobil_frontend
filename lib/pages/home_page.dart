@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:shelf_mobil_frontend/pages/cart.dart';
 import 'package:shelf_mobil_frontend/pages/share_book_page.dart';
 import 'package:shelf_mobil_frontend/types/enums.dart';
 
@@ -39,9 +40,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: _currentPageIndex == 0? AppBar(
-        backgroundColor: const Color.fromARGB(240, 45, 160, 232),
-      ): null,
+      appBar: _currentPageIndex == 0
+          ? AppBar(
+              title: const Text("SHELF"),
+              centerTitle: true,
+              actions: const [CartButton()],
+            )
+          : null,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,

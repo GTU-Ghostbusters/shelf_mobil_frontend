@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shelf_mobil_frontend/pages/cart.dart';
 import 'package:shelf_mobil_frontend/types/book.dart';
 
 class BookDetailPage extends StatefulWidget {
@@ -15,7 +16,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("BOOK NAME"),
+        title: const Text("BOOK NAME"), centerTitle: true, actions: const [CartButton()],
       ),
       body: Container(
         padding: const EdgeInsets.all(25),
