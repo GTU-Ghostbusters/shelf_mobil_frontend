@@ -16,7 +16,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("BOOK NAME"), centerTitle: true, actions: const [CartButton()],
+        title: const Text("BOOK NAME"),
+        centerTitle: true,
+        actions: const [CartButton()],
       ),
       body: Container(
         padding: const EdgeInsets.all(25),
@@ -34,39 +36,50 @@ class _BookDetailPageState extends State<BookDetailPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  width: double.infinity,
-                  child: PageView.builder(
-                    onPageChanged: (index) {
-                      setState(() {
-                        currentIndex = index % images.length;
-                      });
-                    },
-                    itemBuilder: ((context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: SizedBox(
-                          child: Image.network(
-                            images[index % images.length].toString(),
-                            fit: BoxFit.contain,
-                          ),
+                container(
+                  MediaQuery.of(context).size.height * 0.365,
+                  MediaQuery.of(context).size.width * 0.8,
+                  Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        width: double.infinity,
+                        margin:
+                            const EdgeInsets.all(10),
+                        child: PageView.builder(
+                          onPageChanged: (index) {
+                            setState(() {
+                              currentIndex = index % images.length;
+                            });
+                          },
+                          itemBuilder: ((context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: SizedBox(
+                                child: Image.network(
+                                  images[index % images.length].toString(),
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            );
+                          }),
                         ),
-                      );
-                    }),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          for (var i = 0; i < images.length; i++)
+                            buildIndicator(currentIndex == i)
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (var i = 0; i < images.length; i++)
-                      buildIndicator(currentIndex == i)
-                  ],
-                ),
-                const SizedBox(height: 18),
+                const SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -112,7 +125,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                   borderRadius: BorderRadius.circular(5))),
                         ),
                         onPressed: () {},
-                        icon: const Icon(Icons.add_shopping_cart),
+                        icon: const Icon(Icons.favorite_border_rounded),
                         label: const Text(
                           "Add to Favorites",
                           style: TextStyle(
@@ -124,134 +137,51 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 10),
-                  width: MediaQuery.of(context).size.width * 0.65,
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(220, 255, 255, 255),
-                    border: Border.all(
-                      color: Colors.black,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
+                const SizedBox(height: 15),
+                container(
+                  MediaQuery.of(context).size.height * 0.15,
+                  MediaQuery.of(context).size.width * 0.8,
+                  Column(
                     children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.0365,
-                        child: Row(
-                          children: const [
-                            Icon(Icons.menu_book_rounded),
-                            VerticalDivider(
-                              endIndent: 0,
-                              thickness: 1,
-                            ),
-                            Text("NAME OF THE BOOK"),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.0365,
-                        child: Row(
-                          children: const [
-                            Icon(Icons.person),
-                            VerticalDivider(
-                              endIndent: 0,
-                              thickness: 1,
-                            ),
-                            Text("NAME OF THE AUTHOR"),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.0365,
-                        child: Row(
-                          children: const [
-                            Icon(Icons.description),
-                            VerticalDivider(
-                              endIndent: 0,
-                              thickness: 1,
-                            ),
-                            Text("NUMBER OF PAGES"),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.0365,
-                        child: Row(
-                          children: const [
-                            Icon(Icons.library_books),
-                            VerticalDivider(
-                              endIndent: 0,
-                              thickness: 1,
-                            ),
-                            Text("NAME OF THE CATEGORY"),
-                          ],
-                        ),
-                      ),
+                      informatonRow(
+                          const Icon(Icons.menu_book_rounded),
+                          "Name of Book",
+                          MediaQuery.of(context).size.height * 0.0365),
+                      informatonRow(const Icon(Icons.person), "Name of Author",
+                          MediaQuery.of(context).size.height * 0.0365),
+                      informatonRow(
+                          const Icon(Icons.description),
+                          "Number of Pages",
+                          MediaQuery.of(context).size.height * 0.0365),
+                      informatonRow(
+                          const Icon(Icons.library_books),
+                          "Category of Book",
+                          MediaQuery.of(context).size.height * 0.0365),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 8,
+                const SizedBox(height: 5),
+                container(
+                  MediaQuery.of(context).size.height * 0.12,
+                  MediaQuery.of(context).size.width * 0.8,
+                  informatonRow(
+                      const Icon(Icons.assured_workload),
+                      "Information of Book",
+                      MediaQuery.of(context).size.height * 0.12),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(left: 10, top: 5),
-                  width: MediaQuery.of(context).size.width * 0.65,
-                  height: MediaQuery.of(context).size.height * 0.12,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(220, 255, 255, 255),
-                    border: Border.all(
-                      color: Colors.black,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text("DETAILED INFORMATION ABOUT BOOKS"),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 10),
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(220, 255, 255, 255),
-                    border: Border.all(
-                      color: Colors.black,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: IntrinsicHeight(
-                    child: Row(
-                      children: const [
-                        Icon(Icons.local_shipping),
-                        VerticalDivider(
-                          endIndent: 0,
-                          thickness: 1,
-                        ),
-                        Text("SHIPMENT TYPE")
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(220, 255, 255, 255),
-                    border: Border.all(
-                      color: Colors.black,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextButton.icon(
-                    style: const ButtonStyle(
-                        fixedSize: MaterialStatePropertyAll(Size(180, 50))),
+                const SizedBox(height: 5),
+                container(
+                    MediaQuery.of(context).size.height * 0.05,
+                    MediaQuery.of(context).size.width * 0.8,
+                    informatonRow(
+                        const Icon(Icons.local_shipping),
+                        "Shipment Type",
+                        MediaQuery.of(context).size.height * 0.05)),
+                const SizedBox(height: 15),
+                container(
+                  50,
+                  MediaQuery.of(context).size.width * 0.6,
+                  TextButton.icon(
                     onPressed: () {},
                     icon: const Icon(
                       Icons.account_circle,
@@ -259,17 +189,15 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       color: Colors.black,
                     ),
                     label: const Text(
-                      "NAME OF THE OWNER",
+                      "NAME OF BOOK OWNER",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 15,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -289,6 +217,41 @@ class _BookDetailPageState extends State<BookDetailPage> {
           color: isSelected ? Colors.black : Colors.grey,
         ),
       ),
+    );
+  }
+
+  Widget informatonRow(Icon icon, String text, double height) {
+    return Container(
+      alignment: Alignment.topCenter,
+      height: height,
+      child: Row(
+        children: [
+          icon,
+          const VerticalDivider(
+            endIndent: 0,
+            thickness: 1,
+          ),
+          Text(text)
+        ],
+      ),
+    );
+  }
+
+  Widget container(double height, double width, Widget child) {
+    return Container(
+      alignment: Alignment.topCenter,
+      padding: const EdgeInsets.only(left: 10),
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(220, 255, 255, 255),
+        border: Border.all(
+          width: 0.2,
+          color: Colors.black,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      height: height,
+      width: width,
+      child: child,
     );
   }
 }
