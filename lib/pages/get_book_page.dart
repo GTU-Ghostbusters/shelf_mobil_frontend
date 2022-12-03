@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
 import 'package:shelf_mobil_frontend/types/category.dart';
 
@@ -22,6 +23,7 @@ class _GetBookPageState extends State<GetBookPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text("GET BOOK"), centerTitle: true),
       body: Container(
         padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
@@ -200,13 +202,21 @@ class _GetBookPageState extends State<GetBookPage> {
           SizedBox(height: constraints.maxHeight * 0.03),
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return const BookDetailPage();
-                  },
-                ),
-              );
+              AccountPage.isUserLogged() == false
+                  ? Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const AccountPage();
+                        },
+                      ),
+                    )
+                  : Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const BookDetailPage();
+                        },
+                      ),
+                    );
             },
             child: Container(
               height: constraints.maxHeight * 0.725,

@@ -39,9 +39,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
+      appBar: _currentPageIndex == 0? AppBar(
         backgroundColor: const Color.fromARGB(240, 45, 160, 232),
-      ),
+      ): null,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,

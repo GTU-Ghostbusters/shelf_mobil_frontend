@@ -5,16 +5,24 @@ import 'signup_page.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
+  static bool isUserLogged() {
+    return _AccountPageState.isLogged;
+  }
 
   @override
   State<AccountPage> createState() => _AccountPageState();
 }
 
 class _AccountPageState extends State<AccountPage> {
-  static bool isLogged = false;
+  static bool isLogged = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: isLogged
+              ? const Text("MY ACCOUNT")
+              : const Text("USER MANAGMENT"),
+          centerTitle: true),
       body: Container(
         padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(

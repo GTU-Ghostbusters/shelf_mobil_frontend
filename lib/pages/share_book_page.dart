@@ -69,6 +69,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(title: const Text("SHARE BOOK"), centerTitle: true),
       body: Container(
         height: double.infinity,
         padding: const EdgeInsets.all(40),
