@@ -13,9 +13,7 @@ class Shelf extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Shelf',
-      theme: ThemeData(
-          backgroundColor:
-              createMaterialColor(const Color.fromARGB(151, 255, 0, 0))),
+      theme: ThemeData(),
       home: HomePage(),
     );
   }

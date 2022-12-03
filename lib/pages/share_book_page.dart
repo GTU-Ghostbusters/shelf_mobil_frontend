@@ -270,7 +270,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
                 ),
                 const SizedBox(height: 15),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.64,
+                  width: MediaQuery.of(context).size.width * 0.8,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(10, 0, 0, 0),
                     border: Border.all(
@@ -298,13 +298,13 @@ class _ShareBookPageState extends State<ShareBookPage> {
                         fontSize: 15,
                         borderWidth: 0,
                         activeFgColor: Colors.white,
-                        activeBgColor: const [
-                          Color.fromARGB(255, 95, 186, 242)
+                        activeBgColor: [
+                          Theme.of(context).primaryColor
                         ],
                         inactiveFgColor: const Color.fromARGB(200, 37, 37, 37),
                         inactiveBgColor: Colors.white,
                         totalSwitches: 2,
-                        minWidth: MediaQuery.of(context).size.width * 0.25,
+                        minWidth: MediaQuery.of(context).size.width * 0.33,
                         labels: const ['Sender', 'Receiver'],
                         onToggle: (index) {
                           setState(() {

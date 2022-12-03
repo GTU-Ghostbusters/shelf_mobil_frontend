@@ -24,9 +24,10 @@ class _GetBookPageState extends State<GetBookPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: const Text("GET BOOK"), centerTitle: true, actions: const [CartButton()
-      ]),
+      appBar: AppBar(
+          title: const Text("GET BOOK"),
+          centerTitle: true,
+          actions: const [CartButton()]),
       body: Container(
         padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
@@ -55,8 +56,8 @@ class _GetBookPageState extends State<GetBookPage> {
                     style: ButtonStyle(
                       foregroundColor:
                           const MaterialStatePropertyAll(Colors.white),
-                      backgroundColor: const MaterialStatePropertyAll(
-                          Color.fromARGB(255, 95, 186, 242)),
+                      backgroundColor: MaterialStatePropertyAll(
+                          Theme.of(context).primaryColor),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0))),
                     ),
@@ -174,17 +175,10 @@ class _GetBookPageState extends State<GetBookPage> {
               });
             },
             style: ButtonStyle(
-              foregroundColor:
-                  GetBookPage.categoryList.elementAt(index) == _selectedCategory
-                      ? const MaterialStatePropertyAll(Colors.white)
-                      : const MaterialStatePropertyAll(
-                          Color.fromARGB(200, 37, 37, 37),
-                        ),
-              backgroundColor:
-                  GetBookPage.categoryList.elementAt(index) == _selectedCategory
-                      ? const MaterialStatePropertyAll(
-                          Color.fromARGB(255, 95, 186, 242))
-                      : const MaterialStatePropertyAll(Colors.white),
+              foregroundColor: const MaterialStatePropertyAll(
+                Color.fromARGB(200, 37, 37, 37)
+              ),
+              backgroundColor: const MaterialStatePropertyAll(Colors.white),
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0))),
             ),
@@ -224,6 +218,7 @@ class _GetBookPageState extends State<GetBookPage> {
             child: Container(
               height: constraints.maxHeight * 0.725,
               width: constraints.maxWidth * 0.8,
+              padding: const EdgeInsets.all(1.5),
               decoration: BoxDecoration(
                 color: const Color.fromARGB(220, 255, 255, 255),
                 border: Border.all(width: 0.5, color: Colors.grey.shade500),

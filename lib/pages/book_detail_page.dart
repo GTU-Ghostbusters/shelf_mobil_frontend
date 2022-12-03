@@ -91,8 +91,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           elevation: const MaterialStatePropertyAll(5),
                           foregroundColor:
                               const MaterialStatePropertyAll(Colors.white),
-                          backgroundColor: const MaterialStatePropertyAll(
-                              Color.fromARGB(255, 47, 175, 255)),
+                          backgroundColor: MaterialStatePropertyAll(
+                              Theme.of(context).primaryColor),
                           shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
                                   side: BorderSide(
@@ -116,8 +116,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           elevation: const MaterialStatePropertyAll(5),
                           foregroundColor:
                               const MaterialStatePropertyAll(Colors.white),
-                          backgroundColor: const MaterialStatePropertyAll(
-                              Color.fromARGB(255, 47, 175, 255)),
+                          backgroundColor: MaterialStatePropertyAll(
+                              Theme.of(context).primaryColor),
                           shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
                                   side: BorderSide(

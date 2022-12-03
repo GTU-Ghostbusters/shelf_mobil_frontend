@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
           textSize: 11,
           gap: 3,
           tabBorderRadius: 10,
-          activeColor: const Color.fromARGB(240, 45, 160, 232),
+          activeColor: Theme.of(context).primaryColor,
           color: const Color.fromARGB(240, 37, 37, 37),
           tabs: const [
             GButton(
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
             dynamicItemSize: true,
             updateOnScroll: true,
             scrollDirection: Axis.horizontal,
-            dynamicItemOpacity: 0.8,
+            dynamicItemOpacity: 0.95,
           ),
         ),
       ]),
@@ -232,7 +232,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: const Color.fromARGB(200, 37, 37, 37),
-                        backgroundColor: const Color.fromARGB(40, 45, 160, 232),
+                        backgroundColor: const Color.fromARGB(50, 45, 160, 232),
                       ),
                       child: category.numberOfBooks > 1
                           ? const Text("See Books")
