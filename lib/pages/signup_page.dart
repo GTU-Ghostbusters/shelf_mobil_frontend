@@ -19,7 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("SIGN UP"),
+        title: const Text("SIGN UP"), centerTitle: true,
       ),
       body: Container(
         padding: const EdgeInsets.all(35),
