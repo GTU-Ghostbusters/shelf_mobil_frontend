@@ -21,7 +21,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  static bool isLogged = false;
+  static bool isLogged = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -26,12 +26,4 @@ class Book {
     return imagesList;
   }
 
-  void setter(String name, String author, int numPages, String category_,
-      String additional) {
-    bookName = name;
-    authorName = author;
-    numberOfPage = numPages;
-    category = category_;
-    additionalInfo = additional;
-  }
 }
