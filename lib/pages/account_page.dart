@@ -21,7 +21,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  static bool isLogged = true;
+  static bool isLogged = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,177 +31,89 @@ class _AccountPageState extends State<AccountPage> {
         centerTitle: true,
       ),
       body: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            tileMode: TileMode.mirror,
-            colors: [
-              Color.fromARGB(70, 255, 131, 220),
-              Color.fromARGB(70, 246, 238, 243),
-              Color.fromARGB(70, 76, 185, 252),
-            ],
+          padding: const EdgeInsets.all(10),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              tileMode: TileMode.mirror,
+              colors: [
+                Color.fromARGB(60, 255, 131, 220),
+                Color.fromARGB(60, 246, 238, 243),
+                Color.fromARGB(60, 76, 185, 252),
+              ],
+            ),
           ),
-        ),
-        child: isLogged
-            ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 20),
-                    container(
-                      50,
-                      MediaQuery.of(context).size.width * 0.6,
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "My Informations",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    container(
-                      50,
-                      MediaQuery.of(context).size.width * 0.6,
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Favorites",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    container(
-                      50,
-                      MediaQuery.of(context).size.width * 0.6,
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Uploaded Books",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    container(
-                      50,
-                      MediaQuery.of(context).size.width * 0.6,
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Got Books",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll(Colors.grey.shade600),
-                          fixedSize: MaterialStatePropertyAll(Size(
-                              MediaQuery.of(context).size.width * 0.225, 35))),
-                      child: const Text(
-                        "Log Out",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              )
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize:
-                            Size(MediaQuery.of(context).size.width * 0.5, 40),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return const LoginPage();
-                            },
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        "LOGIN",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize:
-                            Size(MediaQuery.of(context).size.width * 0.5, 40),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return const SignUpPage();
-                            },
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        "SIGN UP",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.1,
-                    )
-                  ],
-                ),
-              ),
+          child: isLogged ? myAccount() : userManagement()),
+    );
+  }
+
+  Widget myAccount() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 20),
+          button(0.6, 50, 5, 18, null, "My Informations", (() {})),
+          const SizedBox(height: 10),
+          button(0.6, 50, 5, 18, null, "Favorites", (() {})),
+          const SizedBox(height: 10),
+          button(0.6, 50, 5, 18, null, "Uploaded Books", (() {})),
+          const SizedBox(height: 10),
+          button(0.6, 50, 5, 18, null, "Got Books", (() {})),
+          const SizedBox(height: 10),
+          button(0.25, 35, 5, 15, Colors.grey.shade600, "Log Out", () {
+            setState(() {
+              isLogged = false;
+            });
+          }),
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }
 
-  Widget container(double height, double width, Widget child) {
-    return Container(
-      alignment: Alignment.topCenter,
-      padding: const EdgeInsets.only(left: 10),
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        border: Border.all(
-          width: 0.2,
-          color: Colors.black,
-        ),
-        borderRadius: BorderRadius.circular(8),
+  Widget userManagement() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          button(0.5, 40, 25, 16, null, "LOGIN", () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) {
+                return const LoginPage();
+              },
+            ));
+          }),
+          const SizedBox(height: 5),
+          button(0.5, 40, 25, 16, null, "SIGN UP", () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return const SignUpPage();
+                },
+              ),
+            );
+          }),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.1)
+        ],
       ),
-      height: height,
-      width: width,
-      child: child,
+    );
+  }
+
+  Widget button(double widthConst, double height, double radius,
+      double fontSize, Color? color, String text, Function()? onPressed) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color ?? Theme.of(context).primaryColor,
+        fixedSize: Size(MediaQuery.of(context).size.width * widthConst, height),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
+      ),
+      onPressed: onPressed,
+      child: Text(text,
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: fontSize,
+              fontWeight: FontWeight.w700)),
     );
   }
 }
