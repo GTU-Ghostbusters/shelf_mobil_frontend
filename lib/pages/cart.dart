@@ -23,9 +23,9 @@ class _CartPageState extends State<CartPage> {
             gradient: LinearGradient(
               tileMode: TileMode.mirror,
               colors: [
-                Color.fromARGB(70, 255, 131, 220),
-                Color.fromARGB(70, 246, 238, 243),
-                Color.fromARGB(70, 76, 185, 252),
+                Color.fromARGB(60, 255, 131, 220),
+                Color.fromARGB(60, 246, 238, 243),
+                Color.fromARGB(60, 76, 185, 252),
               ],
             ),
           ),
@@ -48,21 +48,20 @@ class _CartButtonState extends State<CartButton> {
       onPressed: () {
         setState(() {
           AccountPage.isUserLogged() == false
-                  ? Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return const AccountPage();
-                        },
-                      ),
-                    )
-                  : Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return const CartPage();
-                        },
-                      ),
-                    );
-            
+              ? Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return const AccountPage();
+                    },
+                  ),
+                )
+              : Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return const CartPage();
+                    },
+                  ),
+                );
         });
       },
       icon: const Icon(Icons.shopping_bag_outlined),

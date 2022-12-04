@@ -34,9 +34,9 @@ class _GetBookPageState extends State<GetBookPage> {
           gradient: LinearGradient(
             tileMode: TileMode.mirror,
             colors: [
-              Color.fromARGB(70, 255, 131, 220),
-              Color.fromARGB(70, 246, 238, 243),
-              Color.fromARGB(70, 76, 185, 252),
+              Color.fromARGB(60, 255, 131, 220),
+              Color.fromARGB(60, 246, 238, 243),
+              Color.fromARGB(60, 76, 185, 252),
             ],
           ),
         ),
@@ -192,8 +192,8 @@ class _GetBookPageState extends State<GetBookPage> {
       return Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(20, 0, 0, 0),
-          borderRadius: BorderRadius.circular(10),
+          color: const Color.fromARGB(5, 0, 0, 0),
+          borderRadius: BorderRadius.circular(5),
         ),
         child: Column(children: [
           SizedBox(height: constraints.maxHeight * 0.03),
@@ -233,7 +233,7 @@ class _GetBookPageState extends State<GetBookPage> {
           SizedBox(height: constraints.maxHeight * 0.02),
           Container(
             height: constraints.maxHeight * 0.19,
-            width: constraints.maxWidth * 0.9,
+            width: constraints.maxWidth * 0.91,
             decoration: BoxDecoration(
                 color: const Color.fromARGB(220, 255, 255, 255),
                 border: Border.all(width: 0.5, color: Colors.grey.shade500),
@@ -243,7 +243,7 @@ class _GetBookPageState extends State<GetBookPage> {
                 Container(
                   alignment: Alignment.center,
                   height: constraints.maxHeight * 0.115,
-                  width: constraints.maxWidth * 0.665,
+                  width: constraints.maxWidth * 0.675,
                   child: Text("BOOK NAME",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -255,7 +255,7 @@ class _GetBookPageState extends State<GetBookPage> {
                 ),
                 SizedBox(
                   height: constraints.maxHeight * 0.07,
-                  width: constraints.maxWidth * 0.665,
+                  width: constraints.maxWidth * 0.675,
                   child: Text("AUTHOR NAME",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

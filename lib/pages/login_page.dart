@@ -27,9 +27,9 @@ class _LoginPageState extends State<LoginPage> {
           gradient: LinearGradient(
             tileMode: TileMode.mirror,
             colors: [
-              Color.fromARGB(70, 255, 131, 220),
-              Color.fromARGB(70, 246, 238, 243),
-              Color.fromARGB(70, 76, 185, 252),
+              Color.fromARGB(60, 255, 131, 220),
+              Color.fromARGB(60, 246, 238, 243),
+              Color.fromARGB(60, 76, 185, 252),
             ],
           ),
         ),
