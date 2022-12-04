@@ -181,6 +181,20 @@ class _HomePageState extends State<HomePage> {
             dynamicItemOpacity: 0.95,
           ),
         ),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              AccountPage.changeLog();
+            });
+          },
+          style: ButtonStyle(
+              backgroundColor: AccountPage.isUserLogged()
+                  ? const MaterialStatePropertyAll(Colors.green)
+                  : const MaterialStatePropertyAll(Colors.red)),
+          child: const Text(
+            "Change Log For Test",
+          ),
+        ),
       ]),
     );
   }
