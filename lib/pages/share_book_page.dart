@@ -93,25 +93,47 @@ class _ShareBookPageState extends State<ShareBookPage> {
   TextEditingController numberOfPages = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return AccountPage.isUserLogged() == false
-        ? const AccountPage()
-        : Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: AppBar(title: const Text("SHARE BOOK"), centerTitle: true),
-            body: Container(
-              height: double.infinity,
-              padding: const EdgeInsets.all(40),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  tileMode: TileMode.mirror,
-                  colors: [
-                    Color.fromARGB(60, 255, 131, 220),
-                    Color.fromARGB(60, 246, 238, 243),
-                    Color.fromARGB(60, 76, 185, 252),
-                  ],
-                ),
-              ),
-              child: Form(
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(title: const Text("SHARE BOOK"), centerTitle: true),
+      body: Container(
+        height: double.infinity,
+        padding: const EdgeInsets.all(40),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            tileMode: TileMode.mirror,
+            colors: [
+              Color.fromARGB(60, 255, 131, 220),
+              Color.fromARGB(60, 246, 238, 243),
+              Color.fromARGB(60, 76, 185, 252),
+            ],
+          ),
+        ),
+        child: AccountPage.isUserLogged() == false
+            ? Center(
+                child: AlertDialog(
+                actions: [
+                  TextButton(
+                      onPressed: (() {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return const AccountPage();
+                            },
+                          ),
+                        );
+                      }),
+                      child: const Text(
+                        "USER PAGE",
+                        style: TextStyle(fontSize: 18),
+                      ))
+                ],
+                title: const Text("USER LOGIN NEED"),
+                contentPadding: const EdgeInsets.all(20),
+                actionsAlignment: MainAxisAlignment.center,
+                content: const Text("You should login to upload a book."),
+              ))
+            : Form(
                 key: _formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: SingleChildScrollView(
@@ -303,8 +325,8 @@ class _ShareBookPageState extends State<ShareBookPage> {
                   ),
                 ),
               ),
-            ),
-          );
+      ),
+    );
   }
 
   Widget uploadButton() {

@@ -199,13 +199,32 @@ class _GetBookPageState extends State<GetBookPage> {
           GestureDetector(
             onTap: () {
               AccountPage.isUserLogged() == false
-                  ? Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return const AccountPage();
-                        },
-                      ),
-                    )
+                  ? showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    actions: [
+                      TextButton(
+                          onPressed: (() {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return const AccountPage();
+                                },
+                              ),
+                            );
+                          }),
+                          child: const Text(
+                            "USER PAGE",
+                            style: TextStyle(fontSize: 18),
+                          ))
+                    ],
+                    title: const Text("USER LOGIN NEED"),
+                    contentPadding: const EdgeInsets.all(20),
+                    actionsAlignment: MainAxisAlignment.center,
+                    content:
+                        const Text("You should login to view or get a book."),
+                  ),
+                )
                   : Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
