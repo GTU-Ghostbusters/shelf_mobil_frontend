@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shelf_mobil_frontend">
    <application
-        android:label="shelf_mobil_frontend"
+        android:label="Shelf"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

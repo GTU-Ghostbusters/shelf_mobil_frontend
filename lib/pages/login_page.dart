@@ -228,6 +228,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
+// ignore: must_be_immutable
 class ForgotPassword extends StatefulWidget {
   int? phoneNumber;
   ForgotPassword({super.key, this.phoneNumber});

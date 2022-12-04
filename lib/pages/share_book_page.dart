@@ -1,13 +1,9 @@
-import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shelf_mobil_frontend/types/enums.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../screens/select_photo_options_screen.dart';
 import '../types/category.dart';
 import 'account_page.dart';
 
@@ -23,45 +19,16 @@ class _ShareBookPageState extends State<ShareBookPage> {
       Category.getCategoryListAlphabeticSorted().sublist(1);
   Category? _selectedCategory;
   CargoPaymentType _cargoPaymentType = CargoPaymentType.senderPays;
-  File? _image;
 
-  Future _pickImage(ImageSource source) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      File? img = File(image.path);
-      setState(() {
-        _image = img;
-        Navigator.of(context).pop();
-      });
-    } on PlatformException {
-      Navigator.of(context).pop();
+  final ImagePicker imagePicker = ImagePicker();
+  List<XFile>? imageFileList = [];
+
+  void selectImages() async {
+    final List<XFile> selectedImages = await imagePicker.pickMultiImage();
+    if (selectedImages.isNotEmpty) {
+      imageFileList!.addAll(selectedImages);
+      setState(() {});
     }
-  }
-
-  void _showSelectPhotoOptions(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(5.0),
-        ),
-      ),
-      builder: (context) => DraggableScrollableSheet(
-          initialChildSize: 0.28,
-          maxChildSize: 0.4,
-          minChildSize: 0.28,
-          expand: false,
-          builder: (context, scrollController) {
-            return SingleChildScrollView(
-              controller: scrollController,
-              child: SelectPhotoOptionsScreen(
-                onTap: _pickImage,
-              ),
-            );
-          }),
-    );
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -94,66 +61,44 @@ class _ShareBookPageState extends State<ShareBookPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 15),
-                      _image == null
-                          ? GestureDetector(
-                              behavior: HitTestBehavior.translucent,
-                              onTap: () {
-                                _showSelectPhotoOptions(context);
-                              },
-                              child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.2,
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                child: DottedBorder(
-                                  borderType: BorderType.RRect,
-                                  radius: const Radius.circular(5),
-                                  dashPattern: const [10, 5],
-                                  color: const Color.fromARGB(100, 37, 37, 37),
-                                  strokeWidth: 2,
-                                  child: Card(
-                                    color: const Color.fromARGB(
-                                        240, 255, 255, 255),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Center(
-                                        child: Column(
-                                      children: [
-                                        const Text(
-                                          maxLines: 2,
-                                          textAlign: TextAlign.center,
-                                          "UPLOAD BOOK IMAGES",
-                                          style: TextStyle(
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.w500,
-                                              overflow: TextOverflow.visible),
-                                        ),
-                                        Icon(Icons.add_photo_alternate_outlined,
-                                            size: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.075),
-                                      ],
-                                    )),
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {},
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          child: DottedBorder(
+                            borderType: BorderType.RRect,
+                            radius: const Radius.circular(5),
+                            dashPattern: const [10, 5],
+                            color: const Color.fromARGB(100, 37, 37, 37),
+                            strokeWidth: 2,
+                            child: Card(
+                              color: const Color.fromARGB(240, 255, 255, 255),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Center(
+                                  child: Column(
+                                children: [
+                                  const Text(
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    "UPLOAD BOOK IMAGES",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w500,
+                                        overflow: TextOverflow.visible),
                                   ),
-                                ),
-                              ),
-                            )
-                          : Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(10, 0, 0, 0),
-                                border: Border.all(
-                                  width: 1,
-                                  color: const Color.fromARGB(200, 37, 37, 37),
-                                ),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(5)),
-                              ),
-                              height: MediaQuery.of(context).size.height * 0.2,
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              child: Image(image: FileImage(_image!)),
+                                  Icon(Icons.add_photo_alternate_outlined,
+                                      size: MediaQuery.of(context).size.height *
+                                          0.075),
+                                ],
+                              )),
                             ),
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 15),
                       TextFormField(
                         validator: (name) {

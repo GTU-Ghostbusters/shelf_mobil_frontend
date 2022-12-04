@@ -263,6 +263,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
+// ignore: must_be_immutable
 class Confirmation extends StatefulWidget {
   int? phoneNumber;
   Confirmation({super.key, this.phoneNumber});

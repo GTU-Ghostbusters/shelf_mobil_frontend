@@ -176,8 +176,7 @@ class _GetBookPageState extends State<GetBookPage> {
             },
             style: ButtonStyle(
               foregroundColor: const MaterialStatePropertyAll(
-                Color.fromARGB(200, 37, 37, 37)
-              ),
+                  Color.fromARGB(200, 37, 37, 37)),
               backgroundColor: const MaterialStatePropertyAll(Colors.white),
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0))),
