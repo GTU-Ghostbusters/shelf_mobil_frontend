@@ -52,13 +52,45 @@ class _AccountPageState extends State<AccountPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 20),
-          button(0.6, 50, 5, 18, null, "My Informations", (() {})),
+          button(0.6, 50, 5, 18, null, "My Informations", (() {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return SubPage(title: "My Informations");
+                },
+              ),
+            );
+          })),
           const SizedBox(height: 10),
-          button(0.6, 50, 5, 18, null, "Favorites", (() {})),
+          button(0.6, 50, 5, 18, null, "Favorites", (() {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return SubPage(title: "Favorites");
+                },
+              ),
+            );
+          })),
           const SizedBox(height: 10),
-          button(0.6, 50, 5, 18, null, "Uploaded Books", (() {})),
+          button(0.6, 50, 5, 18, null, "Uploaded Books", (() {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return SubPage(title: "Uploaded Books");
+                },
+              ),
+            );
+          })),
           const SizedBox(height: 10),
-          button(0.6, 50, 5, 18, null, "Got Books", (() {})),
+          button(0.6, 50, 5, 18, null, "Got Books", (() {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return SubPage(title: "Got Books");
+                },
+              ),
+            );
+          })),
           const SizedBox(height: 10),
           button(0.25, 35, 5, 15, Colors.grey.shade600, "Log Out", () {
             setState(() {
@@ -114,6 +146,38 @@ class _AccountPageState extends State<AccountPage> {
               color: Colors.white,
               fontSize: fontSize,
               fontWeight: FontWeight.w700)),
+    );
+  }
+}
+
+class SubPage extends StatefulWidget {
+  SubPage({super.key, required this.title});
+  String title;
+  @override
+  State<SubPage> createState() => _SubPageState();
+}
+
+class _SubPageState extends State<SubPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        centerTitle: true,
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            tileMode: TileMode.mirror,
+            colors: [
+              Color.fromARGB(60, 255, 131, 220),
+              Color.fromARGB(60, 246, 238, 243),
+              Color.fromARGB(60, 76, 185, 252),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
