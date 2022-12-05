@@ -7,22 +7,22 @@ class Category {
 
   //FAKE DATABASE
   static final List<Category> _categoryList = <Category>[
-    Category("POLITICS", " ", 0),
+    //Category("POLITICS", " ", 0),
     Category("EDUCATION", " ", 3),
     Category("LITERATURE", " ", 1),
-    Category("STORY", " ", 0),
+    //Category("STORY", " ", 0),
     Category("SCIENCE-FICTION", " ", 2),
     Category("NOVEL", " ", 0),
     Category("HISTORY", " ", 1),
     Category("KIDS", " ", 0),
     Category("BIOGRAPHY", " ", 0),
     Category("WORLD CLASSICS", " ", 5),
-    Category("ART", " ", 0),
+    //Category("ART", " ", 0),
     Category("PHILOSOPHY", " ", 5),
-    Category("ECONOMY", " ", 0),
+    /* Category("ECONOMY", " ", 0),
     Category("SELF-HELP", " ", 0),
     Category("ENTERTAINMENT", " ", 0),
-    Category("POEM", " ", 0),
+    Category("POEM", " ", 0), */
   ];
 
   static List<Category> getCategoryListNumberOfBooksSorted() {

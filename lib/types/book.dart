@@ -1,29 +1,58 @@
-class Book {
-  String? bookName;
-  String? authorName;
-  int? numberOfPage;
-  String? category;
-  String? additionalInfo;
+// To parse this JSON data, do
+//
+//     final books = booksFromMap(jsonString);
+import 'dart:convert';
 
-  Book(
-      {this.bookName,
-      this.authorName,
-      this.numberOfPage,
-      this.category,
-      this.additionalInfo});
+List<Books> booksFromMap(String str) =>
+    List<Books>.from(json.decode(str).map((x) => Books.fromMap(x)));
 
-  static final List<String> _images = [
-    "https://i.dr.com.tr/cache/500x400-0/originals/0000000222779-1.jpg",
-    "https://cdn.dsmcdn.com/ty180/product/media/images/20210923/4/135543021/123892296/1/1_org_zoom.jpg",
-    "https://static.nadirkitap.com/fotograf/5977/19/Kitap_2020082015071659771.jpg",
-  ];
+String booksToMap(List<Books> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toMap())));
 
-  static List<String> getImages() {
-    List<String> imagesList = [];
-    for (var element in _images) {
-      imagesList.add(element);
-    }
-    return imagesList;
-  }
+class Books {
+  Books({
+    required this.donator,
+    required this.name,
+    required this.author,
+    required this.category,
+    required this.numberOfBooks,
+    required this.available,
+    required this.bookAbstract,
+    required this.image,
+    required this.shipmentType,
+  });
 
+  final String donator;
+  final String name;
+  final String author;
+  final String category;
+  final int numberOfBooks;
+  final bool available;
+  final String bookAbstract;
+  final String image;
+  final String shipmentType;
+
+  factory Books.fromMap(Map<String, dynamic> json) => Books(
+        donator: json["donator"],
+        name: json["name"],
+        author: json["author"],
+        category: json["category"],
+        numberOfBooks: json["number_of_books"],
+        available: json["available"],
+        bookAbstract: json["abstract"],
+        image: json["images"],
+        shipmentType: json["shipment_type"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "donator": donator,
+        "name": name,
+        "author": author,
+        "category": category,
+        "number_of_books": numberOfBooks,
+        "available": available,
+        "abstract": bookAbstract,
+        "image": image,
+        "shipment_type": shipmentType
+      };
 }

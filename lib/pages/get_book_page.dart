@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
 import 'package:shelf_mobil_frontend/pages/cart.dart';
 import 'package:shelf_mobil_frontend/types/category.dart';
+
+import '../types/book.dart';
 
 class GetBookPage extends StatefulWidget {
   const GetBookPage({super.key});
@@ -188,116 +192,131 @@ class _GetBookPageState extends State<GetBookPage> {
   Widget _buildGridItem(BuildContext context, int index) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      return Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(5, 0, 0, 0),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Column(children: [
-          SizedBox(height: constraints.maxHeight * 0.03),
-          GestureDetector(
-            onTap: () {
-              AccountPage.isUserLogged() == false
-                  ? showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    actions: [
-                      TextButton(
-                          onPressed: (() {
-                            Navigator.of(context).push(
+      return FutureBuilder<List<Books>>(
+          future: getBookInformation(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text("ERROR");
+            } else if (snapshot.hasData) {
+              List<Books> bookList = snapshot.data!;
+              return Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(5, 0, 0, 0),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Column(children: [
+                  SizedBox(height: constraints.maxHeight * 0.03),
+                  GestureDetector(
+                    onTap: () {
+                      AccountPage.isUserLogged() == false
+                          ? Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
                                   return const AccountPage();
                                 },
                               ),
+                            )
+                          : Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return BookDetailPage(
+                                      name: bookList[index].name,
+                                      author: bookList[index].author,
+                                      pages: bookList[index].numberOfBooks,
+                                      category: bookList[index].category,
+                                      image: bookList[index].image,
+                                      details: bookList[index].bookAbstract,
+                                      owner: bookList[index].donator,
+                                      shipment: bookList[index].shipmentType);
+                                },
+                              ),
                             );
-                          }),
-                          child: const Text(
-                            "USER PAGE",
-                            style: TextStyle(fontSize: 18),
-                          ))
-                    ],
-                    title: const Text("USER LOGIN NEED"),
-                    contentPadding: const EdgeInsets.all(20),
-                    actionsAlignment: MainAxisAlignment.center,
-                    content:
-                        const Text("You should login to view or get a book."),
+                    },
+                    child: Container(
+                      height: constraints.maxHeight * 0.725,
+                      width: constraints.maxWidth * 0.8,
+                      padding: const EdgeInsets.all(1.5),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(220, 255, 255, 255),
+                        border:
+                            Border.all(width: 0.5, color: Colors.grey.shade500),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Image.network(
+                        bookList[index].image,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
-                )
-                  : Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return const BookDetailPage();
-                        },
+                  SizedBox(height: constraints.maxHeight * 0.02),
+                  Container(
+                    height: constraints.maxHeight * 0.19,
+                    width: constraints.maxWidth * 0.91,
+                    decoration: BoxDecoration(
+                        color: const Color.fromARGB(220, 255, 255, 255),
+                        border:
+                            Border.all(width: 0.5, color: Colors.grey.shade500),
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Row(children: [
+                      Column(children: [
+                        Container(
+                          alignment: Alignment.center,
+                          height: constraints.maxHeight * 0.115,
+                          width: constraints.maxWidth * 0.675,
+                          child: Text(bookList[index].name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Colors.grey.shade800,
+                                  fontSize: 13.5,
+                                  fontWeight: FontWeight.w500),
+                              textAlign: TextAlign.center),
+                        ),
+                        SizedBox(
+                          height: constraints.maxHeight * 0.07,
+                          width: constraints.maxWidth * 0.675,
+                          child: Text(bookList[index].author,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.grey.shade800,
+                                fontSize: 10,
+                              ),
+                              textAlign: TextAlign.center),
+                        ),
+                      ]),
+                      Container(
+                        color: Colors.grey.shade400,
+                        width: constraints.maxWidth * 0.004,
                       ),
-                    );
-            },
-            child: Container(
-              height: constraints.maxHeight * 0.725,
-              width: constraints.maxWidth * 0.8,
-              padding: const EdgeInsets.all(1.5),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(220, 255, 255, 255),
-                border: Border.all(width: 0.5, color: Colors.grey.shade500),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Image.asset(
-                "images/category_template.jpg",
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          SizedBox(height: constraints.maxHeight * 0.02),
-          Container(
-            height: constraints.maxHeight * 0.19,
-            width: constraints.maxWidth * 0.91,
-            decoration: BoxDecoration(
-                color: const Color.fromARGB(220, 255, 255, 255),
-                border: Border.all(width: 0.5, color: Colors.grey.shade500),
-                borderRadius: BorderRadius.circular(5)),
-            child: Row(children: [
-              Column(children: [
-                Container(
-                  alignment: Alignment.center,
-                  height: constraints.maxHeight * 0.115,
-                  width: constraints.maxWidth * 0.675,
-                  child: Text("BOOK NAME",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Colors.grey.shade800,
-                          fontSize: 13.5,
-                          fontWeight: FontWeight.w500),
-                      textAlign: TextAlign.center),
-                ),
-                SizedBox(
-                  height: constraints.maxHeight * 0.07,
-                  width: constraints.maxWidth * 0.675,
-                  child: Text("AUTHOR NAME",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 10,
-                      ),
-                      textAlign: TextAlign.center),
-                ),
-              ]),
-              Container(
-                color: Colors.grey.shade400,
-                width: constraints.maxWidth * 0.004,
-              ),
-              SizedBox(
-                width: constraints.maxWidth * 0.22,
-                child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.favorite_outline_outlined)),
-              )
-            ]),
-          ),
-        ]),
-      );
+                      SizedBox(
+                        width: constraints.maxWidth * 0.22,
+                        child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.favorite_outline_outlined)),
+                      )
+                    ]),
+                  ),
+                ]),
+              );
+            } else {
+              return const Text("ERROR");
+            }
+          });
     });
+  }
+
+  Future<List<Books>> getBookInformation() async {
+    String readingString = await DefaultAssetBundle.of(context)
+        .loadString("assets/data/books.json");
+
+    var jsonObject = jsonDecode(readingString);
+    List books = jsonObject;
+
+    List<Books> allBooks =
+        (jsonObject as List).map((bookMap) => Books.fromMap(bookMap)).toList();
+
+    return allBooks;
   }
 }
