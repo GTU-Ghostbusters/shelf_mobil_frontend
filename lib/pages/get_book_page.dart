@@ -190,6 +190,12 @@ class _GetBookPageState extends State<GetBookPage> {
   }
 
   Widget _buildGridItem(BuildContext context, int index) {
+    int indexCount = 0;
+    for (var i = 1;
+        i < GetBookPage.categoryList.indexOf(_selectedCategory);
+        i++) {
+      indexCount += GetBookPage.categoryList[i].numberOfBooks;
+    }
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       return FutureBuilder<List<Books>>(
@@ -199,6 +205,7 @@ class _GetBookPageState extends State<GetBookPage> {
               return const Text("ERROR");
             } else if (snapshot.hasData) {
               List<Books> bookList = snapshot.data!;
+
               return Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -210,25 +217,50 @@ class _GetBookPageState extends State<GetBookPage> {
                   GestureDetector(
                     onTap: () {
                       AccountPage.isUserLogged() == false
-                          ? Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return const AccountPage();
-                                },
+                          ? showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                actions: [
+                                  TextButton(
+                                      onPressed: (() {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                              return const AccountPage();
+                                            },
+                                          ),
+                                        );
+                                      }),
+                                      child: const Text(
+                                        "USER PAGE",
+                                        style: TextStyle(fontSize: 18),
+                                      ))
+                                ],
+                                title: const Text("USER LOGIN NEED"),
+                                contentPadding: const EdgeInsets.all(20),
+                                actionsAlignment: MainAxisAlignment.center,
+                                content: const Text(
+                                    "You should login to view or get a book."),
                               ),
                             )
                           : Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
                                   return BookDetailPage(
-                                      name: bookList[index].name,
-                                      author: bookList[index].author,
-                                      pages: bookList[index].numberOfBooks,
-                                      category: bookList[index].category,
-                                      image: bookList[index].image,
-                                      details: bookList[index].bookAbstract,
-                                      owner: bookList[index].donator,
-                                      shipment: bookList[index].shipmentType);
+                                      name: bookList[index + indexCount].name,
+                                      author:
+                                          bookList[index + indexCount].author,
+                                      pages: bookList[index + indexCount]
+                                          .numberOfBooks,
+                                      category:
+                                          bookList[index + indexCount].category,
+                                      image: bookList[index + indexCount].image,
+                                      details: bookList[index + indexCount]
+                                          .bookAbstract,
+                                      owner:
+                                          bookList[index + indexCount].donator,
+                                      shipment: bookList[index + indexCount]
+                                          .shipmentType);
                                 },
                               ),
                             );
@@ -244,7 +276,7 @@ class _GetBookPageState extends State<GetBookPage> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: Image.network(
-                        bookList[index].image,
+                        bookList[index + indexCount].image,
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -264,7 +296,7 @@ class _GetBookPageState extends State<GetBookPage> {
                           alignment: Alignment.center,
                           height: constraints.maxHeight * 0.115,
                           width: constraints.maxWidth * 0.675,
-                          child: Text(bookList[index].name,
+                          child: Text(bookList[index + indexCount].name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -276,7 +308,7 @@ class _GetBookPageState extends State<GetBookPage> {
                         SizedBox(
                           height: constraints.maxHeight * 0.07,
                           width: constraints.maxWidth * 0.675,
-                          child: Text(bookList[index].author,
+                          child: Text(bookList[index + indexCount].author,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -301,7 +333,7 @@ class _GetBookPageState extends State<GetBookPage> {
                 ]),
               );
             } else {
-              return const Text("ERROR");
+              return const Text("");
             }
           });
     });
@@ -312,11 +344,11 @@ class _GetBookPageState extends State<GetBookPage> {
         .loadString("assets/data/books.json");
 
     var jsonObject = jsonDecode(readingString);
-    List books = jsonObject;
 
     List<Books> allBooks =
         (jsonObject as List).map((bookMap) => Books.fromMap(bookMap)).toList();
-
+    allBooks.sort(
+        (a, b) => a.category.toLowerCase().compareTo(b.category.toLowerCase()));
     return allBooks;
   }
 }

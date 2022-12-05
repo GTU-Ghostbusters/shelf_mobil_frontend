@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/cart.dart';
 
+import 'account_page.dart';
+
 class BookDetailPage extends StatefulWidget {
   BookDetailPage({
     super.key,
@@ -109,7 +111,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                   borderRadius: BorderRadius.circular(5))),
                         ),
                         onPressed: () {},
-                        icon: const Icon(Icons.add_shopping_cart),
+                        icon: const Icon(Icons.shopping_bag_outlined),
                         label: const Text(
                           "Add to Shelf",
                           style: TextStyle(
@@ -152,18 +154,16 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   MediaQuery.of(context).size.width * 0.8,
                   Column(
                     children: [
-                      informatonRow(
-                          const Icon(Icons.menu_book_rounded),
-                          widget.name,
+                      informatonRow(const Icon(Icons.menu_book), widget.name,
                           MediaQuery.of(context).size.height * 0.0365),
                       informatonRow(const Icon(Icons.person), widget.author,
                           MediaQuery.of(context).size.height * 0.0365),
                       informatonRow(
-                          const Icon(Icons.description),
+                          const Icon(Icons.numbers),
                           widget.pages.toString(),
                           MediaQuery.of(context).size.height * 0.0365),
                       informatonRow(
-                          const Icon(Icons.library_books),
+                          const Icon(Icons.type_specimen),
                           widget.category,
                           MediaQuery.of(context).size.height * 0.0365),
                     ],
@@ -174,7 +174,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   MediaQuery.of(context).size.height * 0.12,
                   MediaQuery.of(context).size.width * 0.8,
                   informatonRow(
-                      const Icon(Icons.assured_workload),
+                      const Icon(Icons.text_snippet_rounded),
                       widget.details,
                       MediaQuery.of(context).size.height * 0.12),
                 ),
@@ -191,7 +191,15 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   50,
                   MediaQuery.of(context).size.width * 0.6,
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return SubPage(title: widget.owner);
+                          },
+                        ),
+                      );
+                    },
                     icon: const Icon(
                       Icons.account_circle,
                       size: 30,

@@ -283,7 +283,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
                             Icon(
                               Icons.local_shipping,
                               size: MediaQuery.of(context).size.width * 0.075,
-                              color: const Color.fromARGB(200, 37, 37, 37),
+                              color: const Color.fromARGB(150, 37, 37, 37),
                             ),
                             const SizedBox(width: 5),
                             ToggleSwitch(

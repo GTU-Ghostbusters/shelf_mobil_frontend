@@ -77,9 +77,9 @@
         "images": "https://m.media-amazon.com/images/I/61L63IoSV1L._AC_SY780_.jpg"
     },
     {
-        "donator": "Abc Def",
+        "donator": "Süleyman Koramaz",
         "name": "Calculus-1",
-        "author": "Klmn Opsaf",
+        "author": "Thomas",
         "category": "Education",
         "number_of_books": 1280,
         "available": true,
@@ -88,9 +88,9 @@
         "images": "https://cdn.dsmcdn.com/mnresize/500/-/ty84/product/media/images/20210316/0/71906343/152788565/0/0_org.jpg"
     },
     {
-        "donator": "Aaaaa Bbbbbb",
+        "donator": "Doğukan Karayunus",
         "name": "Physics-1",
-        "author": "Cdf Edfg",
+        "author": "Young and Freedman",
         "category": "Education",
         "number_of_books": 1600,
         "available": true,
@@ -99,7 +99,7 @@
         "images": "https://m.media-amazon.com/images/I/51CWoxz1HOL._AC_SY780_.jpg"
     },
     {
-        "donator": "Abc Def",
+        "donator": "Ayşe Gül Demirbilek",
         "name": "Savaş ve Barış",
         "author": "Tolstoy",
         "category": "World Classics",
@@ -121,7 +121,7 @@
         "images": "https://cdn.cimri.io/image/1000x1000/turklerin-tarihi-ilber-ortayli_61775029.jpg"
     },
     {
-        "donator": "Abc Def",
+        "donator": "Emre Güven",
         "name": "Fahrenheit 451",
         "author": "Ray Bradbury",
         "category": "Science-Fiction",
@@ -132,7 +132,7 @@
         "images": "https://img.kitapyurdu.com/v1/getImage/fn:11486141/wh:true/wi:800"
     },
     {
-        "donator": "Abc Def",
+        "donator": "Emre Güven",
         "name": "1984",
         "author": "George Orwell",
         "category": "Science-Fiction",
@@ -143,7 +143,7 @@
         "images": "https://i.dr.com.tr/cache/600x600-0/originals/0000000064038-1.jpg"
     },
     {
-        "donator": "Abc Def",
+        "donator": "Doğukan Karayunus",
         "name": "Çalıkuşu",
         "author": "Reşat Nuri Güntekin",
         "category": "Literature",
