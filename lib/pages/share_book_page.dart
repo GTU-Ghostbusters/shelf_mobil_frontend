@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shelf_mobil_frontend/types/enums.dart';
+import 'package:shelf_mobil_frontend/enums.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../screens/select_photo.dart';
-import '../types/category.dart';
+import '../models/category.dart';
 import 'account_page.dart';
+import 'home_page.dart';
 
 class ShareBookPage extends StatefulWidget {
   const ShareBookPage({super.key});
@@ -17,10 +18,17 @@ class ShareBookPage extends StatefulWidget {
 }
 
 class _ShareBookPageState extends State<ShareBookPage> {
-  final List<Category> _categories =
-      Category.getCategoryListAlphabeticSorted().sublist(1);
+  List<Category>? _categoryList = [];
+
   Category? _selectedCategory;
+
   CargoPaymentType _cargoPaymentType = CargoPaymentType.senderPays;
+
+  @override
+  void initState() {
+    super.initState();
+    _categoryList = HomePage.getCategories();
+  }
 
   final ImagePicker imagePicker = ImagePicker();
   List<XFile> imageFileList = [];
@@ -218,7 +226,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
                       const SizedBox(height: 15),
                       DropdownButtonFormField<Category>(
                         value: _selectedCategory,
-                        items: _categories
+                        items: _categoryList!
                             .map(
                               (item) => DropdownMenuItem<Category>(
                                 value: item,

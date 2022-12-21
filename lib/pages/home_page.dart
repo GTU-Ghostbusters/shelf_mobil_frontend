@@ -3,38 +3,56 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:shelf_mobil_frontend/pages/cart.dart';
 import 'package:shelf_mobil_frontend/pages/share_book_page.dart';
-import 'package:shelf_mobil_frontend/types/enums.dart';
+import 'package:shelf_mobil_frontend/enums.dart';
 
-import '../types/category.dart';
+import '../services/api_service.dart';
+import '../models/category.dart';
 import 'account_page.dart';
 import 'get_book_page.dart';
 
-// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
-  List<Category> categoryList = Category.getCategoryListNumberOfBooksSorted();
-
-  void sortCategoryByNumberOfBooks() {
-    categoryList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
-  }
-
-  void sortCategoryByName() {
-    categoryList
-        .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
-  }
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
+
+  static List<Category>? getCategories() {
+    return _HomePageState._categoryList;
+  }
 }
 
 class _HomePageState extends State<HomePage> {
+  static List<Category>? _categoryList = [];
+
+  static int _currentPageIndex = 0;
+
+  CategorySort _categorySort = CategorySort.alphabetic;
+
   final List<Widget> pages = [
     const GetBookPage(),
     const ShareBookPage(),
     const AccountPage()
   ];
-  static int _currentPageIndex = 0;
-  static CategorySort _categorySort = CategorySort.alphabetic;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    _categoryList = (await ApiService().getCategories())!;
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  void sortCategoryByNumberOfBooks() {
+    _categoryList!.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
+  }
+
+  void sortCategoryByName() {
+    _categoryList!
+        .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,12 +168,13 @@ class _HomePageState extends State<HomePage> {
                 color: const Color.fromARGB(230, 37, 37, 37),
                 onPressed: () {
                   setState(() {
-                    _categorySort == CategorySort.numberOfBooks
-                        ? _categorySort = CategorySort.alphabetic
-                        : _categorySort = CategorySort.numberOfBooks;
-                    _categorySort == CategorySort.numberOfBooks
-                        ? widget.sortCategoryByName()
-                        : widget.sortCategoryByNumberOfBooks();
+                    if (_categorySort == CategorySort.numberOfBooks) {
+                      _categorySort = CategorySort.alphabetic;
+                      sortCategoryByName();
+                    } else {
+                      _categorySort = CategorySort.numberOfBooks;
+                      sortCategoryByNumberOfBooks();
+                    }
                   });
                 },
                 icon: _categorySort == CategorySort.numberOfBooks
@@ -171,7 +190,7 @@ class _HomePageState extends State<HomePage> {
           child: ScrollSnapList(
             clipBehavior: Clip.none,
             itemBuilder: _buildListItem,
-            itemCount: widget.categoryList.length,
+            itemCount: _categoryList!.length,
             itemSize: MediaQuery.of(context).size.width * 0.6,
             onItemFocus: (index) {},
             initialIndex: 0,
@@ -200,7 +219,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildListItem(BuildContext context, int index) {
-    Category category = widget.categoryList[index];
+    Category category = _categoryList![index];
     return Container(
       padding: const EdgeInsets.all(10),
       width: MediaQuery.of(context).size.width * 0.6,
@@ -217,13 +236,10 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
-              height: MediaQuery.of(context).size.height * 0.35,
-              child: Image.asset(
-                  fit: BoxFit.fitHeight,
-                  alignment: Alignment.center,
-                  "images/category_template.jpg"),
-            ),
+                width: MediaQuery.of(context).size.width * 0.5,
+                height: MediaQuery.of(context).size.height * 0.35,
+                child:
+                    Image.network(fit: BoxFit.fitHeight, category.imagePath)),
             Column(children: [
               Text(
                   category.numberOfBooks > 1

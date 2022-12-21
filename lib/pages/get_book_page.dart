@@ -4,26 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
 import 'package:shelf_mobil_frontend/pages/cart.dart';
-import 'package:shelf_mobil_frontend/types/category.dart';
+import 'package:shelf_mobil_frontend/pages/home_page.dart';
+import 'package:shelf_mobil_frontend/models/category.dart';
 
-import '../types/book.dart';
+import '../models/book.dart';
 
 class GetBookPage extends StatefulWidget {
   const GetBookPage({super.key});
-  static final List<Category> categoryList =
-      Category.getCategoryListAlphabeticSorted();
-  static void setCategory(Category category) {
-    category.title == "ALL"
-        ? _GetBookPageState._selectedCategory = categoryList.first
-        : _GetBookPageState._selectedCategory = category;
-  }
 
   @override
   State<GetBookPage> createState() => _GetBookPageState();
+
+  static void setCategory(Category category) {
+    _GetBookPageState._selectedCategory = category;
+  }
 }
 
 class _GetBookPageState extends State<GetBookPage> {
-  static Category _selectedCategory = GetBookPage.categoryList.elementAt(0);
+  final List<Category>? _categoryList = HomePage.getCategories();
+
+  static Category _selectedCategory = HomePage.getCategories()!.first;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _GetBookPageState extends State<GetBookPage> {
                 child: OutlinedButton(
                     onPressed: () {
                       setState(() {
-                        _selectedCategory = GetBookPage.categoryList.first;
+                        _selectedCategory = _categoryList!.first;
                       });
                     },
                     style: ButtonStyle(
@@ -76,20 +76,14 @@ class _GetBookPageState extends State<GetBookPage> {
                 flex: 1,
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    itemCount: GetBookPage.categoryList.length,
+                    itemCount: _categoryList!.length,
                     itemBuilder: _buildCategoryItem,
                     separatorBuilder: ((context, index) {
                       return SizedBox(
                           width: _selectedCategory.title ==
-                                      GetBookPage.categoryList
-                                          .elementAt(index)
-                                          .title ||
-                                  GetBookPage.categoryList
-                                          .elementAt(index)
-                                          .title ==
-                                      GetBookPage.categoryList
-                                          .elementAt(0)
-                                          .title
+                                      _categoryList!.elementAt(index).title ||
+                                  _categoryList!.elementAt(index).title ==
+                                      _categoryList!.elementAt(0).title
                               ? 0
                               : 5);
                     })),
@@ -167,15 +161,14 @@ class _GetBookPageState extends State<GetBookPage> {
   }
 
   Widget _buildCategoryItem(BuildContext context, int index) {
-    return _selectedCategory.title ==
-                GetBookPage.categoryList.elementAt(index).title ||
-            GetBookPage.categoryList.elementAt(index).title ==
-                GetBookPage.categoryList.elementAt(0).title
+    return _selectedCategory.title == _categoryList!.elementAt(index).title ||
+            _categoryList!.elementAt(index).title ==
+                _categoryList!.elementAt(0).title
         ? const SizedBox()
         : OutlinedButton(
             onPressed: () {
               setState(() {
-                _selectedCategory = GetBookPage.categoryList.elementAt(index);
+                _selectedCategory = _categoryList!.elementAt(index);
               });
             },
             style: ButtonStyle(
@@ -185,16 +178,14 @@ class _GetBookPageState extends State<GetBookPage> {
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0))),
             ),
-            child: Text(GetBookPage.categoryList.elementAt(index).title),
+            child: Text(_categoryList!.elementAt(index).title),
           );
   }
 
   Widget _buildGridItem(BuildContext context, int index) {
     int indexCount = 0;
-    for (var i = 1;
-        i < GetBookPage.categoryList.indexOf(_selectedCategory);
-        i++) {
-      indexCount += GetBookPage.categoryList[i].numberOfBooks;
+    for (var i = 1; i < _categoryList!.indexOf(_selectedCategory); i++) {
+      indexCount += _categoryList![i].numberOfBooks;
     }
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -346,7 +337,7 @@ class _GetBookPageState extends State<GetBookPage> {
     var jsonObject = jsonDecode(readingString);
 
     List<Books> allBooks =
-        (jsonObject as List).map((bookMap) => Books.fromMap(bookMap)).toList();
+        (jsonObject as List).map((bookMap) => Books.fromJson(bookMap)).toList();
     allBooks.sort(
         (a, b) => a.category.toLowerCase().compareTo(b.category.toLowerCase()));
     return allBooks;
