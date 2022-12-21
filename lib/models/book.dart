@@ -1,13 +1,10 @@
-// To parse this JSON data, do
-//
-//     final books = booksFromMap(jsonString);
 import 'dart:convert';
 
-List<Books> booksFromMap(String str) =>
-    List<Books>.from(json.decode(str).map((x) => Books.fromMap(x)));
+List<Books> booksFromJson(String str) =>
+    List<Books>.from(json.decode(str).map((x) => Books.fromJson(x)));
 
-String booksToMap(List<Books> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toMap())));
+String booksToJson(List<Books> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Books {
   Books({
@@ -22,17 +19,17 @@ class Books {
     required this.shipmentType,
   });
 
-  final String donator;
-  final String name;
-  final String author;
-  final String category;
-  final int numberOfBooks;
-  final bool available;
-  final String bookAbstract;
-  final String image;
-  final String shipmentType;
+  String donator;
+  String name;
+  String author;
+  String category;
+  int numberOfBooks;
+  bool available;
+  String bookAbstract;
+  String image;
+  String shipmentType;
 
-  factory Books.fromMap(Map<String, dynamic> json) => Books(
+  factory Books.fromJson(Map<String, dynamic> json) => Books(
         donator: json["donator"],
         name: json["name"],
         author: json["author"],
@@ -44,7 +41,7 @@ class Books {
         shipmentType: json["shipment_type"],
       );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
         "donator": donator,
         "name": name,
         "author": author,
