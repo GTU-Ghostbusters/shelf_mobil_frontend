@@ -238,20 +238,8 @@ class _GetBookPageState extends State<GetBookPage> {
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
                                   return BookDetailPage(
-                                      name: bookList[index + indexCount].name,
-                                      author:
-                                          bookList[index + indexCount].author,
-                                      pages: bookList[index + indexCount]
-                                          .numberOfBooks,
-                                      category:
-                                          bookList[index + indexCount].category,
-                                      image: bookList[index + indexCount].image,
-                                      details: bookList[index + indexCount]
-                                          .bookAbstract,
-                                      owner:
-                                          bookList[index + indexCount].donator,
-                                      shipment: bookList[index + indexCount]
-                                          .shipmentType);
+                                    book: bookList[index + indexCount]
+                                  );
                                 },
                               ),
                             );

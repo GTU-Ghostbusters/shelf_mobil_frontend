@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/cart.dart';
 
+import '../models/book.dart';
 import 'account_page.dart';
 
 class BookDetailPage extends StatefulWidget {
   BookDetailPage({
     super.key,
-    required this.name,
-    required this.author,
-    required this.pages,
-    required this.category,
-    required this.image,
-    required this.details,
-    required this.owner,
-    required this.shipment,
+    required this.book,
   });
-  String name, author, category, image, details, owner, shipment;
-  int pages;
+  late Book book;
+
   @override
   State<BookDetailPage> createState() => _BookDetailPageState();
 }
@@ -28,7 +22,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.name),
+        title: Text(widget.book.name),
         centerTitle: true,
         actions: const [CartButton()],
       ),
@@ -69,7 +63,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                   const EdgeInsets.symmetric(horizontal: 20),
                               child: SizedBox(
                                 child: Image.network(
-                                  widget.image,
+                                  widget.book.image,
                                   fit: BoxFit.contain,
                                 ),
                               ),
@@ -96,7 +90,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   children: [
                     SizedBox(
                       height: 40,
-                      width: MediaQuery.of(context).size.width * 0.35,
+                      width: MediaQuery.of(context).size.width * 0.34,
                       child: TextButton.icon(
                         style: ButtonStyle(
                           elevation: const MaterialStatePropertyAll(5),
@@ -113,7 +107,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         onPressed: () {},
                         icon: const Icon(Icons.shopping_bag_outlined),
                         label: const Text(
-                          "Add to Shelf",
+                          "Add to Cart",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold),
                         ),
@@ -154,17 +148,21 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   MediaQuery.of(context).size.width * 0.8,
                   Column(
                     children: [
-                      informatonRow(const Icon(Icons.menu_book), widget.name,
+                      informatonRow(
+                          const Icon(Icons.menu_book),
+                          widget.book.name,
                           MediaQuery.of(context).size.height * 0.0365),
-                      informatonRow(const Icon(Icons.person), widget.author,
+                      informatonRow(
+                          const Icon(Icons.person),
+                          widget.book.author,
                           MediaQuery.of(context).size.height * 0.0365),
                       informatonRow(
                           const Icon(Icons.numbers),
-                          widget.pages.toString(),
+                          widget.book.numberOfPages.toString(),
                           MediaQuery.of(context).size.height * 0.0365),
                       informatonRow(
                           const Icon(Icons.type_specimen),
-                          widget.category,
+                          widget.book.category,
                           MediaQuery.of(context).size.height * 0.0365),
                     ],
                   ),
@@ -175,7 +173,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   MediaQuery.of(context).size.width * 0.8,
                   informatonRow(
                       const Icon(Icons.text_snippet_rounded),
-                      widget.details,
+                      widget.book.bookAbstract,
                       MediaQuery.of(context).size.height * 0.12),
                 ),
                 const SizedBox(height: 5),
@@ -184,7 +182,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     MediaQuery.of(context).size.width * 0.8,
                     informatonRow(
                         const Icon(Icons.local_shipping),
-                        widget.shipment,
+                        widget.book.shipmentType,
                         MediaQuery.of(context).size.height * 0.05)),
                 const SizedBox(height: 15),
                 container(
@@ -195,7 +193,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return SubPage(title: widget.owner);
+                            return SubPage(title: widget.book.donator);
                           },
                         ),
                       );
@@ -206,7 +204,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       color: Colors.black,
                     ),
                     label: Text(
-                      widget.owner,
+                      widget.book.donator,
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
