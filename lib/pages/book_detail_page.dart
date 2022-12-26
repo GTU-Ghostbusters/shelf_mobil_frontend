@@ -90,8 +90,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   children: [
                     SizedBox(
                       height: 40,
-                      width: MediaQuery.of(context).size.width * 0.34,
-                      child: TextButton.icon(
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      child: ElevatedButton.icon(
                         style: ButtonStyle(
                           elevation: const MaterialStatePropertyAll(5),
                           foregroundColor:
@@ -104,7 +104,51 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                       width: 0.2, color: Colors.grey.shade800),
                                   borderRadius: BorderRadius.circular(5))),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (CartPage.isAddedToCart(widget.book)) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: const Duration(milliseconds: 1000),
+                                content: Container(
+                                  alignment: Alignment.center,
+                                  height: 40,
+                                  child: Text(
+                                    "${widget.book.name} is already added to cart",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor:
+                                    const Color.fromARGB(250, 255, 77, 77),
+                              ),
+                            );
+                          } else {
+                            CartPage.addToCart(widget.book);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: const Duration(milliseconds: 1000),
+                                content: Container(
+                                  alignment: Alignment.center,
+                                  height: 40,
+                                  child: Text(
+                                    "${widget.book.name} is added to cart",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor:
+                                    const Color.fromARGB(250, 33, 149, 243),
+                              ),
+                            );
+                          }
+                        },
                         icon: const Icon(Icons.shopping_bag_outlined),
                         label: const Text(
                           "Add to Cart",
@@ -115,8 +159,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     ),
                     SizedBox(
                       height: 40,
-                      width: MediaQuery.of(context).size.width * 0.41,
-                      child: TextButton.icon(
+                      width: MediaQuery.of(context).size.width * 0.44,
+                      child: ElevatedButton.icon(
                         style: ButtonStyle(
                           elevation: const MaterialStatePropertyAll(5),
                           foregroundColor:

@@ -29,6 +29,22 @@ class Book {
   String image;
   String shipmentType;
 
+  @override
+  operator ==(other) =>
+      other is Book &&
+      donator == other.donator &&
+      name == other.name &&
+      author == other.author &&
+      category == other.category &&
+      numberOfPages == other.numberOfPages &&
+      available == other.available &&
+      bookAbstract == other.bookAbstract &&
+      image == other.image &&
+      shipmentType == other.shipmentType;
+  @override
+  int get hashCode => Object.hash(donator, name, author, category,
+      numberOfPages, available, bookAbstract, image, shipmentType);
+
   factory Book.fromJson(Map<String, dynamic> json) => Book(
         donator: json["donator"],
         name: json["name"],
