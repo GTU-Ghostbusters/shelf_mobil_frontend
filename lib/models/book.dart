@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-List<Books> booksFromJson(String str) =>
-    List<Books>.from(json.decode(str).map((x) => Books.fromJson(x)));
+List<Book> booksFromJson(String str) =>
+    List<Book>.from(json.decode(str).map((x) => Book.fromJson(x)));
 
-String booksToJson(List<Books> data) =>
+String booksToJson(List<Book> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Books {
-  Books({
+class Book {
+  Book({
     required this.donator,
     required this.name,
     required this.author,
     required this.category,
-    required this.numberOfBooks,
+    required this.numberOfPages,
     required this.available,
     required this.bookAbstract,
     required this.image,
@@ -23,18 +23,18 @@ class Books {
   String name;
   String author;
   String category;
-  int numberOfBooks;
+  int numberOfPages;
   bool available;
   String bookAbstract;
   String image;
   String shipmentType;
 
-  factory Books.fromJson(Map<String, dynamic> json) => Books(
+  factory Book.fromJson(Map<String, dynamic> json) => Book(
         donator: json["donator"],
         name: json["name"],
         author: json["author"],
         category: json["category"],
-        numberOfBooks: json["number_of_books"],
+        numberOfPages: json["number_of_books"],
         available: json["available"],
         bookAbstract: json["abstract"],
         image: json["images"],
@@ -46,7 +46,7 @@ class Books {
         "name": name,
         "author": author,
         "category": category,
-        "number_of_books": numberOfBooks,
+        "number_of_books": numberOfPages,
         "available": available,
         "abstract": bookAbstract,
         "image": image,

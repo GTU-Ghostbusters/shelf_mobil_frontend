@@ -10,28 +10,48 @@ import '../models/user.dart';
 
 class ApiService {
   /* User Operations */
-  Future<bool?> login() async {}
+  Future<bool?> login() async {
+    return null;
+  }
 
-  Future<bool?> register() async {}
+  Future<bool?> register() async {
+    return null;
+  }
 
-  Future<bool?> updateMyAccount() async {}
+  Future<bool?> updateMyAccount() async {
+    return null;
+  }
 
-  Future<User?> changeMyPassword() async {}
+  Future<User?> changeMyPassword() async {
+    return null;
+  }
 
-  Future<User?> getUser() async {}
+  Future<User?> getUser() async {
+    return null;
+  }
 
-  Future<User?> trackDelivery() async {}
+  Future<User?> trackDelivery() async {
+    return null;
+  }
 
-  Future<User?> postFeedback() async {}
+  Future<User?> postFeedback() async {
+    return null;
+  }
 
   /* Book Operations */
-  Future<bool?> addBook() async {}
+  Future<bool?> addBook() async {
+    return null;
+  }
 
-  Future<bool?> shareBook() async {}
+  Future<bool?> shareBook() async {
+    return null;
+  }
 
-  Future<List<Books>?> getAllBooks() async {}
+  Future<List<Book>?> getAllBooks() async {
+    return null;
+  }
 
-  Future<List<Books>?> getBooks() async {
+  Future<List<Book>?> getBooks() async {
     try {
       var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.booksEndpoint);
       var response = await http.get(url);

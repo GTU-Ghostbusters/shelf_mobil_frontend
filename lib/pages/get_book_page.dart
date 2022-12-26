@@ -189,13 +189,13 @@ class _GetBookPageState extends State<GetBookPage> {
     }
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      return FutureBuilder<List<Books>>(
+      return FutureBuilder<List<Book>>(
           future: getBookInformation(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return const Text("ERROR");
             } else if (snapshot.hasData) {
-              List<Books> bookList = snapshot.data!;
+              List<Book> bookList = snapshot.data!;
 
               return Container(
                 alignment: Alignment.center,
@@ -330,14 +330,14 @@ class _GetBookPageState extends State<GetBookPage> {
     });
   }
 
-  Future<List<Books>> getBookInformation() async {
+  Future<List<Book>> getBookInformation() async {
     String readingString = await DefaultAssetBundle.of(context)
         .loadString("assets/data/books.json");
 
     var jsonObject = jsonDecode(readingString);
 
-    List<Books> allBooks =
-        (jsonObject as List).map((bookMap) => Books.fromJson(bookMap)).toList();
+    List<Book> allBooks =
+        (jsonObject as List).map((bookMap) => Book.fromJson(bookMap)).toList();
     allBooks.sort(
         (a, b) => a.category.toLowerCase().compareTo(b.category.toLowerCase()));
     return allBooks;
