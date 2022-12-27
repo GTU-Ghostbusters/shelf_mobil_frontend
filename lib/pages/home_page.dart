@@ -17,6 +17,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 
   static List<Category>? getCategories() {
+    _HomePageState._categoryList!
+        .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
     return _HomePageState._categoryList;
   }
 }
@@ -42,6 +44,7 @@ class _HomePageState extends State<HomePage> {
 
   void getData() async {
     _categoryList = (await ApiService().getCategories())!;
+    _categoryList!.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -239,7 +242,7 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width * 0.5,
                 height: MediaQuery.of(context).size.height * 0.35,
                 child:
-                    Image.network(fit: BoxFit.fitHeight, category.imagePath)),
+                    Image.asset(fit: BoxFit.fitHeight, category.imagePath)),
             Column(children: [
               Text(
                   category.numberOfBooks > 1
