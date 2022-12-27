@@ -122,7 +122,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                 ),
                                 behavior: SnackBarBehavior.floating,
                                 backgroundColor:
-                                    const Color.fromARGB(250, 255, 77, 77),
+                                    const Color.fromARGB(240, 255, 77, 77),
                               ),
                             );
                           } else {
@@ -144,7 +144,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                 ),
                                 behavior: SnackBarBehavior.floating,
                                 backgroundColor:
-                                    const Color.fromARGB(250, 33, 149, 243),
+                                    const Color.fromARGB(240, 33, 149, 243),
                               ),
                             );
                           }
