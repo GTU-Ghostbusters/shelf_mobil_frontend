@@ -238,8 +238,7 @@ class _GetBookPageState extends State<GetBookPage> {
                               MaterialPageRoute(
                                 builder: (BuildContext context) {
                                   return BookDetailPage(
-                                    book: bookList[index + indexCount]
-                                  );
+                                      book: bookList[index + indexCount]);
                                 },
                               ),
                             );
@@ -270,33 +269,73 @@ class _GetBookPageState extends State<GetBookPage> {
                             Border.all(width: 0.5, color: Colors.grey.shade500),
                         borderRadius: BorderRadius.circular(5)),
                     child: Row(children: [
-                      Column(children: [
-                        Container(
-                          alignment: Alignment.center,
-                          height: constraints.maxHeight * 0.115,
-                          width: constraints.maxWidth * 0.675,
-                          child: Text(bookList[index + indexCount].name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                      GestureDetector(
+                        onTap: () {
+                          AccountPage.isUserLogged() == false
+                              ? showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    actions: [
+                                      TextButton(
+                                          onPressed: (() {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return const AccountPage();
+                                                },
+                                              ),
+                                            );
+                                          }),
+                                          child: const Text(
+                                            "USER PAGE",
+                                            style: TextStyle(fontSize: 18),
+                                          ))
+                                    ],
+                                    title: const Text("USER LOGIN NEED"),
+                                    contentPadding: const EdgeInsets.all(20),
+                                    actionsAlignment: MainAxisAlignment.center,
+                                    content: const Text(
+                                        "You should login to view or get a book."),
+                                  ),
+                                )
+                              : Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return BookDetailPage(
+                                          book: bookList[index + indexCount]);
+                                    },
+                                  ),
+                                );
+                        },
+                        child: Column(children: [
+                          Container(
+                            alignment: Alignment.center,
+                            height: constraints.maxHeight * 0.115,
+                            width: constraints.maxWidth * 0.675,
+                            child: Text(bookList[index + indexCount].name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontSize: 13.5,
+                                    fontWeight: FontWeight.w500),
+                                textAlign: TextAlign.center),
+                          ),
+                          SizedBox(
+                            height: constraints.maxHeight * 0.07,
+                            width: constraints.maxWidth * 0.675,
+                            child: Text(bookList[index + indexCount].author,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
                                   color: Colors.grey.shade800,
-                                  fontSize: 13.5,
-                                  fontWeight: FontWeight.w500),
-                              textAlign: TextAlign.center),
-                        ),
-                        SizedBox(
-                          height: constraints.maxHeight * 0.07,
-                          width: constraints.maxWidth * 0.675,
-                          child: Text(bookList[index + indexCount].author,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.grey.shade800,
-                                fontSize: 10,
-                              ),
-                              textAlign: TextAlign.center),
-                        ),
-                      ]),
+                                  fontSize: 10,
+                                ),
+                                textAlign: TextAlign.center),
+                          ),
+                        ]),
+                      ),
                       Container(
                         color: Colors.grey.shade400,
                         width: constraints.maxWidth * 0.004,
