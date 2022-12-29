@@ -42,6 +42,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                // IMAGES
                 container(
                   MediaQuery.of(context).size.height * 0.365,
                   MediaQuery.of(context).size.width * 0.8,
@@ -85,6 +86,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   ),
                 ),
                 const SizedBox(height: 15),
+
+                // BUTTONS
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -187,27 +190,29 @@ class _BookDetailPageState extends State<BookDetailPage> {
                   ],
                 ),
                 const SizedBox(height: 15),
+
+                // INFORMATION ROW1
                 container(
-                  MediaQuery.of(context).size.height * 0.15,
+                  MediaQuery.of(context).size.height * 0.145,
                   MediaQuery.of(context).size.width * 0.8,
                   Column(
                     children: [
                       informatonRow(
                           const Icon(Icons.menu_book),
                           widget.book.name,
-                          MediaQuery.of(context).size.height * 0.0365),
+                          MediaQuery.of(context).size.height * 0.035),
                       informatonRow(
                           const Icon(Icons.person),
                           widget.book.author,
-                          MediaQuery.of(context).size.height * 0.0365),
+                          MediaQuery.of(context).size.height * 0.035),
                       informatonRow(
                           const Icon(Icons.numbers),
                           widget.book.numberOfPages.toString(),
-                          MediaQuery.of(context).size.height * 0.0365),
+                          MediaQuery.of(context).size.height * 0.035),
                       informatonRow(
                           const Icon(Icons.type_specimen),
                           widget.book.category,
-                          MediaQuery.of(context).size.height * 0.0365),
+                          MediaQuery.of(context).size.height * 0.035),
                     ],
                   ),
                 ),
@@ -297,20 +302,13 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 
   Widget container(double height, double width, Widget child) {
-    return Container(
-      alignment: Alignment.topCenter,
-      padding: const EdgeInsets.only(left: 10),
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(220, 255, 255, 255),
-        border: Border.all(
-          width: 0.2,
-          color: Colors.black,
-        ),
-        borderRadius: BorderRadius.circular(8),
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        height: height,
+        width: width,
+        child: child,
       ),
-      height: height,
-      width: width,
-      child: child,
     );
   }
 }

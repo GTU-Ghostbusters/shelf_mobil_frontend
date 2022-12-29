@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   static int _currentPageIndex = 0;
 
-  CategorySort _categorySort = CategorySort.alphabetic;
+  CategorySort _categorySort = CategorySort.numberOfBooks;
 
   final List<Widget> pages = [
     const GetBookPage(),
@@ -181,8 +181,8 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
                 icon: _categorySort == CategorySort.numberOfBooks
-                    ? const Icon(Icons.sort_by_alpha)
-                    : const Icon(Icons.sort)),
+                    ? const Icon(Icons.sort)
+                    : const Icon(Icons.sort_by_alpha)),
           )
         ]),
         const SizedBox(height: 5),

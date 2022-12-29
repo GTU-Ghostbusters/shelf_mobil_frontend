@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/models/book.dart';
 import 'package:shelf_mobil_frontend/models/cart_item.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
+import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
 
 import 'account_page.dart';
 
@@ -142,8 +143,13 @@ class _CartPageState extends State<CartPage> {
                 itemCount: CartPage.cartItems.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    elevation: 1,
-                    child: SizedBox(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: CartPage.cartItems[index].value
+                            ? const Color.fromARGB(200, 187, 222, 251)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
                       height: MediaQuery.of(context).size.height * 0.15,
                       child: Row(
                         children: [
@@ -194,7 +200,7 @@ class _CartPageState extends State<CartPage> {
                               });
                             },
                             child: Container(
-                              color: Colors.white,
+                              padding: const EdgeInsets.all(0),
                               height: MediaQuery.of(context).size.height * 0.15,
                               width: MediaQuery.of(context).size.width * 0.68,
                               child: Stack(
@@ -334,29 +340,8 @@ class _CartButtonState extends State<CartButton> {
           AccountPage.isUserLogged() == false
               ? showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
-                    actions: [
-                      TextButton(
-                          onPressed: (() {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return const AccountPage();
-                                },
-                              ),
-                            );
-                          }),
-                          child: const Text(
-                            "USER PAGE",
-                            style: TextStyle(fontSize: 18),
-                          ))
-                    ],
-                    title: const Text("USER LOGIN NEED"),
-                    contentPadding: const EdgeInsets.all(20),
-                    actionsAlignment: MainAxisAlignment.center,
-                    content:
-                        const Text("You should login to view your shelf cart."),
-                  ),
+                  builder: (context) => const AlertDialogUserCheck(
+                      subText: "You should login to view your shelf cart."),
                 )
               : Navigator.of(context).push(
                   MaterialPageRoute(

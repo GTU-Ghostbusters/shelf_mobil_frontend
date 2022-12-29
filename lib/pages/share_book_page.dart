@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shelf_mobil_frontend/enums.dart';
+import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../screens/select_photo.dart';
@@ -118,29 +119,9 @@ class _ShareBookPageState extends State<ShareBookPage> {
           ),
         ),
         child: AccountPage.isUserLogged() == false
-            ? Center(
-                child: AlertDialog(
-                actions: [
-                  TextButton(
-                      onPressed: (() {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return const AccountPage();
-                            },
-                          ),
-                        );
-                      }),
-                      child: const Text(
-                        "USER PAGE",
-                        style: TextStyle(fontSize: 18),
-                      ))
-                ],
-                title: const Text("USER LOGIN NEED"),
-                contentPadding: const EdgeInsets.all(20),
-                actionsAlignment: MainAxisAlignment.center,
-                content: const Text("You should login to upload a book."),
-              ))
+            ? const Center(
+                child: AlertDialogUserCheck(
+                    subText: "You should login to upload a book."))
             : Form(
                 key: _formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -399,15 +380,16 @@ class _ShareBookPageState extends State<ShareBookPage> {
                       margin: EdgeInsets.symmetric(
                           horizontal: MediaQuery.of(context).size.width * 0.012,
                           vertical: 5),
-                      height: MediaQuery.of(context).size.height * 0.20,
-                      width: MediaQuery.of(context).size.width * 0.24,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.239,
                       decoration: BoxDecoration(
+                          color: Colors.white,
                           border: Border.all(width: 1),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(0))),
+                              const BorderRadius.all(Radius.circular(2))),
                       child: Image.file(
                         File(imageFileList[index].path),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fitHeight,
                       ),
                     ),
                     Positioned(
@@ -421,9 +403,9 @@ class _ShareBookPageState extends State<ShareBookPage> {
                         },
                         child: Container(
                           decoration: const BoxDecoration(
-                              color: Color.fromARGB(240, 255, 255, 255),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
+                            color: Color.fromARGB(240, 255, 255, 255),
+                            shape: BoxShape.circle,
+                          ),
                           child:
                               const Icon(Icons.remove_circle_outline, size: 22),
                         ),

@@ -14,7 +14,7 @@ class Shelf extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Shelf',
       theme: ThemeData(),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
