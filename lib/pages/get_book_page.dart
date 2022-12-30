@@ -7,6 +7,7 @@ import 'package:shelf_mobil_frontend/pages/cart.dart';
 import 'package:shelf_mobil_frontend/pages/home_page.dart';
 import 'package:shelf_mobil_frontend/models/category.dart';
 import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
+import 'package:shelf_mobil_frontend/services/api_service.dart';
 
 import '../models/book.dart';
 
@@ -132,8 +133,12 @@ class _GetBookPageState extends State<GetBookPage> {
                     color: const Color.fromARGB(200, 37, 37, 37),
                   ),
                 ),
-                child:
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.sort, size: 20,)))
+                child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.sort,
+                      size: 20,
+                    )))
           ]),
           const SizedBox(height: 5),
           const Divider(),
@@ -189,14 +194,10 @@ class _GetBookPageState extends State<GetBookPage> {
   }
 
   Widget _buildBookItem(BuildContext context, int index) {
-    int indexCount = 0;
-    for (var i = 1; i < _categoryList!.indexOf(_selectedCategory); i++) {
-      indexCount += _categoryList![i].numberOfBooks;
-    }
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       return FutureBuilder<List<Book>>(
-          future: getBookInformation(),
+          future: ApiService().getBooksWithCategory(_selectedCategory.title),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return const Text("ERROR");
@@ -223,8 +224,7 @@ class _GetBookPageState extends State<GetBookPage> {
                         : Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return BookDetailPage(
-                                    book: bookList[index + indexCount]);
+                                return BookDetailPage(book: bookList[index]);
                               },
                             ),
                           );
@@ -238,7 +238,7 @@ class _GetBookPageState extends State<GetBookPage> {
                             width: constraints.maxWidth * 0.75,
                             padding: const EdgeInsets.all(5),
                             child: Image.network(
-                              bookList[index + indexCount].image,
+                              bookList[index].image,
                               fit: BoxFit.contain,
                             ),
                           ),
@@ -261,8 +261,10 @@ class _GetBookPageState extends State<GetBookPage> {
                                 const SizedBox(width: 10),
                                 Text(
                                   textAlign: TextAlign.center,
-                                  bookList[index + indexCount].shipmentType,
-                                  style: TextStyle(color: Colors.grey.shade900, fontWeight: FontWeight.w700),
+                                  bookList[index].shipmentType,
+                                  style: TextStyle(
+                                      color: Colors.grey.shade900,
+                                      fontWeight: FontWeight.w700),
                                 ),
                               ],
                             ),
@@ -284,7 +286,7 @@ class _GetBookPageState extends State<GetBookPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Text(bookList[index + indexCount].name,
+                                  Text(bookList[index].name,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -292,7 +294,7 @@ class _GetBookPageState extends State<GetBookPage> {
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500),
                                       textAlign: TextAlign.center),
-                                  Text(bookList[index + indexCount].author,
+                                  Text(bookList[index].author,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -326,18 +328,5 @@ class _GetBookPageState extends State<GetBookPage> {
             }
           });
     });
-  }
-
-  Future<List<Book>> getBookInformation() async {
-    String readingString = await DefaultAssetBundle.of(context)
-        .loadString("assets/data/books.json");
-
-    var jsonObject = jsonDecode(readingString);
-
-    List<Book> allBooks =
-        (jsonObject as List).map((bookMap) => Book.fromJson(bookMap)).toList();
-    allBooks.sort(
-        (a, b) => a.category.toLowerCase().compareTo(b.category.toLowerCase()));
-    return allBooks;
   }
 }

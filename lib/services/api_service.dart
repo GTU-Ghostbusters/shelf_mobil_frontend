@@ -51,30 +51,36 @@ class ApiService {
     return null;
   }
 
-  Future<List<Book>?> getBooks() async {
-    try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.booksEndpoint);
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        return booksFromJson(response.body);
-      }
-    } catch (e) {
-      log(e.toString());
+  Future<List<Book>> getBooks(
+      String name, String author, String category) async {
+    var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.booksEndpoint);
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      return booksFromJson(response.body);
+    } else {
+      throw Exception('Failed to load books');
     }
-    return null;
+  }
+
+  Future<List<Book>> getBooksWithCategory(String category) async {
+    var url = Uri.parse(ApiConstants.baseUrl + category);
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return booksFromJson(response.body);
+    } else {
+      throw Exception('Failed to load books with category');
+    }
   }
 
   /* Category Operations */
-  Future<List<Category>?> getCategories() async {
-    try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.categoryEndpoint);
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        return categoryFromJson(response.body);
-      }
-    } catch (e) {
-      log(e.toString());
+  Future<List<Category>> getCategories() async {
+    var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.categoryEndpoint);
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      return categoryFromJson(response.body);
+    } else {
+      throw Exception('Failed to load categories');
     }
-    return null;
   }
 }

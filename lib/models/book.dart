@@ -50,7 +50,7 @@ class Book {
         name: json["name"],
         author: json["author"],
         category: json["category"],
-        numberOfPages: json["number_of_books"],
+        numberOfPages: json["numberOfPages"],
         available: json["available"],
         bookAbstract: json["abstract"],
         image: json["images"],
@@ -62,10 +62,10 @@ class Book {
         "name": name,
         "author": author,
         "category": category,
-        "number_of_books": numberOfPages,
+        "numberOfPages": numberOfPages,
         "available": available,
         "abstract": bookAbstract,
-        "image": image,
+        "images": image,
         "shipment_type": shipmentType
       };
 }
