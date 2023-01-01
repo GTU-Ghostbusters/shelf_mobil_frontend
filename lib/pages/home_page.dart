@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
-import 'package:shelf_mobil_frontend/pages/cart.dart';
+import 'package:shelf_mobil_frontend/pages/cart_page.dart';
+import 'package:shelf_mobil_frontend/pages/favorites_page.dart';
+import 'package:shelf_mobil_frontend/pages/search_page.dart';
 import 'package:shelf_mobil_frontend/pages/share_book_page.dart';
 import 'package:shelf_mobil_frontend/enums.dart';
+import 'package:shelf_mobil_frontend/screens/app_bar.dart';
+import 'package:shelf_mobil_frontend/screens/background.dart';
 
 import '../services/api_service.dart';
 import '../models/category.dart';
@@ -24,14 +28,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static List<Category> _categoryList = [];
-
   static int _currentPageIndex = 0;
 
+  static List<Category> _categoryList = [];
   CategorySort _categorySort = CategorySort.numberOfBooks;
 
   final List<Widget> pages = [
     const GetBookPage(),
+    const FavoritesPage(),
     const ShareBookPage(),
     const AccountPage()
   ];
@@ -61,13 +65,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: _currentPageIndex == 0
-          ? AppBar(
-              title: const Text("SHELF"),
-              centerTitle: true,
-              actions: const [CartButton()],
-            )
-          : null,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -98,6 +95,10 @@ class _HomePageState extends State<HomePage> {
               text: "Get Book",
             ),
             GButton(
+              icon: Icons.favorite_border_outlined,
+              text: "Favorites",
+            ),
+            GButton(
               icon: Icons.people_rounded,
               text: "Share Book",
             ),
@@ -119,105 +120,105 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget homePage() {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          tileMode: TileMode.mirror,
-          colors: [
-            Color.fromARGB(60, 255, 131, 220),
-            Color.fromARGB(60, 246, 238, 243),
-            Color.fromARGB(60, 76, 185, 252),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBarDesign().createAppBar(
+        "SHELF",
+        IconButton(
+          onPressed: () async {
+            final Category? result = await showSearch<Category>(
+              context: context,
+              delegate: CategorySearchDelegate(categoryList: _categoryList),
+            );
+            if (_categoryList.contains(result)) {
+              _currentPageIndex = 1;
+              GetBookPage.setCategory(result!);
+              setState(() {});
+            }
+          },
+          icon: Icon(
+            Icons.search_outlined,
+            color: Colors.grey.shade900,
+          ),
+        ),
+        [
+          const CartButton(),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications_none_outlined,
+                color: Colors.grey.shade900),
+          )
+        ],
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: Background().getBackground(),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                        width: 1.5,
+                        color: const Color.fromARGB(200, 37, 37, 37)),
+                  ),
+                  child: IconButton(
+                      color: const Color.fromARGB(230, 37, 37, 37),
+                      onPressed: () {
+                        setState(() {
+                          if (_categorySort == CategorySort.numberOfBooks) {
+                            _categorySort = CategorySort.alphabetic;
+                            sortCategoryByName();
+                          } else {
+                            _categorySort = CategorySort.numberOfBooks;
+                            sortCategoryByNumberOfBooks();
+                          }
+                        });
+                      },
+                      icon: _categorySort == CategorySort.numberOfBooks
+                          ? const Icon(Icons.sort, size: 20)
+                          : const Icon(Icons.sort_by_alpha, size: 20)),
+                )
+              ],
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.55,
+              child: ScrollSnapList(
+                clipBehavior: Clip.none,
+                itemBuilder: _buildListItem,
+                itemCount: _categoryList.length,
+                itemSize: MediaQuery.of(context).size.width * 0.6,
+                onItemFocus: (index) {},
+                initialIndex: 0,
+                dynamicItemSize: true,
+                updateOnScroll: true,
+                scrollDirection: Axis.horizontal,
+                dynamicItemOpacity: 0.95,
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  AccountPage.changeLog();
+                });
+              },
+              style: ButtonStyle(
+                  backgroundColor: AccountPage.isUserLogged()
+                      ? const MaterialStatePropertyAll(Colors.green)
+                      : const MaterialStatePropertyAll(Colors.red)),
+              child: const Text(
+                "Change Log For Test",
+              ),
+            ),
           ],
         ),
       ),
-      child: Column(children: [
-        const SizedBox(height: 5),
-        Row(children: [
-          Flexible(
-            flex: 1,
-            child: SizedBox(
-              height: 50,
-              child: TextField(
-                textAlignVertical: TextAlignVertical.bottom,
-                cursorColor: Colors.grey,
-                decoration: InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none),
-                  hintText: 'Search Category',
-                  hintStyle: const TextStyle(color: Colors.grey, fontSize: 18),
-                  prefixIcon: Container(
-                    width: 18,
-                    padding: const EdgeInsets.all(5),
-                    child: const Icon(size: 20, Icons.search_rounded),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Container(
-            height: 45,
-            width: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(
-                  width: 1.5, color: const Color.fromARGB(200, 37, 37, 37)),
-            ),
-            child: IconButton(
-                color: const Color.fromARGB(230, 37, 37, 37),
-                onPressed: () {
-                  setState(() {
-                    if (_categorySort == CategorySort.numberOfBooks) {
-                      _categorySort = CategorySort.alphabetic;
-                      sortCategoryByName();
-                    } else {
-                      _categorySort = CategorySort.numberOfBooks;
-                      sortCategoryByNumberOfBooks();
-                    }
-                  });
-                },
-                icon: _categorySort == CategorySort.numberOfBooks
-                    ? const Icon(Icons.sort)
-                    : const Icon(Icons.sort_by_alpha)),
-          )
-        ]),
-        const SizedBox(height: 5),
-        const Divider(),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.55,
-          child: ScrollSnapList(
-            clipBehavior: Clip.none,
-            itemBuilder: _buildListItem,
-            itemCount: _categoryList.length,
-            itemSize: MediaQuery.of(context).size.width * 0.6,
-            onItemFocus: (index) {},
-            initialIndex: 0,
-            dynamicItemSize: true,
-            updateOnScroll: true,
-            scrollDirection: Axis.horizontal,
-            dynamicItemOpacity: 0.95,
-          ),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              AccountPage.changeLog();
-            });
-          },
-          style: ButtonStyle(
-              backgroundColor: AccountPage.isUserLogged()
-                  ? const MaterialStatePropertyAll(Colors.green)
-                  : const MaterialStatePropertyAll(Colors.red)),
-          child: const Text(
-            "Change Log For Test",
-          ),
-        ),
-      ]),
     );
   }
 
