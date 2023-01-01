@@ -3,6 +3,8 @@ import 'package:shelf_mobil_frontend/models/book.dart';
 import 'package:shelf_mobil_frontend/models/cart_item.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
 import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
+import 'package:shelf_mobil_frontend/screens/app_bar.dart';
+import 'package:shelf_mobil_frontend/screens/background.dart';
 
 import 'account_page.dart';
 
@@ -29,22 +31,11 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("MY SHELF"),
-        centerTitle: true,
-      ),
+      appBar: AppBarDesign()
+          .createAppBar("MY CART", BackButton(color: Colors.grey.shade900), []),
       body: Container(
         padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            tileMode: TileMode.mirror,
-            colors: [
-              Color.fromARGB(60, 255, 131, 220),
-              Color.fromARGB(60, 246, 238, 243),
-              Color.fromARGB(60, 76, 185, 252),
-            ],
-          ),
-        ),
+        decoration: Background().getBackground(),
         child: Column(
           children: [
             Row(
@@ -352,7 +343,10 @@ class _CartButtonState extends State<CartButton> {
                 );
         });
       },
-      icon: const Icon(Icons.shopping_bag_outlined),
+      icon: Icon(
+        Icons.shopping_bag_outlined,
+        color: Colors.grey.shade900,
+      ),
     );
   }
 }
