@@ -43,6 +43,8 @@ dependencies:
   wc_form_validators: ^1.0.0
   image_picker: ^0.8.6
   dotted_border: ^2.0.0+3
+  anim_search_bar: ^2.0.3
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:

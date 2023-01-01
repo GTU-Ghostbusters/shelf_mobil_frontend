@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:shelf_mobil_frontend/pages/cart.dart';
+import 'package:shelf_mobil_frontend/pages/cart_page.dart';
+import 'package:shelf_mobil_frontend/screens/app_bar.dart';
+import 'package:shelf_mobil_frontend/screens/background.dart';
 
 import '../models/book.dart';
 import 'account_page.dart';
 
 class BookDetailPage extends StatefulWidget {
-  BookDetailPage({
+  const BookDetailPage({
     super.key,
     required this.book,
   });
-  late Book book;
+  final Book book;
 
   @override
   State<BookDetailPage> createState() => _BookDetailPageState();
@@ -21,23 +23,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.book.name),
-        centerTitle: true,
-        actions: const [CartButton()],
-      ),
+      appBar: AppBarDesign().createAppBar(widget.book.name,
+          BackButton(color: Colors.grey.shade900), [const CartButton()]),
       body: Container(
         padding: const EdgeInsets.all(25),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            tileMode: TileMode.mirror,
-            colors: [
-              Color.fromARGB(60, 255, 131, 220),
-              Color.fromARGB(60, 246, 238, 243),
-              Color.fromARGB(60, 76, 185, 252),
-            ],
-          ),
-        ),
+        decoration: Background().getBackground(),
         child: Center(
           child: SingleChildScrollView(
             child: Column(

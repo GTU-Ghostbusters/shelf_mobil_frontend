@@ -1,12 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
-import 'package:shelf_mobil_frontend/pages/cart.dart';
+import 'package:shelf_mobil_frontend/pages/cart_page.dart';
 import 'package:shelf_mobil_frontend/pages/home_page.dart';
 import 'package:shelf_mobil_frontend/models/category.dart';
+import 'package:shelf_mobil_frontend/pages/search_page.dart';
 import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
+import 'package:shelf_mobil_frontend/screens/app_bar.dart';
+import 'package:shelf_mobil_frontend/screens/background.dart';
 import 'package:shelf_mobil_frontend/services/api_service.dart';
 
 import '../models/book.dart';
@@ -24,126 +25,94 @@ class GetBookPage extends StatefulWidget {
 
 class _GetBookPageState extends State<GetBookPage> {
   final List<Category>? _categoryList = HomePage.getCategories();
-
   static Category _selectedCategory = HomePage.getCategories()!.first;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text("GET BOOK"),
-          centerTitle: true,
-          actions: const [CartButton()]),
+      appBar: AppBarDesign().createAppBar("GET BOOK",
+          BookSearchButton(categoryTitle: _selectedCategory.title), [
+        const CartButton(),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.notifications_none_outlined,
+              color: Colors.grey.shade900),
+        )
+      ]),
       body: Container(
         padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            tileMode: TileMode.mirror,
-            colors: [
-              Color.fromARGB(60, 255, 131, 220),
-              Color.fromARGB(60, 246, 238, 243),
-              Color.fromARGB(60, 76, 185, 252),
-            ],
-          ),
-        ),
+        decoration: Background().getBackground(),
         child: Column(children: [
           // CATEGORY BAR
           Container(
-            padding: const EdgeInsets.all(5),
-            height: 50,
-            child: Row(children: [
-              SizedBox(
-                height: 40,
-                child: OutlinedButton(
-                    onPressed: () {
-                      setState(() {
-                        _selectedCategory = _categoryList!.first;
-                      });
-                    },
-                    style: ButtonStyle(
-                      foregroundColor:
-                          const MaterialStatePropertyAll(Colors.white),
-                      backgroundColor: MaterialStatePropertyAll(
-                          Theme.of(context).primaryColor),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0))),
-                    ),
-                    child: Text(
+            padding: const EdgeInsets.only(left: 5),
+            height: 40,
+            child: Row(
+              children: [
+                SizedBox(
+                  height: 40,
+                  child: OutlinedButton(
+                      onPressed: () {
+                        setState(() {
+                          _selectedCategory = _categoryList!.first;
+                        });
+                      },
+                      style: ButtonStyle(
+                        foregroundColor:
+                            const MaterialStatePropertyAll(Colors.white),
+                        backgroundColor: MaterialStatePropertyAll(
+                            Theme.of(context).primaryColor),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0))),
+                      ),
+                      child: Text(
                         overflow: TextOverflow.ellipsis,
                         _selectedCategory.title,
-                        maxLines: 1)),
-              ),
-              const VerticalDivider(
-                  width: 10, thickness: 1, indent: 0, endIndent: 0),
-              Flexible(
-                flex: 1,
-                child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _categoryList!.length,
-                    itemBuilder: _buildCategoryItem,
-                    separatorBuilder: ((context, index) {
-                      return SizedBox(
-                          width: _selectedCategory.title ==
-                                      _categoryList!.elementAt(index).title ||
-                                  _categoryList!.elementAt(index).title ==
-                                      _categoryList!.elementAt(0).title
-                              ? 0
-                              : 5);
-                    })),
-              ),
-            ]),
-          ),
-          const SizedBox(height: 5),
-
-          // SEARCH BAR AND FILTER
-          Row(children: [
-            Flexible(
-              flex: 1,
-              child: SizedBox(
-                height: 40,
-                child: TextField(
-                  textAlignVertical: TextAlignVertical.bottom,
-                  cursorColor: Colors.grey,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none),
-                    hintText: 'Search Book',
-                    hintStyle:
-                        const TextStyle(color: Colors.grey, fontSize: 18),
-                    prefixIcon: Container(
-                      width: 18,
-                      padding: const EdgeInsets.all(5),
-                      child: const Icon(size: 20, Icons.search_rounded),
+                        maxLines: 1,
+                        style: const TextStyle(fontSize: 13),
+                      )),
+                ),
+                const VerticalDivider(
+                    width: 10, thickness: 1, indent: 0, endIndent: 0),
+                Flexible(
+                  flex: 1,
+                  child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: _categoryList!.length,
+                      itemBuilder: _buildCategoryItem,
+                      separatorBuilder: ((context, index) {
+                        return SizedBox(
+                            width: _selectedCategory.title ==
+                                        _categoryList!.elementAt(index).title ||
+                                    _categoryList!.elementAt(index).title ==
+                                        _categoryList!.elementAt(0).title
+                                ? 0
+                                : 5);
+                      })),
+                ),
+                const SizedBox(width: 5),
+                Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      width: 1.5,
+                      color: const Color.fromARGB(200, 37, 37, 37),
                     ),
                   ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 5),
-            Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    width: 1.5,
-                    color: const Color.fromARGB(200, 37, 37, 37),
-                  ),
-                ),
-                child: IconButton(
+                  child: IconButton(
                     onPressed: () {},
                     icon: const Icon(
                       Icons.sort,
                       size: 20,
-                    )))
-          ]),
-          const SizedBox(height: 5),
-          const Divider(),
-          const SizedBox(height: 5),
-
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
           // BOOKS
           Flexible(
             child: _selectedCategory.numberOfBooks > 0
@@ -157,12 +126,15 @@ class _GetBookPageState extends State<GetBookPage> {
                     itemBuilder: _buildBookItem,
                     itemCount: _selectedCategory.numberOfBooks,
                   )
-                : Text(
-                    "NO BOOK FOUND",
-                    style: TextStyle(
-                      color: Colors.grey[700],
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
+                : Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      "NO BOOK FOUND",
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
           ),
@@ -189,7 +161,10 @@ class _GetBookPageState extends State<GetBookPage> {
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0))),
             ),
-            child: Text(_categoryList!.elementAt(index).title),
+            child: Text(
+              _categoryList!.elementAt(index).title,
+              style: const TextStyle(fontSize: 13),
+            ),
           );
   }
 
@@ -203,7 +178,6 @@ class _GetBookPageState extends State<GetBookPage> {
               return const Text("ERROR");
             } else if (snapshot.hasData) {
               List<Book> bookList = snapshot.data!;
-
               return Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(3),
