@@ -8,6 +8,7 @@ import 'package:shelf_mobil_frontend/pages/search_page.dart';
 import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
+import 'package:shelf_mobil_frontend/screens/filter_drawer.dart';
 import 'package:shelf_mobil_frontend/services/api_service.dart';
 
 import '../models/book.dart';
@@ -26,6 +27,7 @@ class GetBookPage extends StatefulWidget {
 class _GetBookPageState extends State<GetBookPage> {
   final List<Category>? _categoryList = HomePage.getCategories();
   static Category _selectedCategory = HomePage.getCategories()!.first;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,9 @@ class _GetBookPageState extends State<GetBookPage> {
               color: Colors.grey.shade900),
         )
       ]),
+      key: _scaffoldKey,
+      endDrawer: const FilterDrawer(),
+      endDrawerEnableOpenDragGesture: false,
       body: Container(
         padding: const EdgeInsets.all(10),
         decoration: Background().getBackground(),
@@ -102,9 +107,11 @@ class _GetBookPageState extends State<GetBookPage> {
                     ),
                   ),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _scaffoldKey.currentState!.openEndDrawer();
+                    },
                     icon: const Icon(
-                      Icons.sort,
+                      Icons.filter_alt,
                       size: 20,
                     ),
                   ),
