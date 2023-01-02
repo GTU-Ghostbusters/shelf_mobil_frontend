@@ -38,97 +38,102 @@ class _CartPageState extends State<CartPage> {
         decoration: Background().getBackground(),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Card(
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    child: Text(
-                      "Your right: 1",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 15,
+            Padding(
+              padding: const EdgeInsets.only(top: 5, bottom: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Card(
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      child: Text(
+                        "Your right: 1",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-                Card(
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    child: Text(
-                      choosenItems!.isEmpty
-                          ? "No book is chosen"
-                          : choosenItems!.length == 1
-                              ? "1 book is chosen"
-                              : "${choosenItems!.length} books are chosen",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 15,
+                  Card(
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      child: Text(
+                        choosenItems!.isEmpty
+                            ? "No book is chosen"
+                            : choosenItems!.length == 1
+                                ? "1 book is chosen"
+                                : "${choosenItems!.length} books are chosen",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontSize: 15,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const Divider(),
-            CartPage.cartItems.isEmpty
-                ? const SizedBox()
-                : Card(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              if (isAllItemsSelected) {
-                                isAllItemsSelected = !isAllItemsSelected;
-                                for (var cartItem in CartPage.cartItems) {
-                                  cartItem.value = false;
-                                  choosenItems?.remove(cartItem);
-                                }
-                              } else {
-                                isAllItemsSelected = !isAllItemsSelected;
-                                for (var cartItem in CartPage.cartItems) {
-                                  if (!cartItem.value) {
-                                    cartItem.value = true;
-                                    choosenItems?.add(cartItem);
-                                  }
-                                }
-                              }
-                            });
-                          },
-                          icon: Icon(Icons.select_all_outlined,
-                              color: isAllItemsSelected &&
-                                      CartPage.cartItems.isNotEmpty
-                                  ? Theme.of(context).primaryColor
-                                  : Colors.grey.shade600),
-                        ),
-                        Text(CartPage.cartItems.length == 1
-                            ? "1 book"
-                            : "${CartPage.cartItems.length} books"),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              CartPage.cartItems.clear();
-                              choosenItems?.clear();
-                              isAllItemsSelected = false;
-                            });
-                          },
-                          icon: Icon(Icons.delete_sweep_outlined,
-                              color: Colors.grey.shade600),
-                        ),
-                      ],
-                    ),
+            Card(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        if (isAllItemsSelected) {
+                          isAllItemsSelected = !isAllItemsSelected;
+                          for (var cartItem in CartPage.cartItems) {
+                            cartItem.value = false;
+                            choosenItems?.remove(cartItem);
+                          }
+                        } else {
+                          isAllItemsSelected = !isAllItemsSelected;
+                          for (var cartItem in CartPage.cartItems) {
+                            if (!cartItem.value) {
+                              cartItem.value = true;
+                              choosenItems?.add(cartItem);
+                            }
+                          }
+                        }
+                      });
+                    },
+                    icon: Icon(Icons.select_all_outlined,
+                        color:
+                            isAllItemsSelected && CartPage.cartItems.isNotEmpty
+                                ? Theme.of(context).primaryColor
+                                : Colors.grey.shade600),
                   ),
+                  Text(
+                    CartPage.cartItems.isEmpty
+                        ? "Empty"
+                        : CartPage.cartItems.length == 1
+                            ? "1 book"
+                            : "${CartPage.cartItems.length} books",
+                    style: TextStyle(color: Colors.grey.shade800, fontSize: 15),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        CartPage.cartItems.clear();
+                        choosenItems?.clear();
+                        isAllItemsSelected = false;
+                      });
+                    },
+                    icon: Icon(Icons.delete_sweep_outlined,
+                        color: Colors.grey.shade600),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: ListView.separated(
                 itemCount: CartPage.cartItems.length,
@@ -191,7 +196,7 @@ class _CartPageState extends State<CartPage> {
                               });
                             },
                             child: Container(
-                              padding: const EdgeInsets.all(0),
+                              color: Colors.transparent,
                               height: MediaQuery.of(context).size.height * 0.15,
                               width: MediaQuery.of(context).size.width * 0.68,
                               child: Stack(
@@ -201,6 +206,7 @@ class _CartPageState extends State<CartPage> {
                                         0.0125,
                                     child: Container(
                                       decoration: BoxDecoration(
+                                        color: Colors.white,
                                         border: Border.all(width: 0.5),
                                       ),
                                       height:
@@ -297,17 +303,19 @@ class _CartPageState extends State<CartPage> {
                 },
               ),
             ),
-            const Divider(),
-            ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(choosenItems!.isEmpty
-                    ? Colors.grey
-                    : Theme.of(context).primaryColor),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(
+                      choosenItems!.isEmpty
+                          ? Colors.grey
+                          : Theme.of(context).primaryColor),
+                ),
+                child: const Text("ADD TO SHELF"),
               ),
-              child: const Text("ADD TO SHELF"),
             ),
-            const SizedBox(height: 10)
           ],
         ),
       ),
@@ -332,7 +340,7 @@ class _CartButtonState extends State<CartButton> {
               ? showDialog(
                   context: context,
                   builder: (context) => const AlertDialogUserCheck(
-                      subText: "You should login to view your shelf cart."),
+                      subText: "You should login to view your cart."),
                 )
               : Navigator.of(context).push(
                   MaterialPageRoute(

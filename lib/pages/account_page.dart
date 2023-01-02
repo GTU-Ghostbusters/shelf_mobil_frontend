@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/my_info_page.dart';
+import 'package:shelf_mobil_frontend/screens/app_bar.dart';
+import 'package:shelf_mobil_frontend/screens/background.dart';
 
 import 'login_page.dart';
 import 'signup_page.dart';
@@ -26,23 +28,11 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:
-            isLogged ? const Text("MY ACCOUNT") : const Text("USER MANAGEMENT"),
-        centerTitle: true,
-      ),
+      appBar: AppBarDesign().createAppBar(
+          isLogged ? "MY ACCOUNT" : "USER MANAGEMENT", const SizedBox(), []),
       body: Container(
           padding: const EdgeInsets.all(10),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              tileMode: TileMode.mirror,
-              colors: [
-                Color.fromARGB(60, 255, 131, 220),
-                Color.fromARGB(60, 246, 238, 243),
-                Color.fromARGB(60, 76, 185, 252),
-              ],
-            ),
-          ),
+          decoration: Background().getBackground(),
           child: isLogged ? myAccount() : userManagement()),
     );
   }

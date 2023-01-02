@@ -158,6 +158,15 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    _categorySort == CategorySort.numberOfBooks
+                        ? "Number of books"
+                        : "Alphabetical",
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
                 Container(
                   height: 40,
                   width: 40,
@@ -180,10 +189,8 @@ class _HomePageState extends State<HomePage> {
                           }
                         });
                       },
-                      icon: _categorySort == CategorySort.numberOfBooks
-                          ? const Icon(Icons.sort, size: 20)
-                          : const Icon(Icons.sort_by_alpha, size: 20)),
-                )
+                      icon: const Icon(Icons.sort, size: 20)),
+                ),
               ],
             ),
             const SizedBox(height: 30),

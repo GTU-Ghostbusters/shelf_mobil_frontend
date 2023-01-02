@@ -32,15 +32,18 @@ class _GetBookPageState extends State<GetBookPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarDesign().createAppBar("GET BOOK",
-          BookSearchButton(categoryTitle: _selectedCategory.title), [
-        const CartButton(),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.notifications_none_outlined,
-              color: Colors.grey.shade900),
-        )
-      ]),
+      appBar: AppBarDesign().createAppBar(
+        "GET BOOK",
+        const BookSearchButton(),
+        [
+          const CartButton(),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications_none_outlined,
+                color: Colors.grey.shade900),
+          )
+        ],
+      ),
       key: _scaffoldKey,
       endDrawer: const FilterDrawer(),
       endDrawerEnableOpenDragGesture: false,

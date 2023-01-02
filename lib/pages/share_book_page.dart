@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shelf_mobil_frontend/enums.dart';
 import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
+import 'package:shelf_mobil_frontend/screens/app_bar.dart';
+import 'package:shelf_mobil_frontend/screens/background.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../screens/select_photo.dart';
@@ -104,20 +106,11 @@ class _ShareBookPageState extends State<ShareBookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text("SHARE BOOK"), centerTitle: true),
+      appBar: AppBarDesign().createAppBar("SHARE BOOK", const SizedBox(),[]),
       body: Container(
         height: double.infinity,
         padding: const EdgeInsets.all(40),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            tileMode: TileMode.mirror,
-            colors: [
-              Color.fromARGB(60, 255, 131, 220),
-              Color.fromARGB(60, 246, 238, 243),
-              Color.fromARGB(60, 76, 185, 252),
-            ],
-          ),
-        ),
+        decoration: Background().getBackground(),
         child: AccountPage.isUserLogged() == false
             ? const Center(
                 child: AlertDialogUserCheck(

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/models/book.dart';
 import 'package:shelf_mobil_frontend/models/category.dart';
+import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
+import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
 import 'package:shelf_mobil_frontend/services/api_service.dart';
 
 class BookSearchButton extends StatelessWidget {
-  const BookSearchButton({super.key, required this.categoryTitle});
-  final String categoryTitle;
+  const BookSearchButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +15,17 @@ class BookSearchButton extends StatelessWidget {
       onPressed: () {
         showSearch(
           context: context,
-          delegate: BookSearchDelegate(categoryTitle: categoryTitle),
+          delegate: BookSearchDelegate(),
         );
       },
-      icon: Icon(
-        Icons.search_outlined,
-        color: Colors.grey.shade900,
-      ),
+      icon: Icon(Icons.search_outlined, color: Colors.grey.shade900),
     );
   }
 }
 
 class BookSearchDelegate extends SearchDelegate {
-  BookSearchDelegate({required this.categoryTitle});
-  String categoryTitle;
+  @override
+  String get searchFieldLabel => 'Search Book';
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -48,7 +46,7 @@ class BookSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     return FutureBuilder<List<Book>>(
-      future: ApiService().getBooksWithCategory(categoryTitle),
+      future: ApiService().getBooksWithCategory("ALL"),
       builder: (context, snapshot) {
         var data = snapshot.data;
         if (!snapshot.hasData) {
@@ -77,7 +75,7 @@ class BookSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder<List<Book>>(
-      future: ApiService().getBooksWithCategory(categoryTitle),
+      future: ApiService().getBooksWithCategory("ALL"),
       builder: (context, snapshot) {
         var data = snapshot.data;
         if (!snapshot.hasData) {
@@ -101,69 +99,65 @@ class BookSearchDelegate extends SearchDelegate {
   Widget _buildListItem(context, var item) {
     return Card(
       elevation: 2,
-      child: ListTile(
-        title: GestureDetector(
-          child: Container(
-            padding: const EdgeInsets.all(0),
-            color: Colors.white,
-            height: MediaQuery.of(context).size.height * 0.075,
-            width: MediaQuery.of(context).size.width,
-            child: Stack(
-              children: [
-                Positioned(
-                  top: MediaQuery.of(context).size.height * 0.0125,
-                  left: 5,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 0.5), color: Colors.white),
-                    height: MediaQuery.of(context).size.height * 0.055,
-                    width: MediaQuery.of(context).size.width * 0.1,
-                    child: Image.network(item.image),
-                  ),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.075,
+        width: MediaQuery.of(context).size.width,
+        child: ListTile(
+          onTap: () {
+            AccountPage.isUserLogged() == false
+                ? showDialog(
+                    context: context,
+                    builder: (context) => const AlertDialogUserCheck(
+                        subText: "You should login to view or get a book."),
+                  )
+                : Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) {
+                        return BookDetailPage(book: item);
+                      }),
+                    ),
+                  );
+          },
+          title: Stack(
+            children: [
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.005,
+                left: 5,
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 0.5), color: Colors.white),
+                  height: MediaQuery.of(context).size.height * 0.055,
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  child: Image.network(item.image),
                 ),
-                Positioned(
-                  top: (MediaQuery.of(context).size.height * 0.075 - 30) / 2,
-                  left: MediaQuery.of(context).size.width * 0.2,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    child: Text(
-                      item.name,
+              ),
+              Positioned(
+                top: (MediaQuery.of(context).size.height * 0.05 - 30) / 2,
+                left: MediaQuery.of(context).size.width * 0.17,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  child: Text(item.name,
                       maxLines: 1,
                       overflow: TextOverflow.clip,
                       style: TextStyle(
                           color: Colors.grey.shade800,
                           fontSize: 16,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
+                          fontWeight: FontWeight.w500)),
                 ),
-                Positioned(
-                  top: (MediaQuery.of(context).size.height * 0.075 - 30) / 2 +
-                      23,
-                  left: MediaQuery.of(context).size.width * 0.2,
-                  child: Text(
-                    item.author,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.grey.shade800,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: ((context) {
-                  return BookDetailPage(book: item);
-                }),
               ),
-            );
-          },
+              Positioned(
+                top: (MediaQuery.of(context).size.height * 0.05 - 30) / 2 + 23,
+                left: MediaQuery.of(context).size.width * 0.17,
+                child: Text(
+                  item.author,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.grey.shade800, fontSize: 14),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -173,6 +167,10 @@ class BookSearchDelegate extends SearchDelegate {
 class CategorySearchDelegate extends SearchDelegate<Category> {
   CategorySearchDelegate({required this.categoryList});
   final List<Category> categoryList;
+
+  @override
+  String get searchFieldLabel => 'Search Category';
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -220,48 +218,42 @@ class CategorySearchDelegate extends SearchDelegate<Category> {
   Widget _buildListItem(context, var item) {
     return Card(
       elevation: 2,
-      child: ListTile(
-        title: GestureDetector(
-          child: Container(
-            padding: const EdgeInsets.all(0),
-            color: Colors.white,
-            height: MediaQuery.of(context).size.height * 0.075,
-            width: MediaQuery.of(context).size.width,
-            child: Stack(
-              children: [
-                Positioned(
-                  top: MediaQuery.of(context).size.height * 0.0125,
-                  left: 5,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 0.5), color: Colors.white),
-                    height: MediaQuery.of(context).size.height * 0.055,
-                    width: MediaQuery.of(context).size.width * 0.1,
-                    child: Image.asset(item.imagePath),
-                  ),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.075,
+        width: MediaQuery.of(context).size.width,
+        child: ListTile(
+          onTap: () {
+            close(context, item);
+          },
+          title: Stack(
+            children: [
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.005,
+                left: 5,
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 0.5), color: Colors.white),
+                  height: MediaQuery.of(context).size.height * 0.055,
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  child: Image.asset(item.imagePath),
                 ),
-                Positioned(
-                  top: (MediaQuery.of(context).size.height * 0.075 - 16) / 2,
-                  left: MediaQuery.of(context).size.width * 0.2,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    child: Text(
-                      item.title,
+              ),
+              Positioned(
+                top: (MediaQuery.of(context).size.height * 0.055 - 16) / 2,
+                left: MediaQuery.of(context).size.width * 0.17,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  child: Text(item.title,
                       maxLines: 1,
                       overflow: TextOverflow.clip,
                       style: TextStyle(
                           color: Colors.grey.shade800,
                           fontSize: 16,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
+                          fontWeight: FontWeight.w500)),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          onTap: () {
-            close(context, item);
-          },
         ),
       ),
     );
