@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shelf_mobil_frontend/pages/my_info_page.dart';
 
 import 'login_page.dart';
 import 'signup_page.dart';
@@ -56,7 +57,7 @@ class _AccountPageState extends State<AccountPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return SubPage(title: "My Informations");
+                  return const MyInfoPage();
                 },
               ),
             );
