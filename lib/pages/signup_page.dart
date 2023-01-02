@@ -14,7 +14,8 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _showPassword_1 = true;
   String _password = "";
   final _formKey = GlobalKey<FormState>();
-  TextEditingController phoneNum = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +91,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 7,
                   ),
                   TextFormField(
+                    controller: emailController,
                     validator: (email) {
                       if (!EmailValidator.validate(email!)) {
                         return 'Please enter a valid e-mail.';
@@ -118,8 +120,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 7,
                   ),
                   TextFormField(
-                    controller: phoneNum,
-                    //maxLength: 10,
+                    maxLength: 10,
                     keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(
                       filled: true,
@@ -240,7 +241,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         MaterialPageRoute(
                           builder: (BuildContext context) {
                             return Confirmation(
-                                phoneNumber: int.parse(phoneNum.text));
+                                email_: emailController.text.toString());
                           },
                         ),
                       );
@@ -265,8 +266,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
 // ignore: must_be_immutable
 class Confirmation extends StatefulWidget {
-  int? phoneNumber;
-  Confirmation({super.key, this.phoneNumber});
+  String? email_;
+  Confirmation({super.key, this.email_});
 
   @override
   State<Confirmation> createState() => _ConfirmationState();
@@ -297,9 +298,9 @@ class _ConfirmationState extends State<Confirmation> {
               child: Column(
                 children: [
                   Text(
-                    "The confirmation code was sent to the phone number: +90${widget.phoneNumber}",
+                    "The confirmation code was sent to the e-mail: ${widget.email_}",
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

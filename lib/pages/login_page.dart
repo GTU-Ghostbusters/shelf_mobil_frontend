@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,7 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _showPassword = true;
   bool _selectItem = true;
-  TextEditingController phoneNum = TextEditingController();
+  TextEditingController email_ = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -155,24 +156,33 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> dialogBuilder(BuildContext context) {
+    bool emailCheck = false;
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Password Reset"),
           content: const Text(
-            "Please enter the phone number to which the password reset code will be sent without 0 at the beginning.",
+            "Please enter the e-mail to reset the password.",
             style: TextStyle(fontSize: 18),
           ),
           actions: <Widget>[
             TextFormField(
-              controller: phoneNum,
-              maxLength: 10,
-              keyboardType: TextInputType.number,
+              controller: email_,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (email) {
+                if (!EmailValidator.validate(email!)) {
+                  return 'Please enter a valid e-mail.';
+                } else {
+                  emailCheck = true;
+                  return null;
+                }
+              },
+              keyboardType: TextInputType.emailAddress,
               textAlign: TextAlign.center,
               decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.phone),
-                labelText: "Phone number",
+                prefixIcon: Icon(Icons.email_rounded),
+                labelText: "E-mail",
                 filled: true,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
@@ -186,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 TextButton(
                   onPressed: () {
-                    phoneNum.clear();
+                    email_.clear();
                     Navigator.of(context).pop();
                   },
                   child: const Text(
@@ -199,12 +209,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 TextButton(
                   onPressed: () {
-                    if (phoneNum.text.length == 10) {
+                    if (emailCheck == true) {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
                             return ForgotPassword(
-                              phoneNumber: int.parse(phoneNum.text),
+                              email: email_.text.toString(),
                             );
                           },
                         ),
@@ -230,8 +240,8 @@ class _LoginPageState extends State<LoginPage> {
 
 // ignore: must_be_immutable
 class ForgotPassword extends StatefulWidget {
-  int? phoneNumber;
-  ForgotPassword({super.key, this.phoneNumber});
+  String? email;
+  ForgotPassword({super.key, this.email});
 
   @override
   State<ForgotPassword> createState() => _ForgotPasswordState();
@@ -269,14 +279,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               child: Column(
                 children: [
                   Text(
-                    "The reset code was sent to the phone number: +90${widget.phoneNumber}",
+                    "The reset code was sent to the email: ${widget.email}",
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 12,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.number,
