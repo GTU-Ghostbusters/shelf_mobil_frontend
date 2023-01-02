@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Doğukan",
+        "surname": "Karayunus",
+        "email": "dogukan@gmail.com",
+        "password": "123456dK",
+        "address": "gebze",
+        "phone_number": "5123456789",
+        "is_superuser": false,
+        "is_manager": false
+    }
+]
