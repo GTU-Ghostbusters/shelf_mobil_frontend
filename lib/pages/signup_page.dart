@@ -42,194 +42,206 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: TextFormField(
-                      validator: (name) {
-                        if (name!.length < 3) {
-                          return 'The name must consist of at least 3 characters.';
-                        } else {
-                          return null;
-                        }
-                      },
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        labelText: "Name",
-                        labelStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        hintText: "Please enter name",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        labelText: "Surname",
-                        labelStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        hintText: "Please enter surname",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: TextFormField(
-                      controller: emailController,
-                      validator: (email) {
-                        if (!EmailValidator.validate(email!)) {
-                          return 'Please enter a valid e-mail.';
-                        } else {
-                          return null;
-                        }
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.email_rounded),
-                        labelText: "E-mail",
-                        labelStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        hintText: "Please enter e-mail",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: TextFormField(
-                      //maxLength: 10,
-                      keyboardType: TextInputType.phone,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.phone),
-                        labelText: "Phone number",
-                        labelStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        hintText: "Please enter phone number",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: TextFormField(
-                      validator: Validators.compose(
-                        [
-                          Validators.patternRegExp(
-                              RegExp(
-                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'),
-                              "Password must contain at least one uppercase letter, one lowercase letter, one number and must be at least 8 characters long."),
-                          Validators.maxLength(15,
-                              "The password can be a maximum of 15 characters long."),
-                        ],
-                      ),
-                      onChanged: (value) {
-                        _password = value;
-                      },
-                      obscureText: _showPassword,
-                      decoration: InputDecoration(
-                        errorMaxLines: 3,
-                        prefixIcon: const Icon(Icons.lock_outline),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _showPassword = !_showPassword;
-                            });
-                          },
-                          icon: Icon(
-                            _showPassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                        ),
-                        labelText: "Password",
-                        labelStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        hintText: "Please enter password",
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: TextFormField(
-                      obscureText: _showPassword_1,
-                      validator: (value) {
-                        if (value != _password) {
-                          return 'Password is not matching!';
-                        }
+                  TextFormField(
+                    validator: (name) {
+                      if (name!.length < 3) {
+                        return 'The name must consist of at least 3 characters.';
+                      } else {
                         return null;
-                      },
-                      decoration: InputDecoration(
-                        errorMaxLines: 2,
-                        prefixIcon: const Icon(Icons.lock_outline),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _showPassword_1 = !_showPassword_1;
-                            });
-                          },
-                          icon: Icon(
-                            _showPassword_1
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                        ),
-                        labelText: "Password again",
-                        labelStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        hintText: "Please enter password again",
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
+                      }
+                    },
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      prefixIcon:
+                          Icon(Icons.person, color: Colors.grey.shade900),
+                      labelText: "Name",
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      hintText: "Please enter name",
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 13,
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    validator: (surname) {
+                      if (surname!.length < 3) {
+                        return 'The surname must consist of at least 3 characters.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      prefixIcon:
+                          Icon(Icons.person, color: Colors.grey.shade900),
+                      labelText: "Surname",
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      hintText: "Please enter surname",
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
                   ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    controller: emailController,
+                    validator: (email) {
+                      if (!EmailValidator.validate(email!)) {
+                        return 'Please enter a valid e-mail.';
+                      } else {
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      prefixIcon: Icon(Icons.email_rounded,
+                          color: Colors.grey.shade900),
+                      labelText: "E-mail",
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      hintText: "Please enter e-mail",
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    validator: (phoneNumber) {
+                      if (phoneNumber!.isEmpty) {
+                        return "Please enter a valid phone number.";
+                      } else {
+                        return null;
+                      }
+                    },
+                    maxLength: 10,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      counterText: "",
+                      fillColor: Colors.white,
+                      filled: true,
+                      prefixIcon:
+                          Icon(Icons.phone, color: Colors.grey.shade900),
+                      labelText: "Phone number",
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      hintText: "Please enter phone number",
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    validator: Validators.compose(
+                      [
+                        Validators.patternRegExp(
+                            RegExp(
+                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'),
+                            "Password must contain at least one uppercase letter, one lowercase letter, one number and must be at least 8, at most 15 characters long."),
+                      ],
+                    ),
+                    onChanged: (value) {
+                      _password = value;
+                    },
+                    obscureText: _showPassword,
+                    maxLength: 15,
+                    decoration: InputDecoration(
+                      counterText: "",
+                      fillColor: Colors.white,
+                      filled: true,
+                      errorMaxLines: 3,
+                      prefixIcon:
+                          Icon(Icons.lock_outline, color: Colors.grey.shade900),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
+                        icon: _showPassword
+                            ? Icon(Icons.visibility_off,
+                                color: Colors.grey.shade900)
+                            : Icon(Icons.visibility,
+                                color: Colors.grey.shade900),
+                      ),
+                      labelText: "Password",
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      hintText: "Please enter password",
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    obscureText: _showPassword_1,
+                    validator: (value) {
+                      if (value != _password) {
+                        return 'Password is not matching!';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      errorMaxLines: 2,
+                      prefixIcon:
+                          Icon(Icons.lock_outline, color: Colors.grey.shade900),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showPassword_1 = !_showPassword_1;
+                          });
+                        },
+                        icon: _showPassword_1
+                            ? Icon(Icons.visibility_off,
+                                color: Colors.grey.shade900)
+                            : Icon(Icons.visibility,
+                                color: Colors.grey.shade900),
+                      ),
+                      labelText: "Password again",
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      hintText: "Please enter password again",
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 13),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       fixedSize:
@@ -239,14 +251,16 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return Confirmation(
-                                email_: emailController.text.toString());
-                          },
-                        ),
-                      );
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return Confirmation(
+                                  email_: emailController.text.toString());
+                            },
+                          ),
+                        );
+                      }
                     },
                     child: const Text(
                       "SIGN UP",
@@ -297,11 +311,14 @@ class _ConfirmationState extends State<Confirmation> {
             child: Form(
               child: Column(
                 children: [
-                  Text(
-                    "The confirmation code was sent to the e-mail: ${widget.email_}",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+                    child: Text(
+                      "The confirmation code was sent to the e-mail: ${widget.email_}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(

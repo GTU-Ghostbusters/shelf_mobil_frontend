@@ -70,8 +70,9 @@ class _LoginPageState extends State<LoginPage> {
                           : TextInputType.phone,
                       decoration: InputDecoration(
                         prefixIcon: _selectItem
-                            ? const Icon(Icons.email_rounded)
-                            : const Icon(Icons.phone),
+                            ? Icon(Icons.email_rounded,
+                                color: Colors.grey.shade900)
+                            : Icon(Icons.phone, color: Colors.grey.shade900),
                         labelText: _selectItem ? "E-mail" : "Phone number",
                         labelStyle: const TextStyle(
                           fontSize: 16,
@@ -93,18 +94,19 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: _showPassword,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.lock_outline),
+                        prefixIcon: Icon(Icons.lock_outline,
+                            color: Colors.grey.shade900),
                         suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
                               _showPassword = !_showPassword;
                             });
                           },
-                          icon: Icon(
-                            _showPassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
+                          icon: _showPassword
+                              ? Icon(Icons.visibility_off,
+                                  color: Colors.grey.shade900)
+                              : Icon(Icons.visibility,
+                                  color: Colors.grey.shade900),
                         ),
                         labelText: "Password",
                         labelStyle: const TextStyle(
@@ -163,32 +165,35 @@ class _LoginPageState extends State<LoginPage> {
             style: TextStyle(fontSize: 20),
           ),
           actions: <Widget>[
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              child: TextFormField(
-                controller: email_,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (email) {
-                  if (!EmailValidator.validate(email!)) {
-                    return 'Please enter a valid e-mail.';
-                  } else {
-                    emailCheck = true;
-                    return null;
-                  }
-                },
-                keyboardType: TextInputType.emailAddress,
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.email_rounded),
-                  labelText: "E-mail",
-                  labelStyle: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                child: TextFormField(
+                  controller: email_,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (email) {
+                    if (!EmailValidator.validate(email!)) {
+                      return 'Please enter a valid e-mail.';
+                    } else {
+                      emailCheck = true;
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.email_rounded),
+                    labelText: "E-mail",
+                    labelStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
                     ),
                   ),
                 ),
@@ -280,11 +285,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
-                  Text(
-                    "The reset code was sent to the email: ${widget.email}",
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+                    child: Text(
+                      "The reset code was sent to the email: ${widget.email}",
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(
