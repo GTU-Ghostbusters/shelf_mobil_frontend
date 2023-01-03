@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
               text: "Get Book",
             ),
             GButton(
-              icon: Icons.favorite_border_outlined,
+              icon: Icons.favorite_outlined,
               text: "Favorites",
             ),
             GButton(

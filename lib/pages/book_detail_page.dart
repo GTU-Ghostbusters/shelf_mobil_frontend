@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/cart_page.dart';
+import 'package:shelf_mobil_frontend/pages/favorites_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
 
@@ -166,7 +167,51 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                       width: 0.2, color: Colors.grey.shade800),
                                   borderRadius: BorderRadius.circular(5))),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (FavoritesPage.isAddedToFav(widget.book)) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: const Duration(milliseconds: 1000),
+                                content: Container(
+                                  alignment: Alignment.center,
+                                  height: 40,
+                                  child: Text(
+                                    "${widget.book.name} is already added to favorites",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor:
+                                    const Color.fromARGB(240, 255, 77, 77),
+                              ),
+                            );
+                          } else {
+                            FavoritesPage.addToFav(widget.book);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: const Duration(milliseconds: 1000),
+                                content: Container(
+                                  alignment: Alignment.center,
+                                  height: 40,
+                                  child: Text(
+                                    "${widget.book.name} is added to favorites",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor:
+                                    const Color.fromARGB(240, 33, 149, 243),
+                              ),
+                            );
+                          }
+                        },
                         icon: const Icon(Icons.favorite_border_rounded),
                         label: const Text(
                           "Add to Favorites",

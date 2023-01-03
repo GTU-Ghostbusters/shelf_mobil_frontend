@@ -126,24 +126,22 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+          Padding(
+            padding: const EdgeInsets.only(left: 7),
+            child: Text(
+              widget.label,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
           Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: TextField(
               controller: controller,
               decoration: InputDecoration(
+                border: InputBorder.none,
                 prefixIcon: widget.icon,
-                prefixIconColor: Colors.red,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
               ),
               maxLines: widget.maxLines,
             ),

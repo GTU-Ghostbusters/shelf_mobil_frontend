@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
 import 'package:shelf_mobil_frontend/pages/cart_page.dart';
+import 'package:shelf_mobil_frontend/pages/favorites_page.dart';
 import 'package:shelf_mobil_frontend/pages/home_page.dart';
 import 'package:shelf_mobil_frontend/models/category.dart';
 import 'package:shelf_mobil_frontend/pages/search_page.dart';
@@ -296,9 +297,33 @@ class _GetBookPageState extends State<GetBookPage> {
                               height: constraints.maxWidth * 0.19,
                               width: constraints.maxWidth * 0.2,
                               child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                      Icons.favorite_outline_outlined)),
+                                  onPressed: () {
+                                    AccountPage.isUserLogged() == false
+                                        ? showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                const AlertDialogUserCheck(
+                                              subText:
+                                                  "You should login to add a book to favorites.",
+                                            ),
+                                          )
+                                        : setState(() {
+                                            if (FavoritesPage.isAddedToFav(
+                                                bookList[index])) {
+                                              FavoritesPage.removeFromFav(
+                                                  bookList[index]);
+                                            } else {
+                                              FavoritesPage.addToFav(
+                                                  bookList[index]);
+                                            }
+                                          });
+                                  },
+                                  icon: FavoritesPage.isAddedToFav(
+                                          bookList[index])
+                                      ? const Icon(Icons.favorite_outlined,
+                                          color: Colors.red)
+                                      : const Icon(
+                                          Icons.favorite_outline_outlined)),
                             ),
                           )
                         ]),
