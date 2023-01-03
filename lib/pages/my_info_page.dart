@@ -13,48 +13,69 @@ class _MyInfoPageState extends State<MyInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarDesign().createAppBar("My Informations", const SizedBox(), []),
+      appBar:
+          AppBarDesign().createAppBar("My Informations", const SizedBox(), []),
       body: Container(
-        padding: const EdgeInsets.all(28),
+        padding: const EdgeInsets.all(26),
         decoration: Background().getBackground(),
         child: SingleChildScrollView(
           child: Column(
             children: [
               TextFieldWidget(
+                icon: const Icon(Icons.person),
                 label: "Name",
                 text: "user name",
                 onChanged: (name) {},
               ),
               const SizedBox(height: 10),
               TextFieldWidget(
+                icon: const Icon(Icons.person),
                 label: "Surname",
                 text: "user surname",
                 onChanged: (surname) {},
               ),
               const SizedBox(height: 10),
               TextFieldWidget(
+                icon: const Icon(Icons.email_rounded),
                 label: "Email",
                 text: "user email",
                 onChanged: (email) {},
               ),
               const SizedBox(height: 10),
               TextFieldWidget(
+                icon: const Icon(Icons.phone),
                 label: "Phone Number",
                 text: "user phone",
                 onChanged: (phone) {},
               ),
               const SizedBox(height: 10),
               TextFieldWidget(
+                icon: const Icon(Icons.lock_outline),
                 label: "Password",
                 text: "user password",
                 onChanged: (password) {},
               ),
               const SizedBox(height: 10),
               TextFieldWidget(
+                icon: const Icon(Icons.location_on),
                 label: "Address",
                 maxLines: 3,
                 text: "user address",
                 onChanged: (address) {},
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  fixedSize: Size(MediaQuery.of(context).size.width * 0.4, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                child: const Text(
+                  "SAVE",
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ],
           ),
@@ -68,11 +89,13 @@ class TextFieldWidget extends StatefulWidget {
   final int maxLines;
   final String label;
   final String text;
+  final Icon icon;
   final ValueChanged<String> onChanged;
 
   const TextFieldWidget({
     Key? key,
     this.maxLines = 1,
+    required this.icon,
     required this.label,
     required this.text,
     required this.onChanged,
@@ -110,16 +133,21 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               fontSize: 16,
             ),
           ),
-          const SizedBox(height: 5),
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+          Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                prefixIcon: widget.icon,
+                prefixIconColor: Colors.red,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
+              maxLines: widget.maxLines,
             ),
-            maxLines: widget.maxLines,
-          ),
+          )
         ],
       );
 }
