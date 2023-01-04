@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-List<User> userFromMap(String str) =>
-    List<User>.from(json.decode(str).map((x) => User.fromMap(x)));
+List<User> userFromJson(String str) =>
+    List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
 
-String userToMap(List<User> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toMap())));
+String userToJson(List<User> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class User {
   User({
@@ -27,7 +27,7 @@ class User {
   final bool isSuperuser;
   final bool isManager;
 
-  factory User.fromMap(Map<String, dynamic> json) => User(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         name: json["name"],
         surname: json["surname"],
         email: json["email"],
@@ -38,7 +38,7 @@ class User {
         isManager: json["is_manager"],
       );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
         "name": name,
         "surname": surname,
         "email": email,
