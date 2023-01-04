@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/cart_page.dart';
 import 'package:shelf_mobil_frontend/pages/favorites_page.dart';
+import 'package:shelf_mobil_frontend/pages/user_review_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
 
 import '../models/book.dart';
-import 'account_page.dart';
 
 class BookDetailPage extends StatefulWidget {
   const BookDetailPage({
@@ -277,7 +277,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return SubPage(title: widget.book.donator);
+                            return UserReviewPage(
+                                user_name: widget.book.donator);
                           },
                         ),
                       );

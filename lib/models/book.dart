@@ -22,18 +22,18 @@ class Book {
     required this.shipmentType,
   });
 
-  String donator;
-  String name;
-  String author;
-  String category;
-  int numberOfPages;
-  int bookId;
-  bool available;
-  String bookAbstract;
-  String image1;
-  String image2;
-  String image3;
-  String shipmentType;
+  final String donator;
+  final String name;
+  final String author;
+  final String category;
+  final int numberOfPages;
+  final int bookId;
+  final bool available;
+  final String bookAbstract;
+  final String image1;
+  final String image2;
+  final String image3;
+  final String shipmentType;
 
   @override
   operator ==(other) => other is Book && bookId == other.bookId;
