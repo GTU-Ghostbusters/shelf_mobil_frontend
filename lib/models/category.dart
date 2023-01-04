@@ -17,10 +17,10 @@ class Category {
   int numberOfBooks;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-      title: json["title"],
-      imagePath: json["imagePath"],
-      numberOfBooks: json["numberOfBooks"]);
+      title: json["name"],
+      imagePath: '', //! json["image"]
+      numberOfBooks: json["books_count"]);
 
   Map<String, dynamic> toJson() =>
-      {"title": title, "imagePath": imagePath, "numberOfBooks": numberOfBooks};
+      {"name": title, "image": imagePath, "books_count": numberOfBooks};
 }
