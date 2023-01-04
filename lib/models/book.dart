@@ -16,7 +16,9 @@ class Book {
     required this.bookId,
     required this.available,
     required this.bookAbstract,
-    required this.image,
+    required this.image1,
+    required this.image2,
+    required this.image3,
     required this.shipmentType,
   });
 
@@ -28,49 +30,44 @@ class Book {
   int bookId;
   bool available;
   String bookAbstract;
-  String image;
+  String image1;
+  String image2;
+  String image3;
   String shipmentType;
 
   @override
-  operator ==(other) =>
-      other is Book &&
-      donator == other.donator &&
-      name == other.name &&
-      author == other.author &&
-      category == other.category &&
-      numberOfPages == other.numberOfPages &&
-      bookId == other.bookId &&
-      available == other.available &&
-      bookAbstract == other.bookAbstract &&
-      image == other.image &&
-      shipmentType == other.shipmentType;
+  operator ==(other) => other is Book && bookId == other.bookId;
+
   @override
-  int get hashCode => Object.hash(donator, name, author, category,
-      numberOfPages, available, bookAbstract, image, shipmentType);
+  int get hashCode => Object.hash(bookId, name);
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
-        donator: json["donator"],
+        donator: json["donor"],
         name: json["name"],
         author: json["author"],
         category: json["category"],
-        numberOfPages: json["numberOfPages"],
+        numberOfPages: json["page_count"],
         bookId: json["id"],
         available: json["available"],
         bookAbstract: json["abstract"],
-        image: json["images"],
+        image1: json["image1"],
+        image2: json["image2"],
+        image3: json["image3"],
         shipmentType: json["shipment_type"],
       );
 
   Map<String, dynamic> toJson() => {
-        "donator": donator,
+        "donor": donator,
         "name": name,
         "author": author,
         "category": category,
-        "numberOfPages": numberOfPages,
+        "page_count": numberOfPages,
         "id": bookId,
         "available": available,
         "abstract": bookAbstract,
-        "images": image,
+        "image1": image1,
+        "image2": image2,
+        "image3": image3,
         "shipment_type": shipmentType
       };
 }

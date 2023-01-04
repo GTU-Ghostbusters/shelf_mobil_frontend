@@ -66,29 +66,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   const SizedBox(height: 7),
                   TextFormField(
-                    validator: (surname) {
-                      if (surname!.length < 3) {
-                        return 'The surname must consist of at least 3 characters.';
-                      } else {
-                        return null;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      prefixIcon:
-                          Icon(Icons.person, color: Colors.grey.shade900),
-                      labelText: "Surname",
-                      labelStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      hintText: "Please enter surname",
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 7),
-                  TextFormField(
                     controller: emailController,
                     validator: (email) {
                       if (!EmailValidator.validate(email!)) {
@@ -310,17 +287,6 @@ class _ConfirmationState extends State<Confirmation> {
                     ),
                     child: const Text(
                       "CONFIRM",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      fixedSize:
-                          Size(MediaQuery.of(context).size.width * 0.4, 40),
-                    ),
-                    child: const Text(
-                      "SEND AGAIN",
                       style: TextStyle(fontSize: 16),
                     ),
                   ),

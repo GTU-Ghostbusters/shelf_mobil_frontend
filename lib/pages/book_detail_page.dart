@@ -55,7 +55,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                   const EdgeInsets.symmetric(horizontal: 20),
                               child: SizedBox(
                                 child: Image.network(
-                                  widget.book.image,
+                                  widget.book.image1,
                                   fit: BoxFit.contain,
                                 ),
                               ),

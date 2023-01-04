@@ -216,7 +216,7 @@ class _CartPageState extends State<CartPage> {
                                           0.2,
                                       child: Image.network(
                                         CartPage
-                                            .cartItems[index].bookItem.image,
+                                            .cartItems[index].bookItem.image1,
                                       ),
                                     ),
                                   ),
