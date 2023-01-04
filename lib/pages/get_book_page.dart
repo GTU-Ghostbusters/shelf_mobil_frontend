@@ -223,7 +223,7 @@ class _GetBookPageState extends State<GetBookPage> {
                             width: constraints.maxWidth * 0.75,
                             padding: const EdgeInsets.all(5),
                             child: Image.network(
-                              bookList[index].image,
+                              bookList[index].image1,
                               fit: BoxFit.contain,
                             ),
                           ),

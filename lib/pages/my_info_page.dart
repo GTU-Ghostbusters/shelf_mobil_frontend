@@ -30,13 +30,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
-                  icon: Icon(Icons.person, color: Colors.grey.shade900),
-                  label: "Surname",
-                  text: "user surname",
-                  onChanged: (surname) {},
-                ),
-                const SizedBox(height: 5),
-                TextFieldWidget(
                   icon: Icon(Icons.email_rounded, color: Colors.grey.shade900),
                   label: "Email",
                   text: "user email",

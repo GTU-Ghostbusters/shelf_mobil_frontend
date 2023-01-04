@@ -123,7 +123,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                   0.2,
                                               child: Image.network(
                                                 FavoritesPage
-                                                    .favBooks[index].image,
+                                                    .favBooks[index].image1,
                                               ),
                                             ),
                                           ),
