@@ -62,8 +62,6 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
                     child: TextFormField(
                       keyboardType: _selectItem
                           ? TextInputType.emailAddress
@@ -81,15 +79,11 @@ class _LoginPageState extends State<LoginPage> {
                         hintText: _selectItem
                             ? "Please enter your email"
                             : "Please enter your phone number",
-                        border: const OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
                   Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
                     child: TextFormField(
                       obscureText: _showPassword,
                       keyboardType: TextInputType.visiblePassword,
@@ -103,10 +97,8 @@ class _LoginPageState extends State<LoginPage> {
                             });
                           },
                           icon: _showPassword
-                              ? Icon(Icons.visibility_off,
-                                  color: Colors.grey.shade900)
-                              : Icon(Icons.visibility,
-                                  color: Colors.grey.shade900),
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility),
                         ),
                         labelText: "Password",
                         labelStyle: const TextStyle(
@@ -114,9 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.bold,
                         ),
                         hintText: "Please enter your password",
-                        border: const OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -167,9 +157,7 @@ class _LoginPageState extends State<LoginPage> {
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 10.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
+              child: Container(
                 child: TextFormField(
                   controller: email_,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -183,18 +171,17 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   keyboardType: TextInputType.emailAddress,
                   textAlign: TextAlign.center,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.email_rounded),
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    prefixIcon:
+                        Icon(Icons.email_rounded, color: Colors.grey.shade900),
                     labelText: "E-mail",
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(12),
-                      ),
-                    ),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
               ),
@@ -299,24 +286,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     height: 12,
                   ),
                   Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
-                        labelText: "Please enter the code",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
-                      ),
+                          labelText: "Please enter the code",
+                          border: OutlineInputBorder()),
                     ),
                   ),
                   Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
                     child: TextFormField(
                       validator: Validators.compose(
                         [
@@ -333,35 +311,28 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       obscureText: _showPassword,
                       decoration: InputDecoration(
                         errorMaxLines: 3,
-                        prefixIcon: const Icon(Icons.lock_outline),
+                        prefixIcon: Icon(Icons.lock_outline,
+                            color: Colors.grey.shade900),
                         suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
                               _showPassword = !_showPassword;
                             });
                           },
-                          icon: Icon(
-                            _showPassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
+                          icon: _showPassword
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility),
                         ),
                         labelText: "New password",
                         labelStyle: const TextStyle(
                           fontSize: 16,
                         ),
                         hintText: "Please enter your password",
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
                   Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
                     child: TextFormField(
                       obscureText: _showPassword_1,
                       validator: (value) {
@@ -372,29 +343,24 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       },
                       decoration: InputDecoration(
                         errorMaxLines: 3,
-                        prefixIcon: const Icon(Icons.lock_outline),
+                        prefixIcon: Icon(Icons.lock_outline,
+                            color: Colors.grey.shade900),
                         suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
                               _showPassword_1 = !_showPassword_1;
                             });
                           },
-                          icon: Icon(
-                            _showPassword_1
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
+                          icon: _showPassword_1
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility),
                         ),
                         labelText: "New password again",
                         labelStyle: const TextStyle(
                           fontSize: 16,
                         ),
                         hintText: "Please enter password again",
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),

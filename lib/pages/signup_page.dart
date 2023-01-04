@@ -61,14 +61,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontWeight: FontWeight.bold,
                       ),
                       hintText: "Please enter name",
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                      ),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 7),
                   TextFormField(
                     validator: (surname) {
                       if (surname!.length < 3) {
@@ -88,14 +84,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontWeight: FontWeight.bold,
                       ),
                       hintText: "Please enter surname",
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                      ),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 7),
                   TextFormField(
                     controller: emailController,
                     validator: (email) {
@@ -117,14 +109,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontWeight: FontWeight.bold,
                       ),
                       hintText: "Please enter e-mail",
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                      ),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 7),
                   TextFormField(
                     validator: (phoneNumber) {
                       if (phoneNumber!.isEmpty) {
@@ -147,14 +135,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontWeight: FontWeight.bold,
                       ),
                       hintText: "Please enter phone number",
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                      ),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 7),
                   TextFormField(
                     validator: Validators.compose(
                       [
@@ -183,10 +167,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           });
                         },
                         icon: _showPassword
-                            ? Icon(Icons.visibility_off,
-                                color: Colors.grey.shade900)
-                            : Icon(Icons.visibility,
-                                color: Colors.grey.shade900),
+                            ? const Icon(Icons.visibility_off)
+                            : const Icon(Icons.visibility),
                       ),
                       labelText: "Password",
                       labelStyle: const TextStyle(
@@ -194,14 +176,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontWeight: FontWeight.bold,
                       ),
                       hintText: "Please enter password",
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                      ),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 7),
                   TextFormField(
                     obscureText: _showPassword_1,
                     validator: (value) {
@@ -223,10 +201,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           });
                         },
                         icon: _showPassword_1
-                            ? Icon(Icons.visibility_off,
-                                color: Colors.grey.shade900)
-                            : Icon(Icons.visibility,
-                                color: Colors.grey.shade900),
+                            ? const Icon(Icons.visibility_off)
+                            : const Icon(Icons.visibility),
                       ),
                       labelText: "Password again",
                       labelStyle: const TextStyle(
@@ -234,11 +210,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontWeight: FontWeight.bold,
                       ),
                       hintText: "Please enter password again",
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                      ),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(height: 13),
@@ -325,18 +297,12 @@ class _ConfirmationState extends State<Confirmation> {
                     height: 10,
                   ),
                   Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
                         labelText: "Please enter the code",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
+                        border: OutlineInputBorder(),
                       ),
                     ),
                   ),

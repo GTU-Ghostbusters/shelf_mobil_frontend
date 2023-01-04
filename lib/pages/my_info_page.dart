@@ -18,66 +18,69 @@ class _MyInfoPageState extends State<MyInfoPage> {
       body: Container(
         padding: const EdgeInsets.all(26),
         decoration: Background().getBackground(),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextFieldWidget(
-                icon: const Icon(Icons.person),
-                label: "Name",
-                text: "user name",
-                onChanged: (name) {},
-              ),
-              const SizedBox(height: 5),
-              TextFieldWidget(
-                icon: const Icon(Icons.person),
-                label: "Surname",
-                text: "user surname",
-                onChanged: (surname) {},
-              ),
-              const SizedBox(height: 5),
-              TextFieldWidget(
-                icon: const Icon(Icons.email_rounded),
-                label: "Email",
-                text: "user email",
-                onChanged: (email) {},
-              ),
-              const SizedBox(height: 5),
-              TextFieldWidget(
-                icon: const Icon(Icons.phone),
-                label: "Phone Number",
-                text: "user phone",
-                onChanged: (phone) {},
-              ),
-              const SizedBox(height: 5),
-              TextFieldWidget(
-                icon: const Icon(Icons.lock_outline),
-                label: "Password",
-                text: "user password",
-                onChanged: (password) {},
-              ),
-              const SizedBox(height: 5),
-              TextFieldWidget(
-                icon: const Icon(Icons.location_on),
-                label: "Address",
-                maxLines: 3,
-                text: "user address",
-                onChanged: (address) {},
-              ),
-              const SizedBox(height: 5),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size(MediaQuery.of(context).size.width * 0.4, 40),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextFieldWidget(
+                  icon: const Icon(Icons.person),
+                  label: "Name",
+                  text: "user name",
+                  onChanged: (name) {},
+                ),
+                const SizedBox(height: 5),
+                TextFieldWidget(
+                  icon: const Icon(Icons.person),
+                  label: "Surname",
+                  text: "user surname",
+                  onChanged: (surname) {},
+                ),
+                const SizedBox(height: 5),
+                TextFieldWidget(
+                  icon: const Icon(Icons.email_rounded),
+                  label: "Email",
+                  text: "user email",
+                  onChanged: (email) {},
+                ),
+                const SizedBox(height: 5),
+                TextFieldWidget(
+                  icon: const Icon(Icons.phone),
+                  label: "Phone Number",
+                  text: "user phone",
+                  onChanged: (phone) {},
+                ),
+                const SizedBox(height: 5),
+                TextFieldWidget(
+                  icon: const Icon(Icons.lock_outline),
+                  label: "Password",
+                  text: "user password",
+                  onChanged: (password) {},
+                ),
+                const SizedBox(height: 5),
+                TextFieldWidget(
+                  icon: const Icon(Icons.location_on),
+                  label: "Address",
+                  maxLines: 3,
+                  text: "user address",
+                  onChanged: (address) {},
+                ),
+                const SizedBox(height: 5),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    fixedSize:
+                        Size(MediaQuery.of(context).size.width * 0.4, 40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  child: const Text(
+                    "SAVE",
+                    style: TextStyle(fontSize: 16),
                   ),
                 ),
-                child: const Text(
-                  "SAVE",
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
