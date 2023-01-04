@@ -13,6 +13,7 @@ class Book {
     required this.author,
     required this.category,
     required this.numberOfPages,
+    required this.bookId,
     required this.available,
     required this.bookAbstract,
     required this.image,
@@ -24,6 +25,7 @@ class Book {
   String author;
   String category;
   int numberOfPages;
+  int bookId;
   bool available;
   String bookAbstract;
   String image;
@@ -37,6 +39,7 @@ class Book {
       author == other.author &&
       category == other.category &&
       numberOfPages == other.numberOfPages &&
+      bookId == other.bookId &&
       available == other.available &&
       bookAbstract == other.bookAbstract &&
       image == other.image &&
@@ -51,6 +54,7 @@ class Book {
         author: json["author"],
         category: json["category"],
         numberOfPages: json["numberOfPages"],
+        bookId: json["id"],
         available: json["available"],
         bookAbstract: json["abstract"],
         image: json["images"],
@@ -63,6 +67,7 @@ class Book {
         "author": author,
         "category": category,
         "numberOfPages": numberOfPages,
+        "id": bookId,
         "available": available,
         "abstract": bookAbstract,
         "images": image,

@@ -128,8 +128,6 @@ class _AccountPageState extends State<AccountPage> {
       style: ElevatedButton.styleFrom(
         backgroundColor: color ?? Theme.of(context).primaryColor,
         fixedSize: Size(MediaQuery.of(context).size.width * widthConst, height),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
       ),
       onPressed: onPressed,
       child: Text(text,

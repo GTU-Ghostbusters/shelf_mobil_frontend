@@ -23,42 +23,42 @@ class _MyInfoPageState extends State<MyInfoPage> {
             child: Column(
               children: [
                 TextFieldWidget(
-                  icon: const Icon(Icons.person),
+                  icon: Icon(Icons.person, color: Colors.grey.shade900),
                   label: "Name",
                   text: "user name",
                   onChanged: (name) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
-                  icon: const Icon(Icons.person),
+                  icon: Icon(Icons.person, color: Colors.grey.shade900),
                   label: "Surname",
                   text: "user surname",
                   onChanged: (surname) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
-                  icon: const Icon(Icons.email_rounded),
+                  icon: Icon(Icons.email_rounded, color: Colors.grey.shade900),
                   label: "Email",
                   text: "user email",
                   onChanged: (email) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
-                  icon: const Icon(Icons.phone),
+                  icon: Icon(Icons.phone, color: Colors.grey.shade900),
                   label: "Phone Number",
                   text: "user phone",
                   onChanged: (phone) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
-                  icon: const Icon(Icons.lock_outline),
+                  icon: Icon(Icons.lock_outline, color: Colors.grey.shade900),
                   label: "Password",
                   text: "user password",
                   onChanged: (password) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
-                  icon: const Icon(Icons.location_on),
+                  icon: Icon(Icons.location_on, color: Colors.grey.shade900),
                   label: "Address",
                   maxLines: 3,
                   text: "user address",
@@ -70,9 +70,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   style: ElevatedButton.styleFrom(
                     fixedSize:
                         Size(MediaQuery.of(context).size.width * 0.4, 40),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
                   ),
                   child: const Text(
                     "SAVE",

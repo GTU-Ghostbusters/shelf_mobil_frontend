@@ -106,7 +106,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBarDesign().createAppBar("SHARE BOOK", const SizedBox(),[]),
+      appBar: AppBarDesign().createAppBar("SHARE BOOK", const SizedBox(), []),
       body: Container(
         height: double.infinity,
         padding: const EdgeInsets.all(40),
@@ -135,23 +135,22 @@ class _ShareBookPageState extends State<ShareBookPage> {
                             return null;
                           }
                         },
-                        decoration: const InputDecoration(
-                          filled: true,
-                          prefixIcon: Icon(Icons.menu_book),
-                          labelText: "Book Name",
-                          labelStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          hintText: "Please enter book name",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            prefixIcon: Icon(
+                              Icons.menu_book,
+                              color: Colors.grey.shade900,
                             ),
-                          ),
-                        ),
+                            labelText: "Book Name",
+                            labelStyle: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            hintText: "Please enter book name",
+                            border: const OutlineInputBorder()),
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 7),
                       TextFormField(
                         validator: (name) {
                           if (name!.length < 5) {
@@ -160,44 +159,41 @@ class _ShareBookPageState extends State<ShareBookPage> {
                             return null;
                           }
                         },
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           filled: true,
-                          prefixIcon: Icon(Icons.person),
+                          fillColor: Colors.white,
+                          prefixIcon:
+                              Icon(Icons.person, color: Colors.grey.shade900),
                           labelText: "Author Name",
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           hintText: "Please enter author name",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                          ),
+                          border: const OutlineInputBorder(),
                         ),
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 7),
                       TextFormField(
                         controller: numberOfPages,
                         keyboardType: TextInputType.number,
                         maxLength: 4,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           filled: true,
-                          prefixIcon: Icon(Icons.numbers),
+                          fillColor: Colors.white,
+                          prefixIcon:
+                              Icon(Icons.numbers, color: Colors.grey.shade900),
                           labelText: "Number Of Pages",
-                          labelStyle: TextStyle(
+                          counterText: "",
+                          labelStyle: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           hintText: "Please enter number of pages",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                          ),
+                          border: const OutlineInputBorder(),
                         ),
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 7),
                       DropdownButtonFormField<Category>(
                         value: _selectedCategory,
                         items: _categoryList!
@@ -210,43 +206,41 @@ class _ShareBookPageState extends State<ShareBookPage> {
                             .toList(),
                         onChanged: (item) =>
                             setState(() => _selectedCategory = item),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           filled: true,
-                          prefixIcon: Icon(Icons.type_specimen),
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(Icons.type_specimen,
+                              color: Colors.grey.shade900),
                           labelText: " Category",
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           hintText: "Please choose category of book",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                          ),
+                          border: const OutlineInputBorder(),
                         ),
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 7),
                       TextFormField(
                         keyboardType: TextInputType.text,
                         maxLength: 300,
                         maxLines: 4,
                         minLines: 1,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           filled: true,
-                          prefixIcon: Icon(Icons.text_snippet_rounded),
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(Icons.text_snippet_rounded,
+                              color: Colors.grey.shade900),
                           labelText: "Details of book",
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                           hintText: "Please enter details of book",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                          ),
+                          border: const OutlineInputBorder(),
                         ),
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 7),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.8,
                         decoration: BoxDecoration(
@@ -262,11 +256,9 @@ class _ShareBookPageState extends State<ShareBookPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const SizedBox(width: 5),
-                            Icon(
-                              Icons.local_shipping,
-                              size: MediaQuery.of(context).size.width * 0.075,
-                              color: const Color.fromARGB(150, 37, 37, 37),
-                            ),
+                            Icon(Icons.local_shipping,
+                                size: MediaQuery.of(context).size.width * 0.075,
+                                color: Colors.grey.shade900),
                             const SizedBox(width: 5),
                             ToggleSwitch(
                               initialLabelIndex: _cargoPaymentType ==
@@ -301,7 +293,12 @@ class _ShareBookPageState extends State<ShareBookPage> {
                       ),
                       const SizedBox(height: 25),
                       ElevatedButton(
-                          onPressed: (() {}), child: const Text("UPLOAD")),
+                          onPressed: (() {}),
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: Size(
+                                MediaQuery.of(context).size.width * 0.4, 40),
+                          ),
+                          child: const Text("UPLOAD")),
                       const SizedBox(height: 15),
                     ],
                   ),

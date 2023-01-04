@@ -115,7 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(height: 7),
                   TextFormField(
                     validator: (phoneNumber) {
-                      if (phoneNumber!.isEmpty) {
+                      if (phoneNumber!.isEmpty || phoneNumber.length < 10) {
                         return "Please enter a valid phone number.";
                       } else {
                         return null;
@@ -218,9 +218,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     style: ElevatedButton.styleFrom(
                       fixedSize:
                           Size(MediaQuery.of(context).size.width * 0.4, 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -293,9 +290,7 @@ class _ConfirmationState extends State<Confirmation> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   Card(
                     child: TextFormField(
                       keyboardType: TextInputType.number,
@@ -306,17 +301,12 @@ class _ConfirmationState extends State<Confirmation> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       fixedSize:
                           Size(MediaQuery.of(context).size.width * 0.4, 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
                     ),
                     child: const Text(
                       "CONFIRM",
@@ -328,9 +318,6 @@ class _ConfirmationState extends State<Confirmation> {
                     style: ElevatedButton.styleFrom(
                       fixedSize:
                           Size(MediaQuery.of(context).size.width * 0.4, 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
                     ),
                     child: const Text(
                       "SEND AGAIN",

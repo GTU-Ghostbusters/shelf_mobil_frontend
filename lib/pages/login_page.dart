@@ -126,9 +126,6 @@ class _LoginPageState extends State<LoginPage> {
                     style: ElevatedButton.styleFrom(
                       fixedSize:
                           Size(MediaQuery.of(context).size.width * 0.35, 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
                     ),
                     onPressed: () {},
                     icon: const Icon(Icons.login),
@@ -157,32 +154,27 @@ class _LoginPageState extends State<LoginPage> {
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 10.0),
-              child: Container(
-                child: TextFormField(
-                  controller: email_,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (email) {
-                    if (!EmailValidator.validate(email!)) {
-                      return 'Please enter a valid e-mail.';
-                    } else {
-                      emailCheck = true;
-                      return null;
-                    }
-                  },
-                  keyboardType: TextInputType.emailAddress,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    prefixIcon:
-                        Icon(Icons.email_rounded, color: Colors.grey.shade900),
-                    labelText: "E-mail",
-                    labelStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    border: const OutlineInputBorder(),
+              child: TextFormField(
+                controller: email_,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (email) {
+                  if (!EmailValidator.validate(email!)) {
+                    return 'Please enter a valid e-mail.';
+                  } else {
+                    emailCheck = true;
+                    return null;
+                  }
+                },
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  prefixIcon:
+                      Icon(Icons.email_rounded, color: Colors.grey.shade900),
+                  labelText: "E-mail",
+                  labelStyle: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
+                  border: const OutlineInputBorder(),
                 ),
               ),
             ),
@@ -272,96 +264,95 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 4.0),
-                    child: Text(
-                      "The reset code was sent to the email: ${widget.email}",
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Text(
+                    "The reset code was sent to the email: ${widget.email}",
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(
                     height: 12,
                   ),
-                  Card(
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      decoration: const InputDecoration(
-                          labelText: "Please enter the code",
-                          border: OutlineInputBorder()),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelText: "Please enter the code",
+                        border: OutlineInputBorder()),
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    validator: Validators.compose(
+                      [
+                        Validators.patternRegExp(
+                            RegExp(
+                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'),
+                            "Password must contain at least one uppercase letter, one lowercase letter, one number and must be at least 8 characters long.")
+                      ],
+                    ),
+                    onChanged: (value) {
+                      _password = value;
+                    },
+                    //maxLength: 15,
+                    obscureText: _showPassword,
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      errorMaxLines: 3,
+                      prefixIcon:
+                          Icon(Icons.lock_outline, color: Colors.grey.shade900),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
+                        icon: _showPassword
+                            ? const Icon(Icons.visibility_off)
+                            : const Icon(Icons.visibility),
+                      ),
+                      labelText: "New password",
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      hintText: "Please enter your password",
+                      border: const OutlineInputBorder(),
                     ),
                   ),
-                  Card(
-                    child: TextFormField(
-                      validator: Validators.compose(
-                        [
-                          Validators.patternRegExp(
-                              RegExp(
-                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'),
-                              "Password must contain at least one uppercase letter, one lowercase letter, one number and must be at least 8 characters long.")
-                        ],
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    obscureText: _showPassword_1,
+                    validator: (value) {
+                      if (value != _password) {
+                        return 'Password is not matching!';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      errorMaxLines: 3,
+                      prefixIcon:
+                          Icon(Icons.lock_outline, color: Colors.grey.shade900),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showPassword_1 = !_showPassword_1;
+                          });
+                        },
+                        icon: _showPassword_1
+                            ? const Icon(Icons.visibility_off)
+                            : const Icon(Icons.visibility),
                       ),
-                      onChanged: (value) {
-                        _password = value;
-                      },
-                      //maxLength: 15,
-                      obscureText: _showPassword,
-                      decoration: InputDecoration(
-                        errorMaxLines: 3,
-                        prefixIcon: Icon(Icons.lock_outline,
-                            color: Colors.grey.shade900),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _showPassword = !_showPassword;
-                            });
-                          },
-                          icon: _showPassword
-                              ? const Icon(Icons.visibility_off)
-                              : const Icon(Icons.visibility),
-                        ),
-                        labelText: "New password",
-                        labelStyle: const TextStyle(
-                          fontSize: 16,
-                        ),
-                        hintText: "Please enter your password",
-                        border: const OutlineInputBorder(),
+                      labelText: "New password again",
+                      labelStyle: const TextStyle(
+                        fontSize: 16,
                       ),
-                    ),
-                  ),
-                  Card(
-                    child: TextFormField(
-                      obscureText: _showPassword_1,
-                      validator: (value) {
-                        if (value != _password) {
-                          return 'Password is not matching!';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        errorMaxLines: 3,
-                        prefixIcon: Icon(Icons.lock_outline,
-                            color: Colors.grey.shade900),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _showPassword_1 = !_showPassword_1;
-                            });
-                          },
-                          icon: _showPassword_1
-                              ? const Icon(Icons.visibility_off)
-                              : const Icon(Icons.visibility),
-                        ),
-                        labelText: "New password again",
-                        labelStyle: const TextStyle(
-                          fontSize: 16,
-                        ),
-                        hintText: "Please enter password again",
-                        border: const OutlineInputBorder(),
-                      ),
+                      hintText: "Please enter password again",
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                   const SizedBox(
@@ -371,9 +362,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     style: ElevatedButton.styleFrom(
                       fixedSize:
                           Size(MediaQuery.of(context).size.width * 0.35, 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
                     ),
                     onPressed: () {},
                     child: const Text(
