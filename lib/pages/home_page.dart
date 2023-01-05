@@ -48,6 +48,8 @@ class _HomePageState extends State<HomePage> {
 
   void getData() async {
     _categoryList = (await ApiService().getCategories());
+    var _user = (await ApiService().login("", ""));
+
     _categoryList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
@@ -250,7 +252,8 @@ class _HomePageState extends State<HomePage> {
               width: MediaQuery.of(context).size.width * 0.5,
               height: MediaQuery.of(context).size.height * 0.35,
               child: Image.network(
-                  fit: BoxFit.fitHeight, "https://hodikids.com/${_categoryList[index].imagePath}"),
+                  fit: BoxFit.fitHeight,
+                  "https://hodikids.com/${_categoryList[index].imagePath}"),
             ),
             Column(children: [
               Text(

@@ -41,11 +41,11 @@ class ApiService {
         await http.post(Uri.parse(ApiConstants.baseUrl + ApiConstants.login),
             headers: requestHeaders,
             body: jsonEncode(<String, String>{
-              "email": email,
-              "password": password,
+              "email": "aysegul_deneme@example.com",
+              "password": "dummy_password",
             }));
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       // save the access token
       bearerToken = data["access_token"];
@@ -69,19 +69,21 @@ class ApiService {
     }
   }
 
-  Future<bool> register(String name, String email, String password) async {
-    final response =
-        await http.post(Uri.parse(ApiConstants.baseUrl + ApiConstants.register),
-            headers: requestHeaders,
-            body: jsonEncode(<String, String>{
-              "name": name,
-              "email": email,
-              "password": password,
-            }));
+  Future<bool> register(
+      String name, String email, String password, String phone) async {
+    final response = await http.post(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.register),
+        headers: requestHeaders,
+        body: jsonEncode(<String, String>{
+          "name": name,
+          "email": email,
+          "password": password,
+          "phone": phone
+        }));
 
+    var data = jsonDecode(response.body);
     if (response.statusCode == 201) {
-      // after registeration user should verify provided email for login
-      return true;
+      return data["result"];
     } else {
       throw Exception('Failed to register.');
     }
@@ -168,7 +170,7 @@ class ApiService {
         headers: requestHeaders,
         body: jsonEncode(book.toJson()));
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return Book.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to add book.');
