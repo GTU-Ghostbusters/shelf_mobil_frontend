@@ -11,7 +11,10 @@ import '../models/category.dart';
 import '../models/user.dart';
 
 class ApiConstants {
-  static String baseUrl = 'https://hodikids.com/api';
+  // static String baseUrl = 'https://hodikids.com/api';
+  static String baseUrl =
+      'https://my-json-server.typicode.com/emreguvn/db_test/';
+
   static String login = '/login';
   static String logout = '/logout';
   static String register = '/register';
@@ -186,10 +189,13 @@ class ApiService {
   }
 
   Future<List<Book>> getBooksWithCategory(String category) async {
-    var response = await http.get(
-        Uri.parse(
-            "${ApiConstants.baseUrl}${ApiConstants.category}?category=$category"),
-        headers: requestHeaders);
+    // API
+    // var response = await http.get(
+    //     Uri.parse(
+    //         "${ApiConstants.baseUrl}${ApiConstants.category}?category=$category"),
+    //     headers: requestHeaders);
+    // TEST
+    var response = await http.get(Uri.parse(ApiConstants.baseUrl + category));
 
     if (response.statusCode == 200) {
       return booksFromJson(response.body);
@@ -226,9 +232,14 @@ class ApiService {
 
   /* Category Operations */
   Future<List<Category>> getCategories() async {
-    var response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.category),
-        headers: requestHeaders);
+    // API
+    // var response = await http.get(
+    //     Uri.parse(ApiConstants.baseUrl + ApiConstants.category),
+    //     headers: requestHeaders);
+    // TEST
+
+    var response =
+        await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.category));
     if (response.statusCode == 200) {
       return categoryFromJson(response.body);
     } else {

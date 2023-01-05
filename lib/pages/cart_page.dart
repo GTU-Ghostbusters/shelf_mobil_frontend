@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/models/book.dart';
 import 'package:shelf_mobil_frontend/models/cart_item.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
+import 'package:shelf_mobil_frontend/pages/shipment_confirmaiton_page.dart';
 import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
@@ -306,14 +307,19 @@ class _CartPageState extends State<CartPage> {
             Padding(
               padding: const EdgeInsets.all(10),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: ((context) {
+                    return const ShipmentConfirmationPage(confirmedBookList: []);
+                  })));
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(
                       choosenItems!.isEmpty
                           ? Colors.grey
                           : Theme.of(context).primaryColor),
                 ),
-                child: const Text("ADD TO SHELF"),
+                child: const Text("CONFIRM CART"),
               ),
             ),
           ],

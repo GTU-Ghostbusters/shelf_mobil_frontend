@@ -249,7 +249,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
                 height: MediaQuery.of(context).size.height * 0.35,
-                child: Image.asset(fit: BoxFit.fitHeight, category.imagePath)),
+                child: Image.network(fit: BoxFit.fitHeight, category.imagePath)),
             Column(children: [
               Text(
                   category.numberOfBooks > 1

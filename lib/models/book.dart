@@ -41,21 +41,37 @@ class Book {
   @override
   int get hashCode => Object.hash(bookId, name);
 
+  // API
+  // factory Book.fromJson(Map<String, dynamic> json) => Book(
+  //       donator: json["donor"],
+  //       name: json["name"],
+  //       author: json["author"],
+  //       category: json["category"],
+  //       numberOfPages: json["page_count"],
+  //       bookId: json["id"],
+  //       available: json["available"],
+  //       bookAbstract: json["abstract"],
+  //       image1: json["image1"],
+  //       image2: json["image2"],
+  //       image3: json["image3"],
+  //       shipmentType: json["shipment_type"],
+  //     );
+
+  // TEST
   factory Book.fromJson(Map<String, dynamic> json) => Book(
-        donator: json["donor"],
+        donator: json["donator"],
         name: json["name"],
         author: json["author"],
         category: json["category"],
-        numberOfPages: json["page_count"],
-        bookId: json["id"],
+        numberOfPages: json["numberOfPages"],
+        bookId: 1,
         available: json["available"],
         bookAbstract: json["abstract"],
-        image1: json["image1"],
-        image2: json["image2"],
-        image3: json["image3"],
+        image1: json["images"],
+        image2: "",
+        image3: "",
         shipmentType: json["shipment_type"],
       );
-
   Map<String, dynamic> toJson() => {
         "donor": donator,
         "name": name,
