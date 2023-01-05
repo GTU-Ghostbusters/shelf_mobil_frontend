@@ -36,7 +36,7 @@ class ApiService {
       };
 
   /* User Operations */
-  Future<User> login(String email, String password) async {
+  Future<User?> login(String email, String password) async {
     final response =
         await http.post(Uri.parse(ApiConstants.baseUrl + ApiConstants.login),
             headers: requestHeaders,
@@ -46,9 +46,12 @@ class ApiService {
             }));
 
     if (response.statusCode == 201) {
-      // response contains access token and the user informations
-      // save the access token for later use
-      return User.fromJson(jsonDecode(response.body));
+      var data = jsonDecode(response.body);
+      // save the access token
+      bearerToken = data["access_token"];
+      return User.fromJson(data["user"]);
+    } else if (response.statusCode == 401) {
+      return null;
     } else {
       throw Exception('Failed to login.');
     }
@@ -186,7 +189,8 @@ class ApiService {
 
   Future<List<Book>> getBooksWithCategory(String category) async {
     var response = await http.get(
-        Uri.parse("${ApiConstants.baseUrl}${ApiConstants.category}?category=$category"),
+        Uri.parse(
+            "${ApiConstants.baseUrl}${ApiConstants.category}?category=$category"),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
