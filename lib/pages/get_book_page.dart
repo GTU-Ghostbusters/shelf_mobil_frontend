@@ -308,8 +308,7 @@ class _GetBookPageState extends State<GetBookPage> {
                                             ),
                                           )
                                         : setState(() {
-                                            if (FavoritesPage.isAddedToFav(
-                                                bookList[index])) {
+                                            if (FavoritesPage.isAddedToFav(bookList[index])) {
                                               FavoritesPage.removeFromFav(
                                                   bookList[index]);
                                             } else {
@@ -318,8 +317,7 @@ class _GetBookPageState extends State<GetBookPage> {
                                             }
                                           });
                                   },
-                                  icon: FavoritesPage.isAddedToFav(
-                                          bookList[index])
+                                  icon: FavoritesPage.isAddedToFav(bookList[index])
                                       ? const Icon(Icons.favorite_outlined,
                                           color: Colors.red)
                                       : const Icon(

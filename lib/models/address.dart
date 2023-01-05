@@ -11,43 +11,54 @@ class Address {
       {required this.addressName,
       required this.city,
       required this.town,
-      required this.openAddress});
+      required this.openAddress,
+      required this.phoneNumber});
   String addressName;
   String city;
   String town;
+  String phoneNumber;
   String openAddress;
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
       addressName: json["name"],
       city: json["city"],
       town: json["town"],
+      phoneNumber: json["phoneNumber"],
       openAddress: json["address"]);
 
-  Map<String, dynamic> toJson() =>
-      {"name": addressName, "city": city, "town": town, "address": openAddress};
+  Map<String, dynamic> toJson() => {
+        "name": addressName,
+        "city": city,
+        "town": town,
+        "address": openAddress,
+        "phoneNumber": phoneNumber
+      };
 }
 
-List<City> citiesFromStaticJson(String str) =>
-    List<City>.from(json.decode(str).map((x) => City.fromJson(x)));
+// LOCAL DATA
+List<City> citiesFromJson(String str) =>
+    List<City>.from(json.decode(str).map((x) => City.fromMap(x)));
 
 class City {
-  City({required this.cityName, required this.townList});
+  City({
+    required this.cityName,
+    required this.townList,
+  });
 
-  String cityName;
-  List<Town> townList;
+  final String cityName;
+  final List<Town> townList;
 
-  factory City.fromJson(Map<String, dynamic> json) => City(
+  factory City.fromMap(Map<String, dynamic> json) => City(
         cityName: json["name"],
-        townList: List<dynamic>.from(json['towns'])
-            .map((i) => Town.fromJson(i))
-            .toList(),
+        townList: List<Town>.from(json["towns"].map((x) => Town.fromMap(x))),
       );
 }
 
 class Town {
   Town({required this.townName});
-  String townName;
-  factory Town.fromJson(Map<String, dynamic> json) => Town(
-        townName: json["name"],
-      );
+
+  final String townName;
+
+  factory Town.fromMap(Map<String, dynamic> json) =>
+      Town(townName: json["name"]);
 }

@@ -16,19 +16,12 @@ class Category {
   String imagePath;
   int numberOfBooks;
 
-  // API
-  // factory Category.fromJson(Map<String, dynamic> json) => Category(
-  //     title: json["name"],
-  //     imagePath: '', //! json["image"]
-  //     numberOfBooks: json["books_count"]);
   
-  // TEST
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-      title: json["title"],
-      imagePath: json["imagePath"], //! json["image"]
-      numberOfBooks: json["numberOfBooks"],
-  );
-
+      title: json["name"],
+      imagePath: json["image"],
+      numberOfBooks: json["books_count"]);
+  
   Map<String, dynamic> toJson() =>
       {"name": title, "image": imagePath, "books_count": numberOfBooks};
 }

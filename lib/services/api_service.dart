@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shelf_mobil_frontend/models/address.dart';
 import 'package:shelf_mobil_frontend/models/author.dart';
@@ -11,10 +10,7 @@ import '../models/category.dart';
 import '../models/user.dart';
 
 class ApiConstants {
-  // static String baseUrl = 'https://hodikids.com/api';
-  static String baseUrl =
-      'https://my-json-server.typicode.com/emreguvn/db_test/';
-
+  static String baseUrl = 'https://hodikids.com/api';
   static String login = '/login';
   static String logout = '/logout';
   static String register = '/register';
@@ -189,13 +185,9 @@ class ApiService {
   }
 
   Future<List<Book>> getBooksWithCategory(String category) async {
-    // API
-    // var response = await http.get(
-    //     Uri.parse(
-    //         "${ApiConstants.baseUrl}${ApiConstants.category}?category=$category"),
-    //     headers: requestHeaders);
-    // TEST
-    var response = await http.get(Uri.parse(ApiConstants.baseUrl + category));
+    var response = await http.get(
+        Uri.parse("${ApiConstants.baseUrl}${ApiConstants.category}?category=$category"),
+        headers: requestHeaders);
 
     if (response.statusCode == 200) {
       return booksFromJson(response.body);
@@ -232,28 +224,13 @@ class ApiService {
 
   /* Category Operations */
   Future<List<Category>> getCategories() async {
-    // API
-    // var response = await http.get(
-    //     Uri.parse(ApiConstants.baseUrl + ApiConstants.category),
-    //     headers: requestHeaders);
-    // TEST
-
-    var response =
-        await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.category));
+    var response = await http.get(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.category),
+        headers: requestHeaders);
     if (response.statusCode == 200) {
       return categoryFromJson(response.body);
     } else {
       throw Exception('Failed to load categories.');
     }
-  }
-
-  /* Address Operations */
-  Future<List<City>> getCities() async {
-    String readingString =
-        await rootBundle.loadString("assets/data/address.json");
-    var jsonObject = jsonDecode(readingString);
-    List<City> allCities =
-        (jsonObject as List).map((cityMap) => City.fromJson(cityMap)).toList();
-    return allCities;
   }
 }

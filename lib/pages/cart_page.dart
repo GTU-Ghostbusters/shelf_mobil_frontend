@@ -308,9 +308,14 @@ class _CartPageState extends State<CartPage> {
               padding: const EdgeInsets.all(10),
               child: ElevatedButton(
                 onPressed: () {
+                  List<Book> confirmedBookList = [];
+                  for (var item in choosenItems!) {
+                    confirmedBookList.add(item.bookItem);
+                  }
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: ((context) {
-                    return const ShipmentConfirmationPage(confirmedBookList: []);
+                    return ShipmentConfirmationPage(
+                        confirmedBookList: confirmedBookList);
                   })));
                 },
                 style: ButtonStyle(

@@ -36,42 +36,31 @@ class Book {
   final String shipmentType;
 
   @override
-  operator ==(other) => other is Book && bookId == other.bookId;
-
+  operator ==(other) =>
+      other is Book &&
+      bookId == other.bookId &&
+      name == other.name &&
+      author == other.author &&
+      category == other.category &&
+      available == other.available;
   @override
-  int get hashCode => Object.hash(bookId, name);
+  int get hashCode => Object.hash(bookId, name, author, category, available);
 
-  // API
-  // factory Book.fromJson(Map<String, dynamic> json) => Book(
-  //       donator: json["donor"],
-  //       name: json["name"],
-  //       author: json["author"],
-  //       category: json["category"],
-  //       numberOfPages: json["page_count"],
-  //       bookId: json["id"],
-  //       available: json["available"],
-  //       bookAbstract: json["abstract"],
-  //       image1: json["image1"],
-  //       image2: json["image2"],
-  //       image3: json["image3"],
-  //       shipmentType: json["shipment_type"],
-  //     );
-
-  // TEST
   factory Book.fromJson(Map<String, dynamic> json) => Book(
-        donator: json["donator"],
+        donator: json["donor"],
         name: json["name"],
         author: json["author"],
         category: json["category"],
-        numberOfPages: json["numberOfPages"],
-        bookId: 1,
+        numberOfPages: json["page_count"],
+        bookId: json["id"],
         available: json["available"],
         bookAbstract: json["abstract"],
-        image1: json["images"],
-        image2: "",
-        image3: "",
+        image1: json["image1"],
+        image2: json["image2"],
+        image3: json["image3"],
         shipmentType: json["shipment_type"],
       );
+
   Map<String, dynamic> toJson() => {
         "donor": donator,
         "name": name,
