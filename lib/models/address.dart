@@ -1,24 +1,53 @@
 import 'dart:convert';
 
-List<Adress> addressFromJson(String str) =>
-    List<Adress>.from(json.decode(str).map((x) => Adress.fromJson(x)));
+List<Address> addressFromJson(String str) =>
+    List<Address>.from(json.decode(str).map((x) => Address.fromJson(x)));
 
-String addressToJson(List<Adress> data) =>
+String addressToJson(List<Address> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Adress {
-  Adress({required this.name});
+class Address {
+  Address(
+      {required this.addressName,
+      required this.city,
+      required this.town,
+      required this.openAddress});
+  String addressName;
+  String city;
+  String town;
+  String openAddress;
 
-  String name;
+  factory Address.fromJson(Map<String, dynamic> json) => Address(
+      addressName: json["name"],
+      city: json["city"],
+      town: json["town"],
+      openAddress: json["address"]);
 
-  @override
-  operator ==(other) => other is Adress && name == other.name;
+  Map<String, dynamic> toJson() =>
+      {"name": addressName, "city": city, "town": town, "address": openAddress};
+}
 
-  factory Adress.fromJson(Map<String, dynamic> json) => Adress(
-        name: json["name"],
+List<City> citiesFromStaticJson(String str) =>
+    List<City>.from(json.decode(str).map((x) => City.fromJson(x)));
+
+class City {
+  City({required this.cityName, required this.townList});
+
+  String cityName;
+  List<Town> townList;
+
+  factory City.fromJson(Map<String, dynamic> json) => City(
+        cityName: json["name"],
+        townList: List<dynamic>.from(json['towns'])
+            .map((i) => Town.fromJson(i))
+            .toList(),
       );
+}
 
-  Map<String, dynamic> toJson() => {
-        "name": name,
-      };
+class Town {
+  Town({required this.townName});
+  String townName;
+  factory Town.fromJson(Map<String, dynamic> json) => Town(
+        townName: json["name"],
+      );
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shelf_mobil_frontend/models/address.dart';
 import 'package:shelf_mobil_frontend/models/author.dart';
@@ -100,7 +101,7 @@ class ApiService {
     }
   }
 
-  Future<bool> addAdress(Adress address) async {
+  Future<bool> addAdress(Address address) async {
     final response = await http.post(
         Uri.parse(
             ApiConstants.baseUrl + ApiConstants.address + ApiConstants.add),
@@ -233,5 +234,15 @@ class ApiService {
     } else {
       throw Exception('Failed to load categories.');
     }
+  }
+
+  /* Address Operations */
+  Future<List<City>> getCities() async {
+    String readingString =
+        await rootBundle.loadString("assets/data/address.json");
+    var jsonObject = jsonDecode(readingString);
+    List<City> allCities =
+        (jsonObject as List).map((cityMap) => City.fromJson(cityMap)).toList();
+    return allCities;
   }
 }
