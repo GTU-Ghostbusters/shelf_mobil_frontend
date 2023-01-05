@@ -48,8 +48,6 @@ class _HomePageState extends State<HomePage> {
 
   void getData() async {
     _categoryList = (await ApiService().getCategories());
-    var _user = (await ApiService().login("", ""));
-
     _categoryList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }

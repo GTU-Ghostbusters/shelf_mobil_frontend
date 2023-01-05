@@ -41,8 +41,8 @@ class ApiService {
         await http.post(Uri.parse(ApiConstants.baseUrl + ApiConstants.login),
             headers: requestHeaders,
             body: jsonEncode(<String, String>{
-              "email": "aysegul_deneme@example.com",
-              "password": "dummy_password",
+              "email": email,
+              "password": password,
             }));
 
     if (response.statusCode == 200) {
@@ -69,9 +69,9 @@ class ApiService {
     }
   }
 
-  Future<bool> register(
+  Future<http.Response> register(
       String name, String email, String password, String phone) async {
-    final response = await http.post(
+    return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.register),
         headers: requestHeaders,
         body: jsonEncode(<String, String>{
@@ -80,13 +80,6 @@ class ApiService {
           "password": password,
           "phone": phone
         }));
-
-    var data = jsonDecode(response.body);
-    if (response.statusCode == 201) {
-      return data["result"];
-    } else {
-      throw Exception('Failed to register.');
-    }
   }
 
   Future<bool> verifyEmail(int id, String verificationCode) async {
