@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:shelf_mobil_frontend/models/book.dart';
 import 'package:shelf_mobil_frontend/models/category.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
@@ -45,7 +46,7 @@ class BookSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return FutureBuilder<List<Book>>(
+    return FutureBuilder<Response>(
       future: ApiService().getBooksWithCategory("ALL"),
       builder: (context, snapshot) {
         var data = snapshot.data;
@@ -54,7 +55,7 @@ class BookSearchDelegate extends SearchDelegate {
             child: CircularProgressIndicator(),
           );
         }
-        List<Book> bookList = data!;
+        List<Book> bookList = booksFromJson(data!.body);
         List<Book> matchQuery = [];
         for (var i = 0; i < bookList.length; i++) {
           if (bookList[i].name.toLowerCase().contains(query.toLowerCase())) {
@@ -74,7 +75,7 @@ class BookSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder<List<Book>>(
+    return FutureBuilder<Response>(
       future: ApiService().getBooksWithCategory("ALL"),
       builder: (context, snapshot) {
         var data = snapshot.data;
@@ -83,7 +84,7 @@ class BookSearchDelegate extends SearchDelegate {
             child: CircularProgressIndicator(),
           );
         }
-        List<Book> bookList = data!;
+        List<Book> bookList = booksFromJson(data!.body);
 
         return ListView.builder(
           itemCount: bookList.length,

@@ -6,9 +6,6 @@ import 'package:shelf_mobil_frontend/models/author.dart';
 
 import 'package:shelf_mobil_frontend/models/book.dart';
 
-import '../models/category.dart';
-import '../models/user.dart';
-
 class ApiConstants {
   static String baseUrl = 'https://hodikids.com/api';
   static String login = '/login';
@@ -36,37 +33,19 @@ class ApiService {
       };
 
   /* User Operations */
-  Future<User?> login(String email, String password) async {
-    final response =
-        await http.post(Uri.parse(ApiConstants.baseUrl + ApiConstants.login),
-            headers: requestHeaders,
-            body: jsonEncode(<String, String>{
-              "email": email,
-              "password": password,
-            }));
-
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      // save the access token
-      bearerToken = data["access_token"];
-      return User.fromJson(data["user"]);
-    } else if (response.statusCode == 401) {
-      return null;
-    } else {
-      throw Exception('Failed to login.');
-    }
+  Future<http.Response> login(String email, String password) async {
+    return await http.post(Uri.parse(ApiConstants.baseUrl + ApiConstants.login),
+        headers: requestHeaders,
+        body: jsonEncode(<String, String>{
+          "email": email,
+          "password": password,
+        }));
   }
 
-  Future<bool> logout() async {
-    final response = await http.post(
+  Future<http.Response> logout() async {
+    return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.logout),
         headers: requestHeaders);
-
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      throw Exception('Failed to logout.');
-    }
   }
 
   Future<http.Response> register(
@@ -82,154 +61,89 @@ class ApiService {
         }));
   }
 
-  Future<bool> verifyEmail(int id, String verificationCode) async {
-    final response = await http.post(
+  Future<http.Response> verifyEmail(int id, String verificationCode) async {
+    return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.verifyEmail),
         headers: requestHeaders,
         body: jsonEncode(<String, String>{
           "user_id": id.toString(),
           "verification_code": verificationCode
         }));
-
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      throw Exception('Failed to verify user.');
-    }
   }
 
-  Future<bool> addAdress(Address address) async {
-    final response = await http.post(
+  Future<http.Response> addAdress(Address address) async {
+    return await http.post(
         Uri.parse(
             ApiConstants.baseUrl + ApiConstants.address + ApiConstants.add),
         headers: requestHeaders,
         body: jsonEncode(address.toJson()));
-
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      throw Exception('Failed to add address.');
-    }
   }
 
-  Future<bool> createOrder(int id) async {
-    final response = await http.post(
+  Future<http.Response> createOrder(int id) async {
+    return await http.post(
         Uri.parse(
             ApiConstants.baseUrl + ApiConstants.order + ApiConstants.create),
         headers: requestHeaders,
         body: jsonEncode(<String, int>{
           "address_id": id,
         }));
-
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      throw Exception('Failed to order create.');
-    }
   }
 
-  Future<bool> addCart(int id) async {
-    final response = await http.post(
+  Future<http.Response> addCart(int id) async {
+    return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.cart + ApiConstants.add),
         headers: requestHeaders,
         body: jsonEncode(<String, int>{
           'book_id': id,
         }));
-
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      throw Exception('Failed to add to cart.');
-    }
   }
 
-  Future<bool> deleteCart(int id) async {
-    final response = await http.post(
+  Future<http.Response> deleteCart(int id) async {
+    return await http.post(
         Uri.parse(
             '${ApiConstants.baseUrl}${ApiConstants.cart}\\$id${ApiConstants.delete}'),
         headers: requestHeaders);
-
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      throw Exception('Failed to delete from cart.');
-    }
   }
 
   /* Book Operations */
-  Future<Book> addBook(Book book) async {
-    final response = await http.post(
+  Future<http.Response> addBook(Book book) async {
+    return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.books + ApiConstants.add),
         headers: requestHeaders,
         body: jsonEncode(book.toJson()));
-
-    if (response.statusCode == 200) {
-      return Book.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to add book.');
-    }
   }
 
-  Future<List<Book>> getBooks(
+  Future<http.Response> getBooks(
       String name, String author, String category) async {
-    var response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.books),
+    return await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.books),
         headers: requestHeaders);
-    if (response.statusCode == 200) {
-      return booksFromJson(response.body);
-    } else {
-      throw Exception('Failed to load books.');
-    }
   }
 
-  Future<List<Book>> getBooksWithCategory(String category) async {
-    var response = await http.get(
+  Future<http.Response> getBooksWithCategory(String category) async {
+    return await http.get(
         Uri.parse(
             "${ApiConstants.baseUrl}${ApiConstants.category}?category=$category"),
         headers: requestHeaders);
-
-    if (response.statusCode == 200) {
-      return booksFromJson(response.body);
-    } else {
-      throw Exception('Failed to load books with category.');
-    }
   }
 
   /* Author Operations */
-  Future<List<Author>> getAuthors(Author author) async {
-    var response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.author),
+  Future<http.Response> getAuthors(Author author) async {
+    return await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.author),
         headers: requestHeaders);
-    if (response.statusCode == 200) {
-      return authorFromJson(response.body);
-    } else {
-      throw Exception('Failed to load authors.');
-    }
   }
 
-  Future<Author> addAuthor(Author book) async {
-    final response = await http.post(
+  Future<http.Response> addAuthor(Author book) async {
+    return await http.post(
         Uri.parse(
             ApiConstants.baseUrl + ApiConstants.author + ApiConstants.add),
         headers: requestHeaders,
         body: jsonEncode(book.toJson()));
-
-    if (response.statusCode == 201) {
-      return Author.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to add author.');
-    }
   }
 
   /* Category Operations */
-  Future<List<Category>> getCategories() async {
-    var response = await http.get(
+  Future<http.Response> getCategories() async {
+    return await http.get(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.category),
         headers: requestHeaders);
-    if (response.statusCode == 200) {
-      return categoryFromJson(response.body);
-    } else {
-      throw Exception('Failed to load categories.');
-    }
   }
 }

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
 import 'package:shelf_mobil_frontend/pages/cart_page.dart';
@@ -182,13 +185,13 @@ class _GetBookPageState extends State<GetBookPage> {
   Widget _buildBookItem(BuildContext context, int index) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      return FutureBuilder<List<Book>>(
+      return FutureBuilder<Response>(
           future: ApiService().getBooksWithCategory(_selectedCategory.title),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return const Text("ERROR");
             } else if (snapshot.hasData) {
-              List<Book> bookList = snapshot.data!;
+              List<Book> bookList = booksFromJson(snapshot.data!.body);
               return Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(3),
@@ -308,7 +311,8 @@ class _GetBookPageState extends State<GetBookPage> {
                                             ),
                                           )
                                         : setState(() {
-                                            if (FavoritesPage.isAddedToFav(bookList[index])) {
+                                            if (FavoritesPage.isAddedToFav(
+                                                bookList[index])) {
                                               FavoritesPage.removeFromFav(
                                                   bookList[index]);
                                             } else {
@@ -317,7 +321,8 @@ class _GetBookPageState extends State<GetBookPage> {
                                             }
                                           });
                                   },
-                                  icon: FavoritesPage.isAddedToFav(bookList[index])
+                                  icon: FavoritesPage.isAddedToFav(
+                                          bookList[index])
                                       ? const Icon(Icons.favorite_outlined,
                                           color: Colors.red)
                                       : const Icon(

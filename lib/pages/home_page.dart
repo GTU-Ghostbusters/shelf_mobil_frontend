@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:http/http.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:shelf_mobil_frontend/pages/cart_page.dart';
 import 'package:shelf_mobil_frontend/pages/favorites_page.dart';
@@ -47,7 +48,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getData() async {
-    _categoryList = (await ApiService().getCategories());
+    Response response = await ApiService().getCategories();
+    _categoryList = categoryFromJson(response.body);
     _categoryList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
