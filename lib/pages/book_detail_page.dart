@@ -278,7 +278,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         MaterialPageRoute(
                           builder: (BuildContext context) {
                             return UserReviewPage(
-                                user_name: widget.book.donator);
+                                user_name: widget.book.donatorID.toString());
                           },
                         ),
                       );
@@ -289,7 +289,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       color: Colors.black,
                     ),
                     label: Text(
-                      widget.book.donator,
+                      widget.book.donatorID.toString(),
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
@@ -331,7 +331,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
             endIndent: 0,
             thickness: 1,
           ),
-          Text(text)
+          Text(text, maxLines: 4,)
         ],
       ),
     );

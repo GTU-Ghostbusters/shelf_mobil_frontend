@@ -186,7 +186,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                 0.24,
                                             child: Text(
                                                 FavoritesPage
-                                                    .favBooks[index].donator,
+                                                    .favBooks[index].donatorID.toString(),
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:shelf_mobil_frontend/services/api_service.dart';
+
 List<Book> booksFromJson(String str) =>
     List<Book>.from(json.decode(str).map((x) => Book.fromJson(x)));
 
@@ -8,7 +10,7 @@ String booksToJson(List<Book> data) =>
 
 class Book {
   Book({
-    required this.donator,
+    required this.donatorID,
     required this.name,
     required this.author,
     required this.category,
@@ -22,13 +24,13 @@ class Book {
     required this.shipmentType,
   });
 
-  final String donator;
+  final int donatorID;
   final String name;
   final String author;
   final String category;
   final int numberOfPages;
   final int bookId;
-  final bool available;
+  final int available;
   final String bookAbstract;
   final String image1;
   final String image2;
@@ -47,7 +49,7 @@ class Book {
   int get hashCode => Object.hash(bookId, name, author, category, available);
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
-        donator: json["donor"],
+        donatorID: json['donor'],
         name: json["name"],
         author: json["author"],
         category: json["category"],
@@ -55,19 +57,18 @@ class Book {
         bookId: json["id"],
         available: json["available"],
         bookAbstract: json["abstract"],
-        image1: json["image1"],
-        image2: json["image2"],
-        image3: json["image3"],
-        shipmentType: json["shipment_type"],
+        image1: ApiConstants.baseUrlImg+ json["image1"],
+        image2: ApiConstants.baseUrlImg+ json["image2"],
+        image3: ApiConstants.baseUrlImg+ json["image3"],
+        shipmentType: json["shipment_type"] == "R" ? "Receiver" : "Sender",
       );
 
   Map<String, dynamic> toJson() => {
-        "donor": donator,
+        "donor": donatorID,
         "name": name,
         "author": author,
         "category": category,
         "page_count": numberOfPages,
-        "id": bookId,
         "available": available,
         "abstract": bookAbstract,
         "image1": image1,
