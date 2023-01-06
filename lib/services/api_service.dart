@@ -5,6 +5,7 @@ import 'package:shelf_mobil_frontend/models/address.dart';
 import 'package:shelf_mobil_frontend/models/author.dart';
 
 import 'package:shelf_mobil_frontend/models/book.dart';
+import 'package:shelf_mobil_frontend/models/user.dart';
 
 class ApiConstants {
   static String baseUrl = 'https://hodikids.com/api';
@@ -13,10 +14,16 @@ class ApiConstants {
   static String logout = '/logout';
   static String register = '/register';
   static String verifyEmail = '/verify-email';
+  static String resetPassword = '/password-reset';
+  static String changePassword = '/change-password';
   static String add = '/add';
   static String delete = '/delete';
   static String create = '/create';
+  static String update = '/update';
+  static String user = '/user';
+  static String reviews = '/reviews';
   static String books = '/books';
+  static String favorites = '/favorites';
   static String category = '/categories';
   static String author = '/authors';
   static String address = '/addresses';
@@ -62,6 +69,27 @@ class ApiService {
         }));
   }
 
+  Future<http.Response> resetPassword(String email) async {
+    return await http.post(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.resetPassword),
+        headers: requestHeaders,
+        body: jsonEncode(<String, String>{
+          "email": email,
+        }));
+  }
+
+  Future<http.Response> changePassword(
+      int id, String resetCode, String newPassword) async {
+    return await http.post(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.changePassword),
+        headers: requestHeaders,
+        body: jsonEncode(<String, String>{
+          "user_id": id.toString(),
+          "reset_code": resetCode,
+          "password": newPassword,
+        }));
+  }
+
   Future<http.Response> verifyEmail(int id, String verificationCode) async {
     return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.verifyEmail),
@@ -72,6 +100,15 @@ class ApiService {
         }));
   }
 
+  Future<http.Response> updateUser(User user) async {
+    return await http.put(
+        Uri.parse(
+            "${ApiConstants.baseUrl}${ApiConstants.user}${user.userId}/${ApiConstants.update}"),
+        headers: requestHeaders,
+        body: jsonEncode(user.toJson()));
+  }
+
+  /* Address Operations */
   Future<http.Response> addAdress(Address address) async {
     return await http.post(
         Uri.parse(
@@ -80,6 +117,30 @@ class ApiService {
         body: jsonEncode(address.toJson()));
   }
 
+  /* Favorities Operations */
+  Future<http.Response> getFavorities(int id) async {
+    return await http.get(
+        Uri.parse(
+            ApiConstants.baseUrl + ApiConstants.order + ApiConstants.favorites),
+        headers: requestHeaders);
+  }
+
+  Future<http.Response> addToFavorities(
+      int userId, int bookId, int favId) async {
+    return await http.post(
+        Uri.parse(ApiConstants.baseUrl +
+            ApiConstants.order +
+            ApiConstants.favorites +
+            ApiConstants.add),
+        headers: requestHeaders,
+        body: jsonEncode(<String, int>{
+          "user_id": userId,
+          "book_id": bookId,
+          "id": favId,
+        }));
+  }
+
+  /* Order Operations */
   Future<http.Response> createOrder(int id) async {
     return await http.post(
         Uri.parse(
@@ -90,6 +151,7 @@ class ApiService {
         }));
   }
 
+  /* Cart Operations */
   Future<http.Response> addCart(int id) async {
     return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.cart + ApiConstants.add),
@@ -102,7 +164,7 @@ class ApiService {
   Future<http.Response> deleteCart(int id) async {
     return await http.post(
         Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.cart}\\$id${ApiConstants.delete}'),
+            '${ApiConstants.baseUrl}${ApiConstants.cart}/$id${ApiConstants.delete}'),
         headers: requestHeaders);
   }
 
@@ -156,6 +218,14 @@ class ApiService {
   Future<http.Response> getCategories() async {
     return await http.get(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.category),
+        headers: requestHeaders);
+  }
+
+  /* Review Operations */
+  Future<http.Response> getReviewList(int id) async {
+    return await http.get(
+        Uri.parse(
+            "${ApiConstants.baseUrl}${ApiConstants.user}/$id${ApiConstants.reviews}"),
         headers: requestHeaders);
   }
 }
