@@ -78,8 +78,6 @@ class _HomePageState extends State<HomePage> {
         }
       },
     );
-
-    setState(() {});
   }
 
   void sortCategoryByNumberOfBooks() {

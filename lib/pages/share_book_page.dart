@@ -1,11 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shelf_mobil_frontend/enums.dart';
+import 'package:shelf_mobil_frontend/models/author.dart';
+import 'package:shelf_mobil_frontend/models/book.dart';
 import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
+import 'package:shelf_mobil_frontend/services/api_service.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../screens/select_photo.dart';
@@ -26,6 +30,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
   Category? _selectedCategory;
 
   CargoPaymentType _cargoPaymentType = CargoPaymentType.senderPays;
+  final Author _author = Author(name: "Sabahattin Ali");
 
   @override
   void initState() {
@@ -35,12 +40,22 @@ class _ShareBookPageState extends State<ShareBookPage> {
 
   final ImagePicker imagePicker = ImagePicker();
   List<XFile> imageFileList = [];
+  List<String> imageBase64List = [];
+
+  Future _convertBase64Files() async {
+    for (var i = imageFileList.length; i < 3; i++) {
+      imageBase64List.add("data:image/jpeg;base64,empty");
+    }
+  }
 
   Future _pickImages(ImageSource source) async {
     if (source == ImageSource.camera) {
       try {
         final image = await ImagePicker().pickImage(source: source);
         if (image == null) return;
+        var bytes = await image.readAsBytes();
+        var base64 = "data:image/jpeg;base64,${base64Encode(bytes)}";
+        imageBase64List.add(base64);
         setState(() {
           imageFileList.add(image);
         });
@@ -53,6 +68,11 @@ class _ShareBookPageState extends State<ShareBookPage> {
         if (selectedImages.length <= 3 &&
             imageFileList.length + selectedImages.length <= 3) {
           imageFileList.addAll(selectedImages);
+          for (var image in selectedImages) {
+            var bytes = await image.readAsBytes();
+            var base64 = "data:image/jpeg;base64,${base64Encode(bytes)}";
+            imageBase64List.add(base64);
+          }
         } else {
           showDialog(
             context: context,
@@ -101,7 +121,12 @@ class _ShareBookPageState extends State<ShareBookPage> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  TextEditingController numberOfPages = TextEditingController();
+
+  TextEditingController numberOfPagesInput = TextEditingController();
+  TextEditingController bookNameInput = TextEditingController();
+
+  TextEditingController bookAbstractInput = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,6 +160,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
                             return null;
                           }
                         },
+                        controller: bookNameInput,
                         decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
@@ -175,7 +201,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
                       ),
                       const SizedBox(height: 7),
                       TextFormField(
-                        controller: numberOfPages,
+                        controller: numberOfPagesInput,
                         keyboardType: TextInputType.number,
                         maxLength: 4,
                         decoration: InputDecoration(
@@ -222,6 +248,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
                       ),
                       const SizedBox(height: 7),
                       TextFormField(
+                        controller: bookAbstractInput,
                         keyboardType: TextInputType.text,
                         maxLength: 300,
                         maxLines: 4,
@@ -293,7 +320,27 @@ class _ShareBookPageState extends State<ShareBookPage> {
                       ),
                       const SizedBox(height: 25),
                       ElevatedButton(
-                          onPressed: (() {}),
+                          onPressed: (() {
+                            var shipmentType =
+                                _cargoPaymentType == CargoPaymentType.senderPays
+                                    ? "S"
+                                    : "R";
+                            _convertBase64Files();
+                            Book book = Book.shareBook(
+                                bookNameInput.text.toString(),
+                                63,
+                                6,
+                                _selectedCategory!.categoryID,
+                                int.parse(numberOfPagesInput.text.toString()),
+                                1,
+                                bookAbstractInput.text.toString(),
+                                shipmentType,
+                                imageBase64List[0],
+                                imageBase64List[1],
+                                imageBase64List[2]);
+                            ApiService().addBook(book);
+                            setState(() {});
+                          }),
                           style: ElevatedButton.styleFrom(
                             fixedSize: Size(
                                 MediaQuery.of(context).size.width * 0.4, 40),
