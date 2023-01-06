@@ -30,7 +30,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static int _currentPageIndex = 0;
-
   static List<Category> _categoryList = [];
   CategorySort _categorySort = CategorySort.numberOfBooks;
 
@@ -47,15 +46,52 @@ class _HomePageState extends State<HomePage> {
     getData();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void getData() async {
     Response response = await ApiService().getCategories();
+    updateCategoryList(response);
+    setState(() {});
+  }
+
+  void updateCategoryList(Response response) async {
     _categoryList = categoryFromJson(response.body);
-    _categoryList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    var count = 0;
+    for (var category in _categoryList) {
+      count += category.numberOfBooks;
+    }
+    _categoryList.add(Category(
+        categoryID: 0,
+        title: "ALL",
+        imagePath:
+            "https://img.freepik.com/free-photo/creative-world-book-day-assortment_23-2148883773.jpg?w=740&t=st=1672997298~exp=1672997898~hmac=58020f47b3729187a2f62027a4f51388be8289ea5076bd143c3adc0bf1bdb81f",
+        numberOfBooks: count));
+    _categoryList.sort(
+      (a, b) {
+        if (a.numberOfBooks == b.numberOfBooks) {
+          return a.title.toLowerCase().compareTo(b.title.toLowerCase());
+        } else {
+          return b.numberOfBooks.compareTo(a.numberOfBooks);
+        }
+      },
+    );
+
+    setState(() {});
   }
 
   void sortCategoryByNumberOfBooks() {
-    _categoryList.sort((a, b) => b.numberOfBooks.compareTo(a.numberOfBooks));
+    _categoryList.sort(
+      (a, b) {
+        if (b.numberOfBooks == a.numberOfBooks) {
+          return a.title.toLowerCase().compareTo(b.title.toLowerCase());
+        } else {
+          return b.numberOfBooks.compareTo(a.numberOfBooks);
+        }
+      },
+    );
   }
 
   void sortCategoryByName() {
@@ -196,20 +232,19 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             const SizedBox(height: 30),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.55,
-              child: ScrollSnapList(
-                clipBehavior: Clip.none,
-                itemBuilder: _buildListItem,
-                itemCount: _categoryList.length,
-                itemSize: MediaQuery.of(context).size.width * 0.6,
-                onItemFocus: (index) {},
-                initialIndex: 0,
-                dynamicItemSize: true,
-                updateOnScroll: true,
-                scrollDirection: Axis.horizontal,
-                dynamicItemOpacity: 0.95,
-              ),
+            cardView(_buildListItem),
+            FutureBuilder(
+              future: ApiService().getCategories(),
+              builder: ((context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text("");
+                } else if (snapshot.hasData) {
+                  updateCategoryList(snapshot.data!);
+                  return const Text("");
+                } else {
+                  return const Text("");
+                }
+              }),
             ),
             ElevatedButton(
               onPressed: () {
@@ -227,6 +262,24 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget cardView(var builder) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.55,
+      child: ScrollSnapList(
+        clipBehavior: Clip.none,
+        itemBuilder: builder,
+        itemCount: _categoryList.length,
+        itemSize: MediaQuery.of(context).size.width * 0.6,
+        onItemFocus: (index) {},
+        initialIndex: 0,
+        dynamicItemSize: true,
+        updateOnScroll: true,
+        scrollDirection: Axis.horizontal,
+        dynamicItemOpacity: 0.95,
       ),
     );
   }
@@ -251,9 +304,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.5,
               height: MediaQuery.of(context).size.height * 0.35,
-              child: Image.network(
-                  fit: BoxFit.fitHeight,
-                  "https://hodikids.com/${_categoryList[index].imagePath}"),
+              child: Image.network(fit: BoxFit.fitHeight, category.imagePath),
             ),
             Column(children: [
               Text(
