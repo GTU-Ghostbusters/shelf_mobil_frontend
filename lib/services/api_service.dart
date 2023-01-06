@@ -8,6 +8,7 @@ import 'package:shelf_mobil_frontend/models/book.dart';
 
 class ApiConstants {
   static String baseUrl = 'https://hodikids.com/api';
+  static String baseUrlImg = 'https://hodikids.com/';
   static String login = '/login';
   static String logout = '/logout';
   static String register = '/register';
@@ -119,11 +120,22 @@ class ApiService {
         headers: requestHeaders);
   }
 
-  Future<http.Response> getBooksWithCategory(String category) async {
-    return await http.get(
-        Uri.parse(
-            "${ApiConstants.baseUrl}${ApiConstants.category}?category=$category"),
+  Future<http.Response> getBooksWithCategory(int categoryID) async {
+    if (categoryID == 0) {
+      return getAllBooks();
+    } else {
+      return await http.get(
+          Uri.parse(
+              "${ApiConstants.baseUrl}${ApiConstants.books}?category=$categoryID"),
+          headers: requestHeaders);
+    }
+  }
+
+  Future<http.Response> getAllBooks() async {
+    var response = await http.get(
+        Uri.parse("${ApiConstants.baseUrl}${ApiConstants.books}?category="),
         headers: requestHeaders);
+    return response;
   }
 
   /* Author Operations */
