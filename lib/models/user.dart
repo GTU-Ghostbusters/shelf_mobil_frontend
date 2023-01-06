@@ -26,7 +26,7 @@ class User {
   final bool isManager;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        userId: json["id"],
+        userId: json["user_id"],
         name: json["name"],
         email: json["email"],
         password: json["password"],
@@ -36,7 +36,6 @@ class User {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": userId,
         "name": name,
         "email": email,
         "password": password,

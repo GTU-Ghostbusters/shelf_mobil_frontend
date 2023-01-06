@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:http/http.dart';
+import 'package:shelf_mobil_frontend/models/user.dart';
+import 'package:shelf_mobil_frontend/pages/account_page.dart';
+import 'package:shelf_mobil_frontend/pages/home_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
+import 'package:shelf_mobil_frontend/services/api_service.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -15,7 +22,11 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _showPassword_1 = true;
   String _password = "";
   final _formKey = GlobalKey<FormState>();
+
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextFormField(
+                    controller: nameController,
                     validator: (name) {
                       if (name!.length < 3) {
                         return 'The name must consist of at least 3 characters.';
@@ -91,6 +103,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   const SizedBox(height: 7),
                   TextFormField(
+                    controller: phoneController,
                     validator: (phoneNumber) {
                       if (phoneNumber!.isEmpty || phoneNumber.length < 10) {
                         return "Please enter a valid phone number.";
@@ -117,6 +130,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   const SizedBox(height: 7),
                   TextFormField(
+                    controller: passwordController,
                     validator: Validators.compose(
                       [
                         Validators.patternRegExp(
@@ -196,16 +210,46 @@ class _SignUpPageState extends State<SignUpPage> {
                       fixedSize:
                           Size(MediaQuery.of(context).size.width * 0.4, 40),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).push(
+                        Response response = await ApiService().register(
+                            nameController.text,
+                            emailController.text,
+                            passwordController.text,
+                            phoneController.text);
+                        debugPrint(response.body.toString());
+
+/*                         User(
+                            userId: 0,
+                            name: nameController.text,
+                            email: emailController.text,
+                            password: passwordController.text,
+                            address: "addres",
+                            phoneNumber: phoneController.text,
+                            isManager: false); */
+
+                        Map<String, dynamic> res = jsonDecode(response.body);
+                        //User.fromJson(res);
+
+                        if (res["result"].toString() == "true") {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return Confirmation(
+                                    email_: emailController.text,
+                                    id: res["user_id"]);
+                              },
+                            ),
+                          );
+                        }
+                        /* Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
                               return Confirmation(
                                   email_: emailController.text.toString());
                             },
                           ),
-                        );
+                        ); */
                       }
                     },
                     child: const Text(
@@ -228,14 +272,16 @@ class _SignUpPageState extends State<SignUpPage> {
 
 // ignore: must_be_immutable
 class Confirmation extends StatefulWidget {
+  int id;
   String? email_;
-  Confirmation({super.key, this.email_});
+  Confirmation({super.key, this.email_, required this.id});
 
   @override
   State<Confirmation> createState() => _ConfirmationState();
 }
 
 class _ConfirmationState extends State<Confirmation> {
+  TextEditingController codeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -262,7 +308,7 @@ class _ConfirmationState extends State<Confirmation> {
                     child: Text(
                       "The confirmation code was sent to the e-mail: ${widget.email_}",
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -270,6 +316,7 @@ class _ConfirmationState extends State<Confirmation> {
                   const SizedBox(height: 10),
                   Card(
                     child: TextFormField(
+                      controller: codeController,
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
@@ -280,7 +327,22 @@ class _ConfirmationState extends State<Confirmation> {
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      Response response = await ApiService()
+                          .verifyEmail(widget.id, codeController.text);
+                      Map<String, dynamic> res = jsonDecode(response.body);
+
+                      if (res["result"].toString() == "true") {
+                        AccountPage.changeLog();
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return const HomePage();
+                            },
+                          ),
+                        );
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       fixedSize:
                           Size(MediaQuery.of(context).size.width * 0.4, 40),

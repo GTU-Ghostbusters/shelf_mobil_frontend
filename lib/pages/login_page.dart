@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:shelf_mobil_frontend/pages/account_page.dart';
+import 'package:shelf_mobil_frontend/pages/home_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
+import 'package:shelf_mobil_frontend/services/api_service.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
@@ -14,7 +20,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _showPassword = true;
   bool _selectItem = true;
+
   TextEditingController email_ = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Card(
                     child: TextFormField(
+                      controller: emailController,
                       keyboardType: _selectItem
                           ? TextInputType.emailAddress
                           : TextInputType.phone,
@@ -85,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Card(
                     child: TextFormField(
+                      controller: passwordController,
                       obscureText: _showPassword,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
@@ -127,7 +138,24 @@ class _LoginPageState extends State<LoginPage> {
                       fixedSize:
                           Size(MediaQuery.of(context).size.width * 0.35, 40),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      Response response = await ApiService().login(
+                          emailController.text.toString(),
+                          passwordController.text.toString());
+
+                      Map<String, dynamic> res = jsonDecode(response.body);
+
+                      if (res["result"].toString() == "true") {
+                        AccountPage.changeLog();
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return const HomePage();
+                            },
+                          ),
+                        );
+                      }
+                    },
                     icon: const Icon(Icons.login),
                     label: const Text("LOGIN"),
                   ),

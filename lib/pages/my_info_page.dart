@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:shelf_mobil_frontend/models/user.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
 
 class MyInfoPage extends StatefulWidget {
   const MyInfoPage({super.key});
 
+  static void assignUser(User other) {
+    _MyInfoPageState.user = other;
+  }
+
   @override
   State<MyInfoPage> createState() => _MyInfoPageState();
 }
 
 class _MyInfoPageState extends State<MyInfoPage> {
+  static User? user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,28 +31,28 @@ class _MyInfoPageState extends State<MyInfoPage> {
                 TextFieldWidget(
                   icon: Icon(Icons.person, color: Colors.grey.shade900),
                   label: "Name",
-                  text: "user name",
+                  text: user!.name,
                   onChanged: (name) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
                   icon: Icon(Icons.email_rounded, color: Colors.grey.shade900),
                   label: "Email",
-                  text: "user email",
+                  text: user!.email,
                   onChanged: (email) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
                   icon: Icon(Icons.phone, color: Colors.grey.shade900),
                   label: "Phone Number",
-                  text: "user phone",
+                  text: user!.phoneNumber,
                   onChanged: (phone) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
                   icon: Icon(Icons.lock_outline, color: Colors.grey.shade900),
                   label: "Password",
-                  text: "user password",
+                  text: user!.password,
                   onChanged: (password) {},
                 ),
                 const SizedBox(height: 5),
