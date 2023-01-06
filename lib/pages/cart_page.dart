@@ -263,7 +263,7 @@ class _CartPageState extends State<CartPage> {
                                         0.24,
                                     child: Text(
                                         CartPage
-                                            .cartItems[index].bookItem.donator,
+                                            .cartItems[index].bookItem.donatorID.toString(),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
