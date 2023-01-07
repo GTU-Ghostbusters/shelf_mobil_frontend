@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shelf_mobil_frontend/models/user.dart';
 import 'package:shelf_mobil_frontend/pages/cart_page.dart';
 import 'package:shelf_mobil_frontend/pages/favorites_page.dart';
 import 'package:shelf_mobil_frontend/pages/user_review_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
+import 'package:shelf_mobil_frontend/services/api_service.dart';
 
 import '../models/book.dart';
 
@@ -20,6 +22,25 @@ class BookDetailPage extends StatefulWidget {
 
 class _BookDetailPageState extends State<BookDetailPage> {
   int currentIndex = 0;
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    getUser();
+  }
+
+  void getUser() async {
+    var response = await ApiService().getUserList();
+    var userList = userFromJsonID(response.body);
+    for (var i = 0; i < userList.length; i++) {
+      if (widget.book.donatorID == userList[i].userId) {
+        _user = userList[i];
+        break;
+      }
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +71,40 @@ class _BookDetailPageState extends State<BookDetailPage> {
                             });
                           },
                           itemBuilder: ((context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: SizedBox(
-                                child: Image.network(
-                                  widget.book.image1,
-                                  fit: BoxFit.contain,
+                            if (index % 3 == 0) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: SizedBox(
+                                  child: Image.network(
+                                    widget.book.image1,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            } else if (index % 3 == 1) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: SizedBox(
+                                  child: Image.network(
+                                    widget.book.image2,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: SizedBox(
+                                  child: Image.network(
+                                    widget.book.image3,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              );
+                            }
                           }),
                         ),
                       ),
@@ -278,7 +323,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         MaterialPageRoute(
                           builder: (BuildContext context) {
                             return UserReviewPage(
-                                user_name: widget.book.donatorID.toString());
+                                user_name: _user!.userId.toString());
                           },
                         ),
                       );
@@ -289,7 +334,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       color: Colors.black,
                     ),
                     label: Text(
-                      widget.book.donatorID.toString(),
+                      (_user != null) ? _user!.name : "",
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
@@ -325,13 +370,20 @@ class _BookDetailPageState extends State<BookDetailPage> {
       alignment: Alignment.topCenter,
       height: height,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           icon,
           const VerticalDivider(
             endIndent: 0,
             thickness: 1,
           ),
-          Text(text, maxLines: 4,)
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            width: MediaQuery.of(context).size.width * 0.6,
+            child: SingleChildScrollView(
+              child: Text(text),
+            ),
+          )
         ],
       ),
     );

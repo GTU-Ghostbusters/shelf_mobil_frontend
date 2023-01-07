@@ -191,7 +191,7 @@ class _GetBookPageState extends State<GetBookPage> {
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10),
                   itemBuilder: _buildBookItem,
-                  itemCount: _selectedCategory.numberOfBooks,
+                  itemCount: _bookList.length,
                 );
               } else {
                 return const Text("");
