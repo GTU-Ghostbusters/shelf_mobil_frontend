@@ -21,6 +21,7 @@ class ApiConstants {
   static String create = '/create';
   static String update = '/update';
   static String user = '/user';
+  static String users = '/users';
   static String reviews = '/reviews';
   static String books = '/books';
   static String favorites = '/favorites';
@@ -106,6 +107,11 @@ class ApiService {
             "${ApiConstants.baseUrl}${ApiConstants.user}${user.userId}/${ApiConstants.update}"),
         headers: requestHeaders,
         body: jsonEncode(user.toJson()));
+  }
+
+  Future<http.Response> getUserList() async {
+    return await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.users),
+        headers: requestHeaders);
   }
 
   /* Address Operations */
@@ -201,7 +207,7 @@ class ApiService {
   }
 
   /* Author Operations */
-  Future<http.Response> getAuthors(Author author) async {
+  Future<http.Response> getAuthors() async {
     return await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.author),
         headers: requestHeaders);
   }
