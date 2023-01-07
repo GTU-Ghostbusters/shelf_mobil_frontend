@@ -144,6 +144,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           onTabChange: (int index) {
+            getData();
             setState(() {
               _currentPageIndex = index;
             });
@@ -231,19 +232,6 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 30),
             cardView(_buildListItem),
-            FutureBuilder(
-              future: ApiService().getCategories(),
-              builder: ((context, snapshot) {
-                if (snapshot.hasError) {
-                  return const Text("");
-                } else if (snapshot.hasData) {
-                  updateCategoryList(snapshot.data!);
-                  return const Text("");
-                } else {
-                  return const Text("");
-                }
-              }),
-            ),
             ElevatedButton(
               onPressed: () {
                 setState(() {

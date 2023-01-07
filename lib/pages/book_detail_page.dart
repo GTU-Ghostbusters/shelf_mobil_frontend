@@ -70,8 +70,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                               currentIndex = index % 3;
                             });
                           },
+                          itemCount: 3,
                           itemBuilder: ((context, index) {
-                            if (index % 3 == 0) {
+                            if (index == 0) {
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20),
@@ -82,7 +83,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                   ),
                                 ),
                               );
-                            } else if (index % 3 == 1) {
+                            } else if (index  == 1) {
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20),

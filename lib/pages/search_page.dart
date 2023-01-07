@@ -130,7 +130,7 @@ class BookSearchDelegate extends SearchDelegate {
                       border: Border.all(width: 0.5), color: Colors.white),
                   height: MediaQuery.of(context).size.height * 0.055,
                   width: MediaQuery.of(context).size.width * 0.1,
-                  child: Image.network(item.image),
+                  child: Image.network(item.image1),
                 ),
               ),
               Positioned(
