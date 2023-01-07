@@ -1,0 +1,647 @@
+@startuml
+set namespaceSeparator ::
+
+class "shelf_mobil_frontend::enums.dart::CategorySort" {
+  +int index
+  {static} +List<CategorySort> values
+  {static} +CategorySort alphabetic
+  {static} +CategorySort numberOfBooks
+}
+
+"shelf_mobil_frontend::enums.dart::CategorySort" o-- "shelf_mobil_frontend::enums.dart::CategorySort"
+"dart::core::Enum" <|-- "shelf_mobil_frontend::enums.dart::CategorySort"
+
+class "shelf_mobil_frontend::enums.dart::CargoPaymentType" {
+  +int index
+  {static} +List<CargoPaymentType> values
+  {static} +CargoPaymentType senderPays
+  {static} +CargoPaymentType receiverPays
+}
+
+"shelf_mobil_frontend::enums.dart::CargoPaymentType" o-- "shelf_mobil_frontend::enums.dart::CargoPaymentType"
+"dart::core::Enum" <|-- "shelf_mobil_frontend::enums.dart::CargoPaymentType"
+
+class "shelf_mobil_frontend::main.dart::Shelf" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "shelf_mobil_frontend::main.dart::Shelf"
+
+class "shelf_mobil_frontend::models::address.dart::Address" {
+  +String addressName
+  +String city
+  +String town
+  +String phoneNumber
+  +String openAddress
+  +Map<String, dynamic> toJson()
+}
+
+class "shelf_mobil_frontend::models::address.dart::City" {
+  +String cityName
+  +List<Town> townList
+}
+
+class "shelf_mobil_frontend::models::address.dart::Town" {
+  +String townName
+}
+
+class "shelf_mobil_frontend::models::author.dart::Author" {
+  +String name
+  +Map<String, dynamic> toJson()
+}
+
+class "shelf_mobil_frontend::models::book.dart::Book" {
+  +int bookId
+  +String name
+  +int donatorID
+  +String author
+  +int authorID
+  +String category
+  +int categoryID
+  +int numberOfPages
+  +int available
+  +String bookAbstract
+  +String shipmentType
+  +String image1
+  +String image2
+  +String image3
+  +int hashCode
+  +bool ==()
+  +Map<String, dynamic> toJson()
+}
+
+class "shelf_mobil_frontend::models::cart_item.dart::CartItem" {
+  +Book bookItem
+  +bool value
+  +int hashCode
+  +bool ==()
+}
+
+"shelf_mobil_frontend::models::cart_item.dart::CartItem" o-- "shelf_mobil_frontend::models::book.dart::Book"
+
+class "shelf_mobil_frontend::models::category.dart::Category" {
+  +int categoryID
+  +String title
+  +String imagePath
+  +int numberOfBooks
+  +Map<String, dynamic> toJson()
+}
+
+class "shelf_mobil_frontend::models::review.dart::Review" {
+  +int id
+  +int userId
+  +int buyerId
+  +int point
+  +String review
+  +Map<String, dynamic> toJson()
+}
+
+class "shelf_mobil_frontend::models::user.dart::User" {
+  +int userId
+  +String name
+  +String email
+  +String password
+  +String address
+  +String phoneNumber
+  +int isManager
+  +Map<String, dynamic> toJson()
+}
+
+class "shelf_mobil_frontend::pages::account_page.dart::AccountPage" {
+  {static} +void changeLog()
+  {static} +bool isUserLogged()
+  +State<AccountPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::account_page.dart::AccountPage"
+
+class "shelf_mobil_frontend::pages::account_page.dart::_AccountPageState" {
+  {static} +bool isLogged
+  +Widget build()
+  +Widget myAccount()
+  +Widget userManagement()
+  +Widget button()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::account_page.dart::_AccountPageState"
+
+class "shelf_mobil_frontend::pages::account_page.dart::SubPage" {
+  +String title
+  +State<SubPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::account_page.dart::SubPage"
+
+class "shelf_mobil_frontend::pages::account_page.dart::_SubPageState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::account_page.dart::_SubPageState"
+
+class "shelf_mobil_frontend::pages::book_detail_page.dart::BookDetailPage" {
+  +Book book
+  +State<BookDetailPage> createState()
+}
+
+"shelf_mobil_frontend::pages::book_detail_page.dart::BookDetailPage" o-- "shelf_mobil_frontend::models::book.dart::Book"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::book_detail_page.dart::BookDetailPage"
+
+class "shelf_mobil_frontend::pages::book_detail_page.dart::_BookDetailPageState" {
+  +int currentIndex
+  +Widget build()
+  +Widget buildIndicator()
+  +Widget informatonRow()
+  +Widget container()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::book_detail_page.dart::_BookDetailPageState"
+
+class "shelf_mobil_frontend::pages::cart_page.dart::CartPage" {
+  {static} +List<CartItem> cartItems
+  {static} +void addToCart()
+  {static} +bool isAddedToCart()
+  +State<CartPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::cart_page.dart::CartPage"
+
+class "shelf_mobil_frontend::pages::cart_page.dart::_CartPageState" {
+  +List<CartItem>? choosenItems
+  +bool isAllItemsSelected
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::cart_page.dart::_CartPageState"
+
+class "shelf_mobil_frontend::pages::cart_page.dart::CartButton" {
+  +State<CartButton> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::cart_page.dart::CartButton"
+
+class "shelf_mobil_frontend::pages::cart_page.dart::_CartButtonState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::cart_page.dart::_CartButtonState"
+
+class "shelf_mobil_frontend::pages::favorites_page.dart::FavoritesPage" {
+  {static} +List<Book> favBooks
+  {static} +void addToFav()
+  {static} +void removeFromFav()
+  {static} +bool isAddedToFav()
+  +State<FavoritesPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::favorites_page.dart::FavoritesPage"
+
+class "shelf_mobil_frontend::pages::favorites_page.dart::_FavoritesPageState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::favorites_page.dart::_FavoritesPageState"
+
+class "shelf_mobil_frontend::pages::get_book_page.dart::GetBookPage" {
+  +State<GetBookPage> createState()
+  {static} +void setCategory()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::get_book_page.dart::GetBookPage"
+
+class "shelf_mobil_frontend::pages::get_book_page.dart::_GetBookPageState" {
+  -List<Category>? _categoryList
+  {static} -Category _selectedCategory
+  -GlobalKey<ScaffoldState> _scaffoldKey
+  -List<Book> _bookList
+  +Widget build()
+  -Widget _categoryBar()
+  -Widget _buildCategoryItem()
+  -Widget _categoryBooksView()
+  -Widget _noBookView()
+  -Widget _buildBookItem()
+}
+
+"shelf_mobil_frontend::pages::get_book_page.dart::_GetBookPageState" o-- "shelf_mobil_frontend::models::category.dart::Category"
+"shelf_mobil_frontend::pages::get_book_page.dart::_GetBookPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<ScaffoldState>"
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::get_book_page.dart::_GetBookPageState"
+
+class "shelf_mobil_frontend::pages::home_page.dart::HomePage" {
+  +State<HomePage> createState()
+  {static} +List<Category>? getCategories()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::home_page.dart::HomePage"
+
+class "shelf_mobil_frontend::pages::home_page.dart::_HomePageState" {
+  {static} -int _currentPageIndex
+  {static} -List<Category> _categoryList
+  -CategorySort _categorySort
+  +List<Widget> pages
+  +void initState()
+  +void dispose()
+  +void getData()
+  +void updateCategoryList()
+  +void sortCategoryByNumberOfBooks()
+  +void sortCategoryByName()
+  +Widget build()
+  +Widget homePage()
+  +Widget cardView()
+  -Widget _buildListItem()
+}
+
+"shelf_mobil_frontend::pages::home_page.dart::_HomePageState" o-- "shelf_mobil_frontend::enums.dart::CategorySort"
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::home_page.dart::_HomePageState"
+
+class "shelf_mobil_frontend::pages::login_page.dart::LoginPage" {
+  +State<LoginPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::login_page.dart::LoginPage"
+
+class "shelf_mobil_frontend::pages::login_page.dart::_LoginPageState" {
+  -bool _showPassword
+  -bool _selectItem
+  +TextEditingController email_
+  +TextEditingController emailController
+  +TextEditingController phoneController
+  +TextEditingController passwordController
+  +Widget build()
+  +Future<void> dialogBuilder()
+}
+
+"shelf_mobil_frontend::pages::login_page.dart::_LoginPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::login_page.dart::_LoginPageState"
+
+class "shelf_mobil_frontend::pages::login_page.dart::ForgotPassword" {
+  +String? email
+  +int userId
+  +State<ForgotPassword> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::login_page.dart::ForgotPassword"
+
+class "shelf_mobil_frontend::pages::login_page.dart::_ForgotPasswordState" {
+  -bool _showPassword
+  -bool _showPassword_1
+  -String _password
+  -GlobalKey<FormState> _formKey
+  +TextEditingController codeController
+  +TextEditingController passwordController
+  +Widget build()
+  +Future<void> dialog()
+}
+
+"shelf_mobil_frontend::pages::login_page.dart::_ForgotPasswordState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"shelf_mobil_frontend::pages::login_page.dart::_ForgotPasswordState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::login_page.dart::_ForgotPasswordState"
+
+class "shelf_mobil_frontend::pages::my_info_page.dart::MyInfoPage" {
+  {static} +void changeField()
+  +State<MyInfoPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::my_info_page.dart::MyInfoPage"
+
+class "shelf_mobil_frontend::pages::my_info_page.dart::_MyInfoPageState" {
+  {static} +String name_
+  {static} +String email_
+  {static} +String phone_
+  {static} +String password_
+  {static} +String address_
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::my_info_page.dart::_MyInfoPageState"
+
+class "shelf_mobil_frontend::pages::my_info_page.dart::TextFieldWidget" {
+  +int maxLines
+  +String label
+  +String text
+  +Icon icon
+  +void Function(String) onChanged
+  +State<TextFieldWidget> createState()
+}
+
+"shelf_mobil_frontend::pages::my_info_page.dart::TextFieldWidget" o-- "flutter::src::widgets::icon.dart::Icon"
+"shelf_mobil_frontend::pages::my_info_page.dart::TextFieldWidget" o-- "flutter::src::foundation::basic_types.dart::void Function(String)"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::my_info_page.dart::TextFieldWidget"
+
+class "shelf_mobil_frontend::pages::my_info_page.dart::_TextFieldWidgetState" {
+  +TextEditingController controller
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"shelf_mobil_frontend::pages::my_info_page.dart::_TextFieldWidgetState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::my_info_page.dart::_TextFieldWidgetState"
+
+class "shelf_mobil_frontend::pages::my_reviews_page.dart::MyReviewsPage" {
+  +State<MyReviewsPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::my_reviews_page.dart::MyReviewsPage"
+
+class "shelf_mobil_frontend::pages::my_reviews_page.dart::_MyReviewsPageState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::my_reviews_page.dart::_MyReviewsPageState"
+
+class "shelf_mobil_frontend::pages::search_page.dart::BookSearchButton" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "shelf_mobil_frontend::pages::search_page.dart::BookSearchButton"
+
+class "shelf_mobil_frontend::pages::search_page.dart::BookSearchDelegate" {
+  +String searchFieldLabel
+  +List<Widget> buildActions()
+  +Widget buildLeading()
+  +Widget buildResults()
+  +Widget buildSuggestions()
+  -Widget _buildListItem()
+}
+
+"flutter::src::material::search.dart::SearchDelegate" <|-- "shelf_mobil_frontend::pages::search_page.dart::BookSearchDelegate"
+
+class "shelf_mobil_frontend::pages::search_page.dart::CategorySearchDelegate" {
+  +List<Category> categoryList
+  +String searchFieldLabel
+  +List<Widget> buildActions()
+  +Widget buildLeading()
+  +Widget buildResults()
+  +Widget buildSuggestions()
+  -Widget _buildListItem()
+}
+
+"flutter::src::material::search.dart::SearchDelegate" <|-- "shelf_mobil_frontend::pages::search_page.dart::CategorySearchDelegate"
+
+class "shelf_mobil_frontend::pages::share_book_page.dart::ShareBookPage" {
+  +State<ShareBookPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::share_book_page.dart::ShareBookPage"
+
+class "shelf_mobil_frontend::pages::share_book_page.dart::_ShareBookPageState" {
+  -List<Category>? _categoryList
+  -Category? _selectedCategory
+  -CargoPaymentType _cargoPaymentType
+  -Author _author
+  +ImagePicker imagePicker
+  +List<XFile> imageFileList
+  +List<String> imageBase64List
+  -GlobalKey<FormState> _formKey
+  +TextEditingController numberOfPagesInput
+  +TextEditingController bookNameInput
+  +TextEditingController bookAbstractInput
+  +void initState()
+  -Future<dynamic> _convertBase64Files()
+  -Future<dynamic> _pickImages()
+  -void _showSelectPhotoOptions()
+  +Widget build()
+  +Widget uploadButton()
+  +Widget showSelectedImages()
+}
+
+"shelf_mobil_frontend::pages::share_book_page.dart::_ShareBookPageState" o-- "shelf_mobil_frontend::models::category.dart::Category"
+"shelf_mobil_frontend::pages::share_book_page.dart::_ShareBookPageState" o-- "shelf_mobil_frontend::enums.dart::CargoPaymentType"
+"shelf_mobil_frontend::pages::share_book_page.dart::_ShareBookPageState" o-- "shelf_mobil_frontend::models::author.dart::Author"
+"shelf_mobil_frontend::pages::share_book_page.dart::_ShareBookPageState" o-- "image_picker::image_picker.dart::ImagePicker"
+"shelf_mobil_frontend::pages::share_book_page.dart::_ShareBookPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"shelf_mobil_frontend::pages::share_book_page.dart::_ShareBookPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::share_book_page.dart::_ShareBookPageState"
+
+class "shelf_mobil_frontend::pages::shipment_confirmaiton_page.dart::ShipmentConfirmationPage" {
+  +List<Book> confirmedBookList
+  +State<ShipmentConfirmationPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::shipment_confirmaiton_page.dart::ShipmentConfirmationPage"
+
+class "shelf_mobil_frontend::pages::shipment_confirmaiton_page.dart::_ShipmentConfirmationPageState" {
+  -City _selectedCity
+  -Town _selectedTown
+  -List<City> _cityList
+  +Widget build()
+}
+
+"shelf_mobil_frontend::pages::shipment_confirmaiton_page.dart::_ShipmentConfirmationPageState" o-- "shelf_mobil_frontend::models::address.dart::City"
+"shelf_mobil_frontend::pages::shipment_confirmaiton_page.dart::_ShipmentConfirmationPageState" o-- "shelf_mobil_frontend::models::address.dart::Town"
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::shipment_confirmaiton_page.dart::_ShipmentConfirmationPageState"
+
+class "shelf_mobil_frontend::pages::signup_page.dart::SignUpPage" {
+  +State<SignUpPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::signup_page.dart::SignUpPage"
+
+class "shelf_mobil_frontend::pages::signup_page.dart::_SignUpPageState" {
+  -bool _showPassword
+  -bool _showPassword_1
+  -String _password
+  -GlobalKey<FormState> _formKey
+  +TextEditingController nameController
+  +TextEditingController emailController
+  +TextEditingController phoneController
+  +TextEditingController passwordController
+  +Widget build()
+}
+
+"shelf_mobil_frontend::pages::signup_page.dart::_SignUpPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"shelf_mobil_frontend::pages::signup_page.dart::_SignUpPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::signup_page.dart::_SignUpPageState"
+
+class "shelf_mobil_frontend::pages::signup_page.dart::Confirmation" {
+  +int id
+  +String? email_
+  +State<Confirmation> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::signup_page.dart::Confirmation"
+
+class "shelf_mobil_frontend::pages::signup_page.dart::_ConfirmationState" {
+  +TextEditingController codeController
+  +Widget build()
+  +Future<void> dialog()
+}
+
+"shelf_mobil_frontend::pages::signup_page.dart::_ConfirmationState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::signup_page.dart::_ConfirmationState"
+
+class "shelf_mobil_frontend::pages::user_review_page.dart::UserReviewPage" {
+  +String user_name
+  +State<UserReviewPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::pages::user_review_page.dart::UserReviewPage"
+
+class "shelf_mobil_frontend::pages::user_review_page.dart::_UserReviewPageState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::pages::user_review_page.dart::_UserReviewPageState"
+
+class "shelf_mobil_frontend::screens::alert_dialog.dart::AlertDialogUserCheck" {
+  +String subText
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "shelf_mobil_frontend::screens::alert_dialog.dart::AlertDialogUserCheck"
+
+class "shelf_mobil_frontend::screens::app_bar.dart::AppBarDesign" {
+  +PreferredSize createAppBar()
+}
+
+class "shelf_mobil_frontend::screens::background.dart::Background" {
+  +Decoration getBackground()
+}
+
+class "shelf_mobil_frontend::screens::filter_drawer.dart::FilterDrawer" {
+  +State<FilterDrawer> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::screens::filter_drawer.dart::FilterDrawer"
+
+class "shelf_mobil_frontend::screens::filter_drawer.dart::_FilterDrawerState" {
+  +int pageIndex
+  -PageController _controller
+  +void initState()
+  -dynamic _onChangePage()
+  +void dispose()
+  +Widget build()
+}
+
+"shelf_mobil_frontend::screens::filter_drawer.dart::_FilterDrawerState" o-- "flutter::src::widgets::page_view.dart::PageController"
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::screens::filter_drawer.dart::_FilterDrawerState"
+
+class "shelf_mobil_frontend::screens::filter_drawer.dart::FirstDrawer" {
+  +void Function() author
+  +void Function() shipmentType
+  +Widget build()
+}
+
+"shelf_mobil_frontend::screens::filter_drawer.dart::FirstDrawer" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "shelf_mobil_frontend::screens::filter_drawer.dart::FirstDrawer"
+
+class "shelf_mobil_frontend::screens::filter_drawer.dart::AuthorFilter" {
+  +void Function() goBack
+  +State<AuthorFilter> createState()
+}
+
+"shelf_mobil_frontend::screens::filter_drawer.dart::AuthorFilter" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::screens::filter_drawer.dart::AuthorFilter"
+
+class "shelf_mobil_frontend::screens::filter_drawer.dart::_AuthorFilterState" {
+  +bool isSelectionMode
+  +List<String> authorList
+  +Map<int, bool> selectedFlag
+  +Widget build()
+  +void onTap()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::screens::filter_drawer.dart::_AuthorFilterState"
+
+class "shelf_mobil_frontend::screens::filter_drawer.dart::ShipmentTypeFilter" {
+  +void Function() goBack
+  +State<ShipmentTypeFilter> createState()
+}
+
+"shelf_mobil_frontend::screens::filter_drawer.dart::ShipmentTypeFilter" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "shelf_mobil_frontend::screens::filter_drawer.dart::ShipmentTypeFilter"
+
+class "shelf_mobil_frontend::screens::filter_drawer.dart::_ShipmentTypeFilterState" {
+  +bool isSelectionMode
+  +List<String> shipmentTypeList
+  +Map<int, bool> selectedFlag
+  +Widget build()
+  +void onTap()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "shelf_mobil_frontend::screens::filter_drawer.dart::_ShipmentTypeFilterState"
+
+class "shelf_mobil_frontend::screens::select_photo.dart::SelectPhotoOptionsScreen" {
+  +dynamic Function(ImageSource) onTap
+  +Widget build()
+}
+
+"shelf_mobil_frontend::screens::select_photo.dart::SelectPhotoOptionsScreen" o-- "null::dynamic Function(ImageSource)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "shelf_mobil_frontend::screens::select_photo.dart::SelectPhotoOptionsScreen"
+
+class "shelf_mobil_frontend::screens::select_photo.dart::SelectPhoto" {
+  +String textLabel
+  +IconData icon
+  +void Function()? onTap
+  +Widget build()
+}
+
+"shelf_mobil_frontend::screens::select_photo.dart::SelectPhoto" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"shelf_mobil_frontend::screens::select_photo.dart::SelectPhoto" o-- "null::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "shelf_mobil_frontend::screens::select_photo.dart::SelectPhoto"
+
+class "shelf_mobil_frontend::services::api_service.dart::ApiConstants" {
+  {static} +String baseUrl
+  {static} +String baseUrlImg
+  {static} +String login
+  {static} +String logout
+  {static} +String register
+  {static} +String verifyEmail
+  {static} +String resetPassword
+  {static} +String changePassword
+  {static} +String add
+  {static} +String delete
+  {static} +String create
+  {static} +String update
+  {static} +String user
+  {static} +String reviews
+  {static} +String books
+  {static} +String favorites
+  {static} +String category
+  {static} +String author
+  {static} +String address
+  {static} +String order
+  {static} +String cart
+}
+
+class "shelf_mobil_frontend::services::api_service.dart::ApiService" {
+  +String bearerToken
+  +Map<String, String> requestHeaders
+  +Future<Response> login()
+  +Future<Response> logout()
+  +Future<Response> register()
+  +Future<Response> resetPassword()
+  +Future<Response> changePassword()
+  +Future<Response> verifyEmail()
+  +Future<Response> updateUser()
+  +Future<Response> addAdress()
+  +Future<Response> getFavorities()
+  +Future<Response> addToFavorities()
+  +Future<Response> createOrder()
+  +Future<Response> addCart()
+  +Future<Response> deleteCart()
+  +Future<Response> addBook()
+  +Future<Response> getBooks()
+  +Future<Response> getBooksWithCategory()
+  +Future<Response> getAllBooks()
+  +Future<Response> getAuthors()
+  +Future<Response> addAuthor()
+  +Future<Response> getCategories()
+  +Future<Response> getReviewList()
+}
+
+class "shelf_mobil_frontend::services::storage_service.dart::SecureService" {
+  {static} +String tokenKey
+  {static} +String userKey
+  {static} +FlutterSecureStorage storage
+  +void storeUser()
+  +void deleteUser()
+  +Future<String?> getUser()
+  +void storeToken()
+  +void deleteToken()
+  +Future<String?> getToken()
+}
+
+"shelf_mobil_frontend::services::storage_service.dart::SecureService" o-- "flutter_secure_storage::flutter_secure_storage.dart::FlutterSecureStorage"
+
+
+@enduml
