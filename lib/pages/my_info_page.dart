@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:shelf_mobil_frontend/models/user.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
 
 class MyInfoPage extends StatefulWidget {
   const MyInfoPage({super.key});
 
-  static void assignUser(User other) {
-    _MyInfoPageState.user = other;
+  static void changeField(String name, String email, String phone,
+      String password, String address) {
+    _MyInfoPageState.name_ = name;
+    _MyInfoPageState.email_ = email;
+    _MyInfoPageState.phone_ = phone;
+    _MyInfoPageState.password_ = password;
+    _MyInfoPageState.address_ = address;
   }
 
   @override
@@ -15,12 +19,17 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class _MyInfoPageState extends State<MyInfoPage> {
-  static User? user;
+  static String name_ = "";
+  static String email_ = "";
+  static String phone_ = "";
+  static String password_ = "";
+  static String address_ = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBarDesign().createAppBar("My Informations", const SizedBox(), []),
+      appBar: AppBarDesign().createAppBar(
+          "My Informations", BackButton(color: Colors.grey.shade900), []),
       body: Container(
         padding: const EdgeInsets.all(26),
         decoration: Background().getBackground(),
@@ -31,28 +40,28 @@ class _MyInfoPageState extends State<MyInfoPage> {
                 TextFieldWidget(
                   icon: Icon(Icons.person, color: Colors.grey.shade900),
                   label: "Name",
-                  text: user!.name,
+                  text: name_,
                   onChanged: (name) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
                   icon: Icon(Icons.email_rounded, color: Colors.grey.shade900),
                   label: "Email",
-                  text: user!.email,
+                  text: email_,
                   onChanged: (email) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
                   icon: Icon(Icons.phone, color: Colors.grey.shade900),
                   label: "Phone Number",
-                  text: user!.phoneNumber,
+                  text: phone_,
                   onChanged: (phone) {},
                 ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
                   icon: Icon(Icons.lock_outline, color: Colors.grey.shade900),
                   label: "Password",
-                  text: user!.password,
+                  text: password_,
                   onChanged: (password) {},
                 ),
                 const SizedBox(height: 5),
@@ -60,7 +69,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   icon: Icon(Icons.location_on, color: Colors.grey.shade900),
                   label: "Address",
                   maxLines: 3,
-                  text: "user address",
+                  text: address_,
                   onChanged: (address) {},
                 ),
                 const SizedBox(height: 5),

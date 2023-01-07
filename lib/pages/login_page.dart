@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/home_page.dart';
+import 'package:shelf_mobil_frontend/pages/my_info_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/services/api_service.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -23,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController email_ = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
@@ -72,11 +74,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Card(
                     child: TextFormField(
-                      controller: emailController,
+                      maxLength: _selectItem ? 1000 : 10,
+                      controller:
+                          _selectItem ? emailController : phoneController,
                       keyboardType: _selectItem
                           ? TextInputType.emailAddress
                           : TextInputType.phone,
                       decoration: InputDecoration(
+                        counterText: "",
                         prefixIcon: _selectItem
                             ? Icon(Icons.email_rounded,
                                 color: Colors.grey.shade900)
@@ -139,13 +144,19 @@ class _LoginPageState extends State<LoginPage> {
                           Size(MediaQuery.of(context).size.width * 0.35, 40),
                     ),
                     onPressed: () async {
-                      Response response = await ApiService().login(
-                          emailController.text.toString(),
-                          passwordController.text.toString());
+                      Response response = await ApiService()
+                          .login(emailController.text, passwordController.text);
 
                       Map<String, dynamic> res = jsonDecode(response.body);
 
                       if (res["result"].toString() == "true") {
+                        MyInfoPage.changeField(
+                            res["user"]["name"],
+                            res["user"]["email"],
+                            res["user"]["phone"],
+                            passwordController.text,
+                            "");
+
                         AccountPage.changeLog();
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -223,15 +234,43 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {
-                    if (emailCheck == true) {
+                  onPressed: () async {
+                    Response response =
+                        await ApiService().resetPassword(email_.text);
+
+                    Map<String, dynamic> emailReset = jsonDecode(response.body);
+
+                    if (emailReset["status"].toString() == "true") {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
                             return ForgotPassword(
-                              email: email_.text.toString(),
+                              email: email_.text,
+                              userId: emailReset["user_id"],
                             );
                           },
+                        ),
+                      );
+                    } else if (emailReset["status"].toString() == "false") {
+                      // ignore: use_build_context_synchronously
+                      _ForgotPasswordState().dialog(
+                        context,
+                        const Text(
+                          "There is no user registered with this e-mail. Please try again.",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            email_.clear();
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
                       );
                     }
@@ -256,7 +295,8 @@ class _LoginPageState extends State<LoginPage> {
 // ignore: must_be_immutable
 class ForgotPassword extends StatefulWidget {
   String? email;
-  ForgotPassword({super.key, this.email});
+  int userId;
+  ForgotPassword({super.key, this.email, required this.userId});
 
   @override
   State<ForgotPassword> createState() => _ForgotPasswordState();
@@ -267,6 +307,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   bool _showPassword_1 = true;
   String _password = "";
   final _formKey = GlobalKey<FormState>();
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -303,9 +346,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     height: 12,
                   ),
                   TextFormField(
+                    maxLength: 6,
+                    controller: codeController,
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                     decoration: const InputDecoration(
+                        counterText: "",
                         fillColor: Colors.white,
                         filled: true,
                         labelText: "Please enter the code",
@@ -313,20 +359,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   ),
                   const SizedBox(height: 5),
                   TextFormField(
+                    controller: passwordController,
                     validator: Validators.compose(
                       [
                         Validators.patternRegExp(
                             RegExp(
                                 r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'),
-                            "Password must contain at least one uppercase letter, one lowercase letter, one number and must be at least 8 characters long.")
+                            "Password must contain at least one uppercase letter, one lowercase letter, one number and must be at least 8, at most 15 characters long.")
                       ],
                     ),
                     onChanged: (value) {
                       _password = value;
                     },
-                    //maxLength: 15,
+                    maxLength: 15,
                     obscureText: _showPassword,
                     decoration: InputDecoration(
+                      counterText: "",
                       fillColor: Colors.white,
                       filled: true,
                       errorMaxLines: 3,
@@ -352,6 +400,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   ),
                   const SizedBox(height: 5),
                   TextFormField(
+                    maxLength: 15,
                     obscureText: _showPassword_1,
                     validator: (value) {
                       if (value != _password) {
@@ -360,6 +409,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       return null;
                     },
                     decoration: InputDecoration(
+                      counterText: "",
                       fillColor: Colors.white,
                       filled: true,
                       errorMaxLines: 3,
@@ -391,7 +441,44 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       fixedSize:
                           Size(MediaQuery.of(context).size.width * 0.35, 40),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      Response response = await ApiService().changePassword(
+                          widget.userId,
+                          codeController.text,
+                          passwordController.text);
+
+                      Map<String, dynamic> passReset =
+                          jsonDecode(response.body);
+
+                      if (passReset["status"].toString() == "true") {
+                        // ignore: use_build_context_synchronously
+                        dialog(
+                          context,
+                          const Text(
+                            "Your password was changed. You can login with your new password.",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return const LoginPage();
+                                  },
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              "OK",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
                     child: const Text(
                       "SAVE",
                       style: TextStyle(
@@ -406,6 +493,20 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> dialog(BuildContext context, Widget content_, Widget actions_) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          actionsAlignment: MainAxisAlignment.center,
+          title: const Text("MESSAGE"),
+          content: content_,
+          actions: <Widget>[actions_],
+        );
+      },
     );
   }
 }

@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:http/http.dart';
-import 'package:shelf_mobil_frontend/models/user.dart';
-import 'package:shelf_mobil_frontend/pages/account_page.dart';
-import 'package:shelf_mobil_frontend/pages/home_page.dart';
+import 'package:shelf_mobil_frontend/pages/login_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/services/api_service.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
@@ -172,6 +170,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   const SizedBox(height: 7),
                   TextFormField(
+                    maxLength: 15,
                     obscureText: _showPassword_1,
                     validator: (value) {
                       if (value != _password) {
@@ -180,6 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       return null;
                     },
                     decoration: InputDecoration(
+                      counterText: "",
                       fillColor: Colors.white,
                       filled: true,
                       errorMaxLines: 2,
@@ -217,19 +217,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             emailController.text,
                             passwordController.text,
                             phoneController.text);
-                        debugPrint(response.body.toString());
-
-/*                         User(
-                            userId: 0,
-                            name: nameController.text,
-                            email: emailController.text,
-                            password: passwordController.text,
-                            address: "addres",
-                            phoneNumber: phoneController.text,
-                            isManager: false); */
 
                         Map<String, dynamic> res = jsonDecode(response.body);
-                        //User.fromJson(res);
+
+                        debugPrint(response.body.toString());
 
                         if (res["result"].toString() == "true") {
                           Navigator.of(context).push(
@@ -241,15 +232,28 @@ class _SignUpPageState extends State<SignUpPage> {
                               },
                             ),
                           );
+                        } else if (res["result"].toString() == "false") {
+                          // ignore: use_build_context_synchronously
+                          _ConfirmationState().dialog(
+                            context,
+                            const Text(
+                              "The user already exists. Please try again.",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                "OK",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          );
                         }
-                        /* Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return Confirmation(
-                                  email_: emailController.text.toString());
-                            },
-                          ),
-                        ); */
                       }
                     },
                     child: const Text(
@@ -282,6 +286,7 @@ class Confirmation extends StatefulWidget {
 
 class _ConfirmationState extends State<Confirmation> {
   TextEditingController codeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -316,10 +321,12 @@ class _ConfirmationState extends State<Confirmation> {
                   const SizedBox(height: 10),
                   Card(
                     child: TextFormField(
+                      maxLength: 6,
                       controller: codeController,
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
+                        counterText: "",
                         labelText: "Please enter the code",
                         border: OutlineInputBorder(),
                       ),
@@ -333,12 +340,52 @@ class _ConfirmationState extends State<Confirmation> {
                       Map<String, dynamic> res = jsonDecode(response.body);
 
                       if (res["result"].toString() == "true") {
-                        AccountPage.changeLog();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return const HomePage();
+                        // ignore: use_build_context_synchronously
+                        dialog(
+                          context,
+                          const Text(
+                            "Your account was verified. You can login with your e-mail and password.",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return const LoginPage();
+                                  },
+                                ),
+                              );
                             },
+                            child: const Text(
+                              "OK",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                      } else if (res["result"].toString() == "false") {
+                        // ignore: use_build_context_synchronously
+                        dialog(
+                          context,
+                          const Text(
+                            "The entered code is incorrect. Please try again.",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              codeController.clear();
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text(
+                              "OK",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
                         );
                       }
@@ -358,6 +405,20 @@ class _ConfirmationState extends State<Confirmation> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> dialog(BuildContext context, Widget content_, Widget actions_) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          actionsAlignment: MainAxisAlignment.center,
+          title: const Text("MESSAGE"),
+          content: content_,
+          actions: <Widget>[actions_],
+        );
+      },
     );
   }
 }

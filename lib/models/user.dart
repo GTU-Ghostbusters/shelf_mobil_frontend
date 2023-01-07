@@ -23,7 +23,7 @@ class User {
   final String password;
   final String address;
   final String phoneNumber;
-  final bool isManager;
+  final int isManager;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         userId: json["user_id"],

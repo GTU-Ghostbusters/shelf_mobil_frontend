@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/my_info_page.dart';
+import 'package:shelf_mobil_frontend/pages/my_reviews_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
 
@@ -47,17 +48,17 @@ class _AccountPageState extends State<AccountPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return const MyInfoPage();
+                  return MyInfoPage();
                 },
               ),
             );
           })),
           const SizedBox(height: 10),
-          button(0.6, 50, 5, 18, null, "Favorites", (() {
+          button(0.6, 50, 5, 18, null, "My Reviews", (() {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return SubPage(title: "Favorites");
+                  return const MyReviewsPage();
                 },
               ),
             );
