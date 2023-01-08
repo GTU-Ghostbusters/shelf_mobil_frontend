@@ -63,7 +63,7 @@ class _AccountPageState extends State<AccountPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return MyInfoPage();
+                  return const MyInfoPage();
                 },
               ),
             );

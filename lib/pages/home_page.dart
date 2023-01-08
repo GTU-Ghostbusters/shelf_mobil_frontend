@@ -232,20 +232,6 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 30),
             cardView(_buildListItem),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  //! DELETE THIS, NOT WORK ANYMORE
-                });
-              },
-              style: ButtonStyle(
-                  backgroundColor: AccountPage.isUserLogged()
-                      ? const MaterialStatePropertyAll(Colors.green)
-                      : const MaterialStatePropertyAll(Colors.red)),
-              child: const Text(
-                "Change Log For Test",
-              ),
-            ),
           ],
         ),
       ),

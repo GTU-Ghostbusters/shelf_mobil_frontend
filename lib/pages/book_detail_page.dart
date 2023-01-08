@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/models/user.dart';
 import 'package:shelf_mobil_frontend/pages/cart_page.dart';
@@ -31,14 +33,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 
   void getUser() async {
-    var response = await ApiService.getUserList();
-    var userList = userFromJsonID(response.body);
-    for (var i = 0; i < userList.length; i++) {
-      if (widget.book.donatorID == userList[i].userId) {
-        _user = userList[i];
-        break;
-      }
-    }
+    var response = await ApiService.getUser(widget.book.donatorID);
+    User user = User.fromJson(jsonDecode(response.body));
+    _user = user;
     setState(() {});
   }
 
@@ -324,7 +321,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         MaterialPageRoute(
                           builder: (BuildContext context) {
                             return UserReviewPage(
-                                user_name: _user!.userId.toString());
+                                user: _user!);
                           },
                         ),
                       );

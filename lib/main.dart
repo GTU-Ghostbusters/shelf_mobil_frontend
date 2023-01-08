@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/home_page.dart';
+// ignore: unused_import
 import 'package:dcdg/dcdg.dart';
 
 void main() {
@@ -18,7 +19,9 @@ class Shelf extends StatelessWidget {
       home: const HomePage(),
     );
   }
+
 }
+
 
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];

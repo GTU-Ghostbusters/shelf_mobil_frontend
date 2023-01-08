@@ -121,6 +121,13 @@ class ApiService {
         headers: requestHeaders);
   }
 
+  static Future<http.Response> getUser(int id) async {
+    return await http.get(Uri.parse("${ApiConstants.baseUrl}${ApiConstants.user}/$id"),
+        headers: requestHeaders);
+  }
+
+
+
   /* Address Operations */
   static Future<http.Response> addAdress(Address address) async {
     return await http.post(
