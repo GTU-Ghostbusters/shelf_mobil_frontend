@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:shelf_mobil_frontend/models/user.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/home_page.dart';
 import 'package:shelf_mobil_frontend/pages/my_info_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/services/api_service.dart';
+import 'package:shelf_mobil_frontend/services/storage_service.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
@@ -144,12 +146,17 @@ class _LoginPageState extends State<LoginPage> {
                           Size(MediaQuery.of(context).size.width * 0.35, 40),
                     ),
                     onPressed: () async {
-                      Response response = await ApiService()
-                          .login(emailController.text, passwordController.text);
-
+                      Response response = await ApiService().login(
+                          _selectItem
+                              ? emailController.text
+                              : phoneController.text,
+                          passwordController.text);
                       Map<String, dynamic> res = jsonDecode(response.body);
-
                       if (res["result"].toString() == "true") {
+                        StorageService.storeToken(
+                            res["access_token"].toString());
+                        AccountPage.changeLog(res["access_token"].toString());
+
                         MyInfoPage.changeField(
                             res["user"]["name"],
                             res["user"]["email"],
@@ -157,7 +164,6 @@ class _LoginPageState extends State<LoginPage> {
                             passwordController.text,
                             "");
 
-                        AccountPage.changeLog();
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (BuildContext context) {

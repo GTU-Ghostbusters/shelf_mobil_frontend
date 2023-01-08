@@ -6,6 +6,7 @@ import 'package:shelf_mobil_frontend/models/author.dart';
 
 import 'package:shelf_mobil_frontend/models/book.dart';
 import 'package:shelf_mobil_frontend/models/user.dart';
+import 'package:shelf_mobil_frontend/pages/account_page.dart';
 
 class ApiConstants {
   static String baseUrl = 'https://hodikids.com/api';
@@ -33,12 +34,12 @@ class ApiConstants {
 }
 
 class ApiService {
-  String bearerToken = "Bearer 2|yAx5KiDejngz3WsLT4yN8JXP0CaSUIet1Xn11Crp";
-
   Map<String, String> get requestHeaders => {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Authorization": bearerToken,
+        "Authorization": AccountPage.getToken() != null
+            ? "Bearer ${AccountPage.getToken()!}"
+            : "",
       };
 
   /* User Operations */
@@ -99,6 +100,11 @@ class ApiService {
           "user_id": id.toString(),
           "verification_code": verificationCode
         }));
+  }
+
+  Future<http.Response> getLoggedUser() async {
+    return await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.user),
+        headers: requestHeaders);
   }
 
   Future<http.Response> updateUser(User user) async {

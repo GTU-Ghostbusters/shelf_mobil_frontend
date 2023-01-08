@@ -3,6 +3,7 @@ import 'package:shelf_mobil_frontend/pages/my_info_page.dart';
 import 'package:shelf_mobil_frontend/pages/my_reviews_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
+import 'package:shelf_mobil_frontend/services/storage_service.dart';
 
 import 'login_page.dart';
 import 'signup_page.dart';
@@ -10,14 +11,16 @@ import 'signup_page.dart';
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
 
-  static void changeLog() {
-    _AccountPageState.isLogged
-        ? _AccountPageState.isLogged = false
-        : _AccountPageState.isLogged = true;
+  static void changeLog(String token) {
+    _AccountPageState.token = token;
   }
 
   static bool isUserLogged() {
-    return _AccountPageState.isLogged;
+    return _AccountPageState.token != null;
+  }
+
+  static String? getToken() {
+    return _AccountPageState.token;
   }
 
   @override
@@ -25,16 +28,28 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  static bool isLogged = false;
+  static String? token;
+
+  @override
+  void initState() {
+    super.initState();
+    readFromStorage();
+  }
+
+  void readFromStorage() async {
+    token = await StorageService.getToken();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarDesign().createAppBar(
-          isLogged ? "MY ACCOUNT" : "USER MANAGEMENT", const SizedBox(), []),
+          AccountPage.isUserLogged() ? "MY ACCOUNT" : "USER MANAGEMENT",
+          const SizedBox(), []),
       body: Container(
           padding: const EdgeInsets.all(10),
           decoration: Background().getBackground(),
-          child: isLogged ? myAccount() : userManagement()),
+          child: AccountPage.isUserLogged() ? myAccount() : userManagement()),
     );
   }
 
@@ -86,7 +101,8 @@ class _AccountPageState extends State<AccountPage> {
           const SizedBox(height: 10),
           button(0.25, 35, 5, 15, Colors.grey.shade600, "Log Out", () {
             setState(() {
-              isLogged = false;
+              StorageService.deleteToken();
+              token = null;
             });
           }),
           const SizedBox(height: 20),

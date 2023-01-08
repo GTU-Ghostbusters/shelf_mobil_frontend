@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
+import 'package:shelf_mobil_frontend/services/api_service.dart';
 
 class MyInfoPage extends StatefulWidget {
   const MyInfoPage({super.key});
@@ -10,7 +14,6 @@ class MyInfoPage extends StatefulWidget {
     _MyInfoPageState.name_ = name;
     _MyInfoPageState.email_ = email;
     _MyInfoPageState.phone_ = phone;
-    _MyInfoPageState.password_ = password;
     _MyInfoPageState.address_ = address;
   }
 
@@ -19,11 +22,31 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class _MyInfoPageState extends State<MyInfoPage> {
+  static int id_ = 0;
   static String name_ = "";
   static String email_ = "";
   static String phone_ = "";
-  static String password_ = "";
   static String address_ = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    Response response = await ApiService().getLoggedUser();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      id_ = data["id"];
+      name_ = data["name"];
+      email_ = data["email"];
+      address_ = "";
+      phone_ = data["phone"];
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +81,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   onChanged: (phone) {},
                 ),
                 const SizedBox(height: 5),
-                TextFieldWidget(
-                  icon: Icon(Icons.lock_outline, color: Colors.grey.shade900),
-                  label: "Password",
-                  text: password_,
-                  onChanged: (password) {},
-                ),
                 const SizedBox(height: 5),
                 TextFieldWidget(
                   icon: Icon(Icons.location_on, color: Colors.grey.shade900),
