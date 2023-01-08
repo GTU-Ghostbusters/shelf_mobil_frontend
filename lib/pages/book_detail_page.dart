@@ -34,8 +34,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   void getUser() async {
     var response = await ApiService.getUser(widget.book.donatorID);
-    User user = User.fromJson(jsonDecode(response.body));
-    _user = user;
+    _user = User.fromJsonID(jsonDecode(response.body));
     setState(() {});
   }
 
@@ -320,8 +319,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return UserReviewPage(
-                                user: _user!);
+                            return UserReviewPage(user: _user!);
                           },
                         ),
                       );
