@@ -25,6 +25,7 @@ class _UserReviewPageState extends State<UserReviewPage> {
   void getData() async {
     var response = await ApiService.getReviewList(widget.user!.userId);
     _reviewList = reviewFromJson(response.body);
+
     setState(() {});
   }
 
@@ -42,75 +43,57 @@ class _UserReviewPageState extends State<UserReviewPage> {
         decoration: Background().getBackground(),
         child: Column(
           children: [
-            Card(
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
-                  _reviewList.isEmpty
-                      ? "0 review"
-                      : _reviewList.length == 1
-                          ? "1 review"
-                          : "${_reviewList.length} reviews",
-                  style: TextStyle(color: Colors.grey.shade800, fontSize: 15),
-                ),
-              ]),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.06,
+              child: Card(
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(
+                    _reviewList.isEmpty
+                        ? "0 review"
+                        : _reviewList.length == 1
+                            ? "1 review"
+                            : "${_reviewList.length} reviews",
+                    style: TextStyle(color: Colors.grey.shade800, fontSize: 16),
+                  ),
+                ]),
+              ),
             ),
             Expanded(
               child: ListView.separated(
                 itemCount: _reviewList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            color: Colors.transparent,
-                            height: MediaQuery.of(context).size.height * 0.15,
-                            width: MediaQuery.of(context).size.width * 0.68,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 12.0),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.45,
-                                      child: Text(
-                                        _reviewList.first.review,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.clip,
-                                        style: TextStyle(
-                                            color: Colors.grey.shade800,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: MediaQuery.of(context).size.height *
-                                        0.02,
-                                    child: Text(
-                                      _reviewList.first.buyerId.toString(),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w900),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10),
+                          child: Text(
+                            _reviewList[index].review,
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                color: Colors.grey.shade800,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500),
                           ),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(left: 10),
+                          height: 40,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 5,
+                              itemBuilder: ((context, ind) {
+                                return ind < _reviewList[index].point
+                                    ? Icon(Icons.star,
+                                        color: Colors.yellow.shade800)
+                                    : Icon(Icons.star,
+                                        color: Colors.grey.shade700);
+                              })),
+                        ),
+                      ],
                     ),
                   );
                 },
