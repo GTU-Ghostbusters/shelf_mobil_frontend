@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
@@ -323,27 +325,39 @@ class _GetBookPageState extends State<GetBookPage> {
                       height: constraints.maxWidth * 0.19,
                       width: constraints.maxWidth * 0.2,
                       child: IconButton(
-                          onPressed: () {
-                            AccountPage.isUserLogged() == false
-                                ? showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        const AlertDialogUserCheck(
-                                      subText:
-                                          "You should login to add a book to favorites.",
-                                    ),
-                                  )
-                                : setState(() {
-                                    if (FavoritesPage.isAddedToFav(
-                                        _bookList[index])) {
-                                      FavoritesPage.removeFromFav(
-                                          _bookList[index]);
-                                    } else {
-                                      FavoritesPage.addToFav(_bookList[index]);
-                                    }
-                                  });
+                          onPressed: () async {
+                            if (AccountPage.isUserLogged() == false) {
+                              showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    const AlertDialogUserCheck(
+                                  subText:
+                                      "You should login to add a book to favorites.",
+                                ),
+                              );
+                            } else if (AccountPage.isUserLogged() == true) {
+                              Response response =
+                                  await ApiService.getLoggedUser();
+                              Map<String, dynamic> data =
+                                  jsonDecode(response.body);
+
+                              setState(() {
+                                if (FavoritesPage.isAddedToFav(
+                                    _bookList[index].bookId)) {
+                                  FavoritesPage.removeFromFav(
+                                      _bookList[index].bookId);
+                                  ApiService.deleteFav(_bookList[index].bookId);
+                                } else {
+                                  FavoritesPage.addToFav(
+                                      _bookList[index].bookId);
+                                  ApiService.addToFavorities(
+                                      data["id"], _bookList[index].bookId);
+                                }
+                              });
+                            }
                           },
-                          icon: FavoritesPage.isAddedToFav(_bookList[index])
+                          icon: FavoritesPage.isAddedToFav(
+                                  _bookList[index].bookId)
                               ? const Icon(Icons.favorite_outlined,
                                   color: Colors.red)
                               : const Icon(Icons.favorite_outline_outlined)),

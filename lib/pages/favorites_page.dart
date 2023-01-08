@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shelf_mobil_frontend/models/book.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
-import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
 import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
@@ -9,25 +7,33 @@ import 'package:shelf_mobil_frontend/screens/background.dart';
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
 
-  static void addToFav(Book book) {
-    favBooks.add(book);
+  static void addToFav(int bookId) {
+    favBooksId.add(bookId);
   }
 
-  static void removeFromFav(Book book) {
-    favBooks.remove(book);
+  static void removeFromFav(int bookId) {
+    favBooksId.remove(bookId);
   }
 
-  static bool isAddedToFav(Book book) {
-    return favBooks.contains(book);
+  static bool isAddedToFav(int bookId) {
+    return favBooksId.contains(bookId);
   }
 
-  static final List<Book> favBooks = [];
+  static final List<int> favBooksId = [];
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
+  /*  Future<Response> getFavBookDetail() async {
+    Response response1 = await ApiService.getFavorities();
+    Map<String, dynamic> res = jsonDecode(response1.body);
+    Response response2 = await ApiService.getBookDetail(res["book_id"]);
+    debugPrint(response2.body.toString());
+    return response2;
+  } */
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,18 +53,18 @@ class _FavoritesPageState extends State<FavoritesPage> {
                         children: [
                           const SizedBox(width: 45),
                           Text(
-                            FavoritesPage.favBooks.isEmpty
+                            FavoritesPage.favBooksId.isEmpty
                                 ? "Empty"
-                                : FavoritesPage.favBooks.length == 1
+                                : FavoritesPage.favBooksId.length == 1
                                     ? "1 book"
-                                    : "${FavoritesPage.favBooks.length} books",
+                                    : "${FavoritesPage.favBooksId.length} books",
                             style: TextStyle(
                                 color: Colors.grey.shade800, fontSize: 15),
                           ),
                           IconButton(
                             onPressed: () {
                               setState(() {
-                                FavoritesPage.favBooks.clear();
+                                FavoritesPage.favBooksId.clear();
                               });
                             },
                             icon: Icon(Icons.delete_sweep_outlined,
@@ -68,7 +74,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   ),
                   Expanded(
                     child: ListView.separated(
-                      itemCount: FavoritesPage.favBooks.length,
+                      itemCount: FavoritesPage.favBooksId.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
                           child: Container(
@@ -81,17 +87,17 @@ class _FavoritesPageState extends State<FavoritesPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  onTap: (() {
+                                  /* onTap: (() {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
                                           return BookDetailPage(
                                               book: FavoritesPage
-                                                  .favBooks[index]);
+                                                  .favBooksId[index]);
                                         },
                                       ),
                                     );
-                                  }),
+                                  }), */
                                   child: Container(
                                     color: Colors.transparent,
                                     height: MediaQuery.of(context).size.height *
@@ -121,10 +127,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                       .size
                                                       .width *
                                                   0.2,
-                                              child: Image.network(
+                                              /* child: Image.network(
                                                 FavoritesPage
-                                                    .favBooks[index].image1,
-                                              ),
+                                                    .favBooksId[index].image1,
+                                              ), */
                                             ),
                                           ),
                                           Positioned(
@@ -142,8 +148,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                       .width *
                                                   0.45,
                                               child: Text(
-                                                FavoritesPage
-                                                    .favBooks[index].name,
+                                                "a",
+                                                /* FavoritesPage
+                                                    .favBooksId[index].name, */
                                                 maxLines: 1,
                                                 overflow: TextOverflow.clip,
                                                 style: TextStyle(
@@ -154,7 +161,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                               ),
                                             ),
                                           ),
-                                          Positioned(
+                                          /* Positioned(
                                             top: MediaQuery.of(context)
                                                         .size
                                                         .height *
@@ -166,7 +173,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                 0.24,
                                             child: Text(
                                               FavoritesPage
-                                                  .favBooks[index].author,
+                                                  .favBooksId[index].author,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
@@ -174,8 +181,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                 fontSize: 15,
                                               ),
                                             ),
-                                          ),
-                                          Positioned(
+                                          ), */
+                                          /* Positioned(
                                             bottom: MediaQuery.of(context)
                                                     .size
                                                     .height *
@@ -186,7 +193,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                 0.24,
                                             child: Text(
                                                 FavoritesPage
-                                                    .favBooks[index].donatorID.toString(),
+                                                    .favBooksId[index].donatorID
+                                                    .toString(),
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
@@ -196,7 +204,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                     fontWeight:
                                                         FontWeight.w900),
                                                 textAlign: TextAlign.center),
-                                          ),
+                                          ), */
                                         ],
                                       ),
                                     ),
@@ -205,7 +213,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 IconButton(
                                   onPressed: () {
                                     setState(() {
-                                      FavoritesPage.favBooks.removeAt(index);
+                                      FavoritesPage.favBooksId.removeAt(index);
                                     });
                                   },
                                   icon: Icon(

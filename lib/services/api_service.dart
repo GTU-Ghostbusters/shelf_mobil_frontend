@@ -138,26 +138,28 @@ class ApiService {
   }
 
   /* Favorities Operations */
-  static Future<http.Response> getFavorities(int id) async {
+  static Future<http.Response> getFavorities() async {
     return await http.get(
-        Uri.parse(
-            ApiConstants.baseUrl + ApiConstants.order + ApiConstants.favorites),
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.favorites),
         headers: requestHeaders);
   }
 
-  static Future<http.Response> addToFavorities(
-      int userId, int bookId, int favId) async {
+  static Future<http.Response> addToFavorities(int userId, int bookId) async {
     return await http.post(
-        Uri.parse(ApiConstants.baseUrl +
-            ApiConstants.order +
-            ApiConstants.favorites +
-            ApiConstants.add),
+        Uri.parse(
+            ApiConstants.baseUrl + ApiConstants.favorites + ApiConstants.add),
         headers: requestHeaders,
         body: jsonEncode(<String, int>{
           "user_id": userId,
           "book_id": bookId,
-          "id": favId,
         }));
+  }
+
+  static Future<http.Response> deleteFav(int id) async {
+    return await http.post(
+        Uri.parse(
+            '${ApiConstants.baseUrl}${ApiConstants.favorites}/$id${ApiConstants.delete}'),
+        headers: requestHeaders);
   }
 
   /* Order Operations */
@@ -199,6 +201,12 @@ class ApiService {
   static Future<http.Response> getBooks(
       String name, String author, String category) async {
     return await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.books),
+        headers: requestHeaders);
+  }
+
+  static Future<http.Response> getBookDetail(int bookId) async {
+    return await http.get(
+        Uri.parse("${ApiConstants.baseUrl}${ApiConstants.books}/$bookId"),
         headers: requestHeaders);
   }
 
