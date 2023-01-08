@@ -9,32 +9,32 @@ import 'package:shelf_mobil_frontend/models/user.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
 
 class ApiConstants {
-  static String baseUrl = 'https://hodikids.com/api';
-  static String baseUrlImg = 'https://hodikids.com/';
-  static String login = '/login';
-  static String logout = '/logout';
-  static String register = '/register';
-  static String verifyEmail = '/verify-email';
-  static String resetPassword = '/password-reset';
-  static String changePassword = '/change-password';
-  static String add = '/add';
-  static String delete = '/delete';
-  static String create = '/create';
-  static String update = '/update';
-  static String user = '/user';
-  static String users = '/users';
-  static String reviews = '/reviews';
-  static String books = '/books';
-  static String favorites = '/favorites';
-  static String category = '/categories';
-  static String author = '/authors';
-  static String address = '/addresses';
-  static String order = '/order';
-  static String cart = '/cart';
+  static const String baseUrl = 'https://hodikids.com/api';
+  static const String baseUrlImg = 'https://hodikids.com/';
+  static const String login = '/login';
+  static const String logout = '/logout';
+  static const String register = '/register';
+  static const String verifyEmail = '/verify-email';
+  static const String resetPassword = '/password-reset';
+  static const String changePassword = '/change-password';
+  static const String add = '/add';
+  static const String delete = '/delete';
+  static const String create = '/create';
+  static const String update = '/update';
+  static const String user = '/user';
+  static const String users = '/users';
+  static const String reviews = '/reviews';
+  static const String books = '/books';
+  static const String favorites = '/favorites';
+  static const String category = '/categories';
+  static const String author = '/authors';
+  static const String address = '/addresses';
+  static const String order = '/order';
+  static const String cart = '/cart';
 }
 
 class ApiService {
-  Map<String, String> get requestHeaders => {
+  static Map<String, String> get requestHeaders => {
         "Content-Type": "application/json",
         "Accept": "application/json",
         "Authorization": AccountPage.getToken() != null
@@ -43,7 +43,7 @@ class ApiService {
       };
 
   /* User Operations */
-  Future<http.Response> login(String email, String password) async {
+  static Future<http.Response> login(String email, String password) async {
     return await http.post(Uri.parse(ApiConstants.baseUrl + ApiConstants.login),
         headers: requestHeaders,
         body: jsonEncode(<String, String>{
@@ -52,13 +52,13 @@ class ApiService {
         }));
   }
 
-  Future<http.Response> logout() async {
+  static Future<http.Response> logout() async {
     return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.logout),
         headers: requestHeaders);
   }
 
-  Future<http.Response> register(
+  static Future<http.Response> register(
       String name, String email, String password, String phone) async {
     return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.register),
@@ -71,7 +71,7 @@ class ApiService {
         }));
   }
 
-  Future<http.Response> resetPassword(String email) async {
+  static Future<http.Response> resetPassword(String email) async {
     return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.resetPassword),
         headers: requestHeaders,
@@ -80,7 +80,7 @@ class ApiService {
         }));
   }
 
-  Future<http.Response> changePassword(
+  static Future<http.Response> changePassword(
       int id, String resetCode, String newPassword) async {
     return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.changePassword),
@@ -92,7 +92,8 @@ class ApiService {
         }));
   }
 
-  Future<http.Response> verifyEmail(int id, String verificationCode) async {
+  static Future<http.Response> verifyEmail(
+      int id, String verificationCode) async {
     return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.verifyEmail),
         headers: requestHeaders,
@@ -102,12 +103,12 @@ class ApiService {
         }));
   }
 
-  Future<http.Response> getLoggedUser() async {
+  static Future<http.Response> getLoggedUser() async {
     return await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.user),
         headers: requestHeaders);
   }
 
-  Future<http.Response> updateUser(User user) async {
+  static Future<http.Response> updateUser(User user) async {
     return await http.put(
         Uri.parse(
             "${ApiConstants.baseUrl}${ApiConstants.user}${user.userId}/${ApiConstants.update}"),
@@ -115,13 +116,13 @@ class ApiService {
         body: jsonEncode(user.toJson()));
   }
 
-  Future<http.Response> getUserList() async {
+  static Future<http.Response> getUserList() async {
     return await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.users),
         headers: requestHeaders);
   }
 
   /* Address Operations */
-  Future<http.Response> addAdress(Address address) async {
+  static Future<http.Response> addAdress(Address address) async {
     return await http.post(
         Uri.parse(
             ApiConstants.baseUrl + ApiConstants.address + ApiConstants.add),
@@ -130,14 +131,14 @@ class ApiService {
   }
 
   /* Favorities Operations */
-  Future<http.Response> getFavorities(int id) async {
+  static Future<http.Response> getFavorities(int id) async {
     return await http.get(
         Uri.parse(
             ApiConstants.baseUrl + ApiConstants.order + ApiConstants.favorites),
         headers: requestHeaders);
   }
 
-  Future<http.Response> addToFavorities(
+  static Future<http.Response> addToFavorities(
       int userId, int bookId, int favId) async {
     return await http.post(
         Uri.parse(ApiConstants.baseUrl +
@@ -153,7 +154,7 @@ class ApiService {
   }
 
   /* Order Operations */
-  Future<http.Response> createOrder(int id) async {
+  static Future<http.Response> createOrder(int id) async {
     return await http.post(
         Uri.parse(
             ApiConstants.baseUrl + ApiConstants.order + ApiConstants.create),
@@ -164,7 +165,7 @@ class ApiService {
   }
 
   /* Cart Operations */
-  Future<http.Response> addCart(int id) async {
+  static Future<http.Response> addCart(int id) async {
     return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.cart + ApiConstants.add),
         headers: requestHeaders,
@@ -173,7 +174,7 @@ class ApiService {
         }));
   }
 
-  Future<http.Response> deleteCart(int id) async {
+  static Future<http.Response> deleteCart(int id) async {
     return await http.post(
         Uri.parse(
             '${ApiConstants.baseUrl}${ApiConstants.cart}/$id${ApiConstants.delete}'),
@@ -181,20 +182,20 @@ class ApiService {
   }
 
   /* Book Operations */
-  Future<http.Response> addBook(Book book) async {
+  static Future<http.Response> addBook(Book book) async {
     return await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.books + ApiConstants.add),
         headers: requestHeaders,
         body: jsonEncode(book.toJson()));
   }
 
-  Future<http.Response> getBooks(
+  static Future<http.Response> getBooks(
       String name, String author, String category) async {
     return await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.books),
         headers: requestHeaders);
   }
 
-  Future<http.Response> getBooksWithCategory(int categoryID) async {
+  static Future<http.Response> getBooksWithCategory(int categoryID) async {
     if (categoryID == 0) {
       return getAllBooks();
     } else {
@@ -205,7 +206,7 @@ class ApiService {
     }
   }
 
-  Future<http.Response> getAllBooks() async {
+  static Future<http.Response> getAllBooks() async {
     var response = await http.get(
         Uri.parse("${ApiConstants.baseUrl}${ApiConstants.books}?category="),
         headers: requestHeaders);
@@ -213,12 +214,12 @@ class ApiService {
   }
 
   /* Author Operations */
-  Future<http.Response> getAuthors() async {
+  static Future<http.Response> getAuthors() async {
     return await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.author),
         headers: requestHeaders);
   }
 
-  Future<http.Response> addAuthor(Author book) async {
+  static Future<http.Response> addAuthor(Author book) async {
     return await http.post(
         Uri.parse(
             ApiConstants.baseUrl + ApiConstants.author + ApiConstants.add),
@@ -227,14 +228,14 @@ class ApiService {
   }
 
   /* Category Operations */
-  Future<http.Response> getCategories() async {
+  static Future<http.Response> getCategories() async {
     return await http.get(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.category),
         headers: requestHeaders);
   }
 
   /* Review Operations */
-  Future<http.Response> getReviewList(int id) async {
+  static Future<http.Response> getReviewList(int id) async {
     return await http.get(
         Uri.parse(
             "${ApiConstants.baseUrl}${ApiConstants.user}/$id${ApiConstants.reviews}"),

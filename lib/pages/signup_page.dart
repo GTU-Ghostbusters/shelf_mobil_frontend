@@ -212,7 +212,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        Response response = await ApiService().register(
+                        Response response = await ApiService.register(
                             nameController.text,
                             emailController.text,
                             passwordController.text,
@@ -335,8 +335,8 @@ class _ConfirmationState extends State<Confirmation> {
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () async {
-                      Response response = await ApiService()
-                          .verifyEmail(widget.id, codeController.text);
+                      Response response = await ApiService.verifyEmail(
+                          widget.id, codeController.text);
                       Map<String, dynamic> res = jsonDecode(response.body);
 
                       if (res["result"].toString() == "true") {

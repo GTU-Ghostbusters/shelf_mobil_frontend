@@ -47,7 +47,7 @@ class BookSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     return FutureBuilder<Response>(
-      future: ApiService().getAllBooks(),
+      future: ApiService.getAllBooks(),
       builder: (context, snapshot) {
         var data = snapshot.data;
         if (!snapshot.hasData) {
@@ -76,7 +76,7 @@ class BookSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder<Response>(
-      future: ApiService().getAllBooks(),
+      future: ApiService.getAllBooks(),
       builder: (context, snapshot) {
         var data = snapshot.data;
         if (!snapshot.hasData) {
@@ -236,7 +236,10 @@ class CategorySearchDelegate extends SearchDelegate<Category> {
                       border: Border.all(width: 0.5), color: Colors.white),
                   height: MediaQuery.of(context).size.height * 0.055,
                   width: MediaQuery.of(context).size.width * 0.1,
-                  child: Image.network(item.imagePath, fit: BoxFit.fill,),
+                  child: Image.network(
+                    item.imagePath,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
               Positioned(

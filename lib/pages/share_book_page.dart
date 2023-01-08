@@ -72,7 +72,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
   }
 
   void getCategoryList() async {
-    var response = await ApiService().getCategories();
+    var response = await ApiService.getCategories();
     _categoryList = categoryFromJson(response.body);
     _categoryList!
         .sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
@@ -81,7 +81,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
   }
 
   void getAuthorList() async {
-    var response = await ApiService().getAuthors();
+    var response = await ApiService.getAuthors();
     _authorList = authorFromJson(response.body);
     _authorList!
         .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
@@ -428,7 +428,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
                         }
                       }
                       if (checkAdd) {
-                        ApiService().addAuthor(Author.createNew(
+                        ApiService.addAuthor(Author.createNew(
                             name: authorNameInput.text.toString()));
                       }
 
@@ -601,7 +601,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
                 imageBase64List[0],
                 imageBase64List[1],
                 imageBase64List[2]);
-            var response = await ApiService().addBook(book);
+            var response = await ApiService.addBook(book);
 
             setState(() {
               if (response.statusCode == 200) {

@@ -31,7 +31,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
   }
 
   void getUser() async {
-    var response = await ApiService().getUserList();
+    var response = await ApiService.getUserList();
     var userList = userFromJsonID(response.body);
     for (var i = 0; i < userList.length; i++) {
       if (widget.book.donatorID == userList[i].userId) {
@@ -83,7 +83,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                   ),
                                 ),
                               );
-                            } else if (index  == 1) {
+                            } else if (index == 1) {
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20),

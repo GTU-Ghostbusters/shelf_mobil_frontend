@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getData() async {
-    Response response = await ApiService().getCategories();
+    Response response = await ApiService.getCategories();
     updateCategoryList(response);
     setState(() {});
   }

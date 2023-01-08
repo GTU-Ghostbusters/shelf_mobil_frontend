@@ -35,7 +35,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
   }
 
   void getData() async {
-    Response response = await ApiService().getLoggedUser();
+    Response response = await ApiService.getLoggedUser();
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);

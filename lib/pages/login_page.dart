@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                           Size(MediaQuery.of(context).size.width * 0.35, 40),
                     ),
                     onPressed: () async {
-                      Response response = await ApiService().login(
+                      Response response = await ApiService.login(
                           _selectItem
                               ? emailController.text
                               : phoneController.text,
@@ -242,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextButton(
                   onPressed: () async {
                     Response response =
-                        await ApiService().resetPassword(email_.text);
+                        await ApiService.resetPassword(email_.text);
 
                     Map<String, dynamic> emailReset = jsonDecode(response.body);
 
@@ -448,7 +448,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           Size(MediaQuery.of(context).size.width * 0.35, 40),
                     ),
                     onPressed: () async {
-                      Response response = await ApiService().changePassword(
+                      Response response = await ApiService.changePassword(
                           widget.userId,
                           codeController.text,
                           passwordController.text);

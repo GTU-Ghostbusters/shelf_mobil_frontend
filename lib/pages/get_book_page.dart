@@ -164,7 +164,7 @@ class _GetBookPageState extends State<GetBookPage> {
 
   Widget _categoryBooksView() {
     return FutureBuilder<Response>(
-        future: ApiService().getBooksWithCategory(_selectedCategory.categoryID),
+        future: ApiService.getBooksWithCategory(_selectedCategory.categoryID),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
