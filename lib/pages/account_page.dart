@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shelf_mobil_frontend/pages/my_info_page.dart';
 import 'package:shelf_mobil_frontend/pages/my_reviews_page.dart';
+import 'package:shelf_mobil_frontend/pages/user_received_books_page.dart';
+import 'package:shelf_mobil_frontend/pages/user_uploaded_books_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
 import 'package:shelf_mobil_frontend/services/storage_service.dart';
@@ -83,17 +85,17 @@ class _AccountPageState extends State<AccountPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return SubPage(title: "Uploaded Books");
+                  return const UserUploadedBooks();
                 },
               ),
             );
           })),
           const SizedBox(height: 10),
-          button(0.6, 50, 5, 18, null, "Got Books", (() {
+          button(0.6, 50, 5, 18, null, "Received Books", (() {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return SubPage(title: "Got Books");
+                  return const UserReceivedBooks();
                 },
               ),
             );
