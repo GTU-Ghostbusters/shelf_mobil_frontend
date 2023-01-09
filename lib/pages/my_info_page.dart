@@ -9,6 +9,15 @@ import 'package:shelf_mobil_frontend/services/api_service.dart';
 class MyInfoPage extends StatefulWidget {
   const MyInfoPage({super.key});
 
+  void changeField(
+      int id, String name, String email, String phone, String address) {
+    _MyInfoPageState.id_ = id;
+    _MyInfoPageState.name_ = name;
+    _MyInfoPageState.email_ = email;
+    _MyInfoPageState.phone_ = phone;
+    _MyInfoPageState.address_ = address;
+  }
+
   @override
   State<MyInfoPage> createState() => _MyInfoPageState();
 }
@@ -21,24 +30,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
   static String address_ = "";
 
   @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
-  void getData() async {
-    Response response = await ApiService.getLoggedUser();
-    debugPrint(response.body.toString());
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      id_ = data["id"];
-      name_ = data["name"];
-      email_ = data["email"];
-      address_ = "";
-      phone_ = data["phone"];
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {

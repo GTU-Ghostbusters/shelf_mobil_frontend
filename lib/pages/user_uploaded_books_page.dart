@@ -58,7 +58,7 @@ class _UserUploadedBooksState extends State<UserUploadedBooks> {
                       children: [
                         Text(
                           _uploadedBooksList.isEmpty
-                              ? "Empty"
+                              ? "0 book"
                               : _uploadedBooksList.length == 1
                                   ? "1 book"
                                   : "${_uploadedBooksList.length} books",

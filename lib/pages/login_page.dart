@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
 import 'package:shelf_mobil_frontend/pages/home_page.dart';
+import 'package:shelf_mobil_frontend/pages/my_info_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/services/api_service.dart';
 import 'package:shelf_mobil_frontend/services/storage_service.dart';
@@ -151,6 +152,15 @@ class _LoginPageState extends State<LoginPage> {
                           passwordController.text);
 
                       Map<String, dynamic> res = jsonDecode(response.body);
+
+                      const MyInfoPage().changeField(
+                          res["user"]["id"],
+                          res["user"]["name"],
+                          res["user"]["email"],
+                          res["user"]["phone"],
+                          "");
+
+                      debugPrint(res.toString());
 
                       if (res["result"].toString() == "true") {
                         StorageService.storeToken(

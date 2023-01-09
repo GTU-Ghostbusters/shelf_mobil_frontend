@@ -28,18 +28,23 @@ class _UserReceivedBooksState extends State<UserReceivedBooks> {
           decoration: Background().getBackground(),
           child: Column(
             children: [
-              Card(
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text(
-                    _receivedBooksList.isEmpty
-                        ? "0 book"
-                        : _receivedBooksList.length == 1
-                            ? "1 book"
-                            : "${_receivedBooksList.length} books",
-                    style: TextStyle(color: Colors.grey.shade800, fontSize: 15),
-                  ),
-                ]),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.06,
+                child: Card(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          _receivedBooksList.isEmpty
+                              ? "0 book"
+                              : _receivedBooksList.length == 1
+                                  ? "1 book"
+                                  : "${_receivedBooksList.length} books",
+                          style: TextStyle(
+                              color: Colors.grey.shade800, fontSize: 15),
+                        ),
+                      ]),
+                ),
               ),
               Expanded(
                 child: ListView.separated(
