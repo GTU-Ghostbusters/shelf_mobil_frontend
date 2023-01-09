@@ -20,17 +20,18 @@ class Address {
   String openAddress;
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
-      addressName: json["name"],
+      addressName: json["address_name"],
       city: json["city"],
       town: json["town"],
-      phoneNumber: json["phoneNumber"],
+      phoneNumber: json["phone"],
       openAddress: json["address"]);
 
   Map<String, dynamic> toJson() => {
-        "name": addressName,
+        "receiver_name": 82,
+        "address_name": addressName,
         "city": city,
         "town": town,
         "address": openAddress,
-        "phoneNumber": phoneNumber
+        "phone": phoneNumber
       };
 }

@@ -29,6 +29,16 @@ class _CartPageState extends State<CartPage> {
   late List<CartItem>? choosenItems = [];
   bool isAllItemsSelected = false;
 
+  int right = 1;
+
+  @override
+  void dispose() {
+    for (var i = 0; i < CartPage.cartItems.length; i++) {
+      CartPage.cartItems[i].value = false;
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +60,7 @@ class _CartPageState extends State<CartPage> {
                       height: 50,
                       width: MediaQuery.of(context).size.width * 0.45,
                       child: Text(
-                        "Your right: 1",
+                        "Your right: $right",
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: Colors.grey.shade800,
@@ -262,8 +272,8 @@ class _CartPageState extends State<CartPage> {
                                     left: MediaQuery.of(context).size.width *
                                         0.24,
                                     child: Text(
-                                        CartPage
-                                            .cartItems[index].bookItem.donatorID.toString(),
+                                        CartPage.cartItems[index].bookItem
+                                            .donatorName,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -312,15 +322,38 @@ class _CartPageState extends State<CartPage> {
                   for (var item in choosenItems!) {
                     confirmedBookList.add(item.bookItem);
                   }
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: ((context) {
-                    return ShipmentConfirmationPage(
-                        confirmedBookList: confirmedBookList);
-                  })));
+                  if (confirmedBookList.isNotEmpty) {
+                    if (right >= confirmedBookList.length) {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: ((context) {
+                        return ShipmentConfirmationPage(
+                            confirmedBookList: confirmedBookList);
+                      })));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(milliseconds: 1000),
+                          content: Container(
+                            alignment: Alignment.center,
+                            height: 40,
+                            child: const Text(
+                              "You added more books than you can buy.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor:
+                              const Color.fromARGB(240, 255, 77, 77),
+                        ),
+                      );
+                    }
+                  }
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(
-                      choosenItems!.isEmpty
+                      choosenItems!.isEmpty || right < choosenItems!.length
                           ? Colors.grey
                           : Theme.of(context).primaryColor),
                 ),

@@ -39,141 +39,136 @@ class _UserUploadedBooksState extends State<UserUploadedBooks> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarDesign().createAppBar(
-            "Uploaded Books",
-            BackButton(
-              color: Colors.grey.shade900,
-            ),
-            []),
-        body: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: Background().getBackground(),
-          child: Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.06,
-                child: Card(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          _uploadedBooksList.isEmpty
-                              ? "0 book"
-                              : _uploadedBooksList.length == 1
-                                  ? "1 book"
-                                  : "${_uploadedBooksList.length} books",
-                          style: TextStyle(
-                              color: Colors.grey.shade800, fontSize: 16),
-                        ),
-                      ]),
-                ),
+      appBar: AppBarDesign().createAppBar(
+          "Uploaded Books",
+          BackButton(
+            color: Colors.grey.shade900,
+          ),
+          []),
+      body: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: Background().getBackground(),
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.06,
+              child: Card(
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(
+                    _uploadedBooksList.isEmpty
+                        ? "Empty"
+                        : _uploadedBooksList.length == 1
+                            ? "1 book"
+                            : "${_uploadedBooksList.length} books",
+                    style: TextStyle(color: Colors.grey.shade800, fontSize: 16),
+                  ),
+                ]),
               ),
-              Expanded(
-                child: ListView.separated(
-                  itemCount: _uploadedBooksList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        height: MediaQuery.of(context).size.height * 0.12,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              color: Colors.transparent,
-                              width: MediaQuery.of(context).size.width * 0.68,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 30.0),
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.all(width: 0.5),
-                                          ),
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.1,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.15,
-                                          child: Image.network(
-                                              _uploadedBooksList[index]
-                                                  .image1)),
-                                    ),
-                                    Positioned(
-                                      top: MediaQuery.of(context).size.height *
-                                          0.025,
-                                      left: MediaQuery.of(context).size.width *
-                                          0.2,
-                                      child: SizedBox(
+            ),
+            Expanded(
+              child: ListView.separated(
+                itemCount: _uploadedBooksList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      height: MediaQuery.of(context).size.height * 0.12,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            color: Colors.transparent,
+                            width: MediaQuery.of(context).size.width * 0.68,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 30.0),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(width: 0.5),
+                                        ),
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.1,
                                         width:
                                             MediaQuery.of(context).size.width *
-                                                0.45,
-                                        child: Text(
-                                          _uploadedBooksList[index].name,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.clip,
-                                          style: TextStyle(
-                                              color: Colors.grey.shade800,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: MediaQuery.of(context).size.height *
-                                              0.025 +
-                                          25,
-                                      left: MediaQuery.of(context).size.width *
-                                          0.2,
+                                                0.15,
+                                        child: Image.network(
+                                            _uploadedBooksList[index].image1)),
+                                  ),
+                                  Positioned(
+                                    top: MediaQuery.of(context).size.height *
+                                        0.025,
+                                    left:
+                                        MediaQuery.of(context).size.width * 0.2,
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.45,
                                       child: Text(
-                                        _uploadedBooksList[index].author,
+                                        _uploadedBooksList[index].name,
                                         maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                        overflow: TextOverflow.clip,
                                         style: TextStyle(
-                                          color: Colors.grey.shade800,
-                                          fontSize: 15,
-                                        ),
+                                            color: Colors.grey.shade800,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Positioned(
+                                    top: MediaQuery.of(context).size.height *
+                                            0.025 +
+                                        25,
+                                    left:
+                                        MediaQuery.of(context).size.width * 0.2,
+                                    child: Text(
+                                      _uploadedBooksList[index].author,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Colors.grey.shade800,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            IconButton(
-                              onPressed: () async {
-                                var response = await ApiService.deleteBook(
-                                    _uploadedBooksList[index].bookId);
-                                setState(() {
-                                  _uploadedBooksList.removeAt(index);
-                                });
-                              },
-                              icon: Icon(
-                                Icons.delete_outline,
-                                color: Colors.grey.shade600,
-                              ),
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              var response = await ApiService.deleteBook(
+                                  _uploadedBooksList[index].bookId);
+                              setState(() {
+                                _uploadedBooksList.removeAt(index);
+                              });
+                            },
+                            icon: Icon(
+                              Icons.delete_outline,
+                              color: Colors.grey.shade600,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      height: 5,
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 5,
+                  );
+                },
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

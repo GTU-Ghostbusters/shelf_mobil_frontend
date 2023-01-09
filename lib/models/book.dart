@@ -41,6 +41,7 @@ class Book {
   int bookId = 0;
   final String name;
   final int donatorID;
+  String donatorName = "";
   String author = "";
   int authorID = 0;
   String category = "";

@@ -131,7 +131,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                             top: MediaQuery.of(context)
                                                     .size
                                                     .height *
-                                                0.02,
+                                                0.045,
                                             left: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -158,7 +158,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                             top: MediaQuery.of(context)
                                                         .size
                                                         .height *
-                                                    0.02 +
+                                                    0.045 +
                                                 25,
                                             left: MediaQuery.of(context)
                                                     .size
@@ -174,29 +174,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                 fontSize: 15,
                                               ),
                                             ),
-                                          ),
-                                          Positioned(
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.02,
-                                            left: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.24,
-                                            child: Text(
-                                                FavoritesPage
-                                                    .favBooksId[index].donatorID
-                                                    .toString(),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w900),
-                                                textAlign: TextAlign.center),
                                           ),
                                         ],
                                       ),

@@ -451,6 +451,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
                 : const Text(""),
             TextButton(
               onPressed: () {
+                getAuthorList();
                 setState(() {
                   _isAuthorAdd = !_isAuthorAdd;
                 });

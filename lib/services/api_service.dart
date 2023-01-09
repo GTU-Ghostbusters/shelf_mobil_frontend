@@ -137,6 +137,12 @@ class ApiService {
         body: jsonEncode(address.toJson()));
   }
 
+  static Future<http.Response> getAdresses() async {
+    return await http.get(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.address),
+        headers: requestHeaders);
+  }
+
   /* Favorities Operations */
   static Future<http.Response> getFavorities() async {
     return await http.get(

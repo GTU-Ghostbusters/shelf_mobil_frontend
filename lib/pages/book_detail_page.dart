@@ -140,7 +140,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                       width: 0.2, color: Colors.grey.shade800),
                                   borderRadius: BorderRadius.circular(5))),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
+                          widget.book.donatorName = _user!.name;
                           if (CartPage.isAddedToCart(widget.book)) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shelf_mobil_frontend/models/user.dart';
+import 'package:shelf_mobil_frontend/pages/cart_page.dart';
+import 'package:shelf_mobil_frontend/pages/favorites_page.dart';
 import 'package:shelf_mobil_frontend/pages/my_info_page.dart';
 import 'package:shelf_mobil_frontend/pages/my_reviews_page.dart';
 import 'package:shelf_mobil_frontend/pages/user_received_books_page.dart';
@@ -13,17 +18,22 @@ import 'signup_page.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
+  static String? token;
+
+  static void setToken(String? token) {
+    AccountPage.token = token;
+  }
 
   static void changeLog(String token) {
-    _AccountPageState.token = token;
+    AccountPage.token = token;
   }
 
   static bool isUserLogged() {
-    return _AccountPageState.token != null;
+    return AccountPage.token != null;
   }
 
   static String? getToken() {
-    return _AccountPageState.token;
+    return AccountPage.token;
   }
 
   @override
@@ -31,16 +41,19 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  static String? token;
+  User? _user;
 
   @override
   void initState() {
     super.initState();
-    readFromStorage();
+    getData();
   }
 
-  void readFromStorage() async {
-    token = await StorageService.getToken();
+  void getData() async {
+    if (AccountPage.isUserLogged()) {
+      var response = await ApiService.getLoggedUser();
+      _user = User.fromJson(jsonDecode(response.body));
+    }
   }
 
   @override
@@ -77,7 +90,9 @@ class _AccountPageState extends State<AccountPage> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return const MyReviewsPage();
+                    return MyReviewsPage(
+                      user: _user,
+                    );
                   },
                 ),
               );
@@ -106,8 +121,10 @@ class _AccountPageState extends State<AccountPage> {
             button(0.25, 35, 5, 15, Colors.grey.shade600, "Log Out", () {
               ApiService.logout();
               setState(() {
+                CartPage.cartItems.clear();
+                FavoritesPage.favBooksId.clear();
                 StorageService.deleteToken();
-                token = null;
+                AccountPage.token = null;
               });
             }),
             const SizedBox(height: 20),

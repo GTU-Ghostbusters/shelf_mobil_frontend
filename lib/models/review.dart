@@ -24,6 +24,7 @@ class Review {
   final int buyerId;
   final int point;
   final String review;
+  String buyerName = "";
 
   factory Review.fromJson(Map<String, dynamic> json) => Review(
         id: json["id"],

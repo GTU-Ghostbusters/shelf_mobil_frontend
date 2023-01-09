@@ -9,6 +9,7 @@ import 'package:shelf_mobil_frontend/pages/share_book_page.dart';
 import 'package:shelf_mobil_frontend/enums.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
+import 'package:shelf_mobil_frontend/services/storage_service.dart';
 
 import '../services/api_service.dart';
 import '../models/category.dart';
@@ -43,7 +44,15 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    
+    readFromStorage();
     getData();
+  }
+   
+
+  void readFromStorage() async {
+    String? token = await StorageService.getToken();
+    AccountPage.setToken(token);
   }
 
   @override

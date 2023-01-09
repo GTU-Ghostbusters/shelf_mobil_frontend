@@ -1,10 +1,8 @@
-import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
-import 'package:shelf_mobil_frontend/services/api_service.dart';
 
 class MyInfoPage extends StatefulWidget {
   const MyInfoPage({super.key});
@@ -29,8 +27,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
   static String phone_ = "";
   static String address_ = "";
 
-  @override
-  
+
 
   @override
   Widget build(BuildContext context) {

@@ -36,7 +36,7 @@ class _UserReceivedBooksState extends State<UserReceivedBooks> {
                       children: [
                         Text(
                           _receivedBooksList.isEmpty
-                              ? "0 book"
+                              ? "Empty"
                               : _receivedBooksList.length == 1
                                   ? "1 book"
                                   : "${_receivedBooksList.length} books",
