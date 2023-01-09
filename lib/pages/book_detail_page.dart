@@ -210,7 +210,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                                   borderRadius: BorderRadius.circular(5))),
                         ),
                         onPressed: () {
-                          if (FavoritesPage.isAddedToFav(widget.book.bookId)) {
+                          if (FavoritesPage.isAddedToFav(widget.book)) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 duration: const Duration(milliseconds: 1000),
@@ -231,7 +231,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                               ),
                             );
                           } else {
-                            FavoritesPage.addToFav(widget.book.bookId);
+                            FavoritesPage.addToFav(widget.book);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 duration: const Duration(milliseconds: 1000),

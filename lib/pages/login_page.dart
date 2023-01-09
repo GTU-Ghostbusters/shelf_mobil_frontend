@@ -160,8 +160,6 @@ class _LoginPageState extends State<LoginPage> {
                           res["user"]["phone"],
                           "");
 
-                      debugPrint(res.toString());
-
                       if (res["result"].toString() == "true") {
                         StorageService.storeToken(
                             res["access_token"].toString());

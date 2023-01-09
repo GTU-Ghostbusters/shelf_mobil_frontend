@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shelf_mobil_frontend/models/book.dart';
 import 'package:shelf_mobil_frontend/pages/account_page.dart';
+import 'package:shelf_mobil_frontend/pages/book_detail_page.dart';
 import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
@@ -7,33 +9,25 @@ import 'package:shelf_mobil_frontend/screens/background.dart';
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
 
-  static void addToFav(int bookId) {
-    favBooksId.add(bookId);
+  static void addToFav(Book book) {
+    favBooksId.add(book);
   }
 
-  static void removeFromFav(int bookId) {
-    favBooksId.remove(bookId);
+  static void removeFromFav(Book book) {
+    favBooksId.remove(book);
   }
 
-  static bool isAddedToFav(int bookId) {
-    return favBooksId.contains(bookId);
+  static bool isAddedToFav(Book book) {
+    return favBooksId.contains(book);
   }
 
-  static final List<int> favBooksId = [];
+  static final List<Book> favBooksId = [];
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  /*  Future<Response> getFavBookDetail() async {
-    Response response1 = await ApiService.getFavorities();
-    Map<String, dynamic> res = jsonDecode(response1.body);
-    Response response2 = await ApiService.getBookDetail(res["book_id"]);
-    debugPrint(response2.body.toString());
-    return response2;
-  } */
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +81,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  /* onTap: (() {
+                                  onTap: (() {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (BuildContext context) {
@@ -97,7 +91,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                         },
                                       ),
                                     );
-                                  }), */
+                                  }),
                                   child: Container(
                                     color: Colors.transparent,
                                     height: MediaQuery.of(context).size.height *
@@ -127,10 +121,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                       .size
                                                       .width *
                                                   0.2,
-                                              /* child: Image.network(
+                                              child: Image.network(
                                                 FavoritesPage
                                                     .favBooksId[index].image1,
-                                              ), */
+                                              ),
                                             ),
                                           ),
                                           Positioned(
@@ -148,9 +142,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                       .width *
                                                   0.45,
                                               child: Text(
-                                                "a",
-                                                /* FavoritesPage
-                                                    .favBooksId[index].name, */
+                                                FavoritesPage
+                                                    .favBooksId[index].name,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.clip,
                                                 style: TextStyle(
@@ -161,7 +154,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                               ),
                                             ),
                                           ),
-                                          /* Positioned(
+                                          Positioned(
                                             top: MediaQuery.of(context)
                                                         .size
                                                         .height *
@@ -181,8 +174,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                 fontSize: 15,
                                               ),
                                             ),
-                                          ), */
-                                          /* Positioned(
+                                          ),
+                                          Positioned(
                                             bottom: MediaQuery.of(context)
                                                     .size
                                                     .height *
@@ -204,7 +197,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                                     fontWeight:
                                                         FontWeight.w900),
                                                 textAlign: TextAlign.center),
-                                          ), */
+                                          ),
                                         ],
                                       ),
                                     ),

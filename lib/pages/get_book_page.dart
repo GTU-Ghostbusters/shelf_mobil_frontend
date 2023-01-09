@@ -343,21 +343,18 @@ class _GetBookPageState extends State<GetBookPage> {
 
                               setState(() {
                                 if (FavoritesPage.isAddedToFav(
-                                    _bookList[index].bookId)) {
-                                  FavoritesPage.removeFromFav(
-                                      _bookList[index].bookId);
+                                    _bookList[index])) {
+                                  FavoritesPage.removeFromFav(_bookList[index]);
                                   ApiService.deleteFav(_bookList[index].bookId);
                                 } else {
-                                  FavoritesPage.addToFav(
-                                      _bookList[index].bookId);
+                                  FavoritesPage.addToFav(_bookList[index]);
                                   ApiService.addToFavorities(
                                       data["id"], _bookList[index].bookId);
                                 }
                               });
                             }
                           },
-                          icon: FavoritesPage.isAddedToFav(
-                                  _bookList[index].bookId)
+                          icon: FavoritesPage.isAddedToFav(_bookList[index])
                               ? const Icon(Icons.favorite_outlined,
                                   color: Colors.red)
                               : const Icon(Icons.favorite_outline_outlined)),
