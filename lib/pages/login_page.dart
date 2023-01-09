@@ -164,6 +164,33 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                         );
+                      } else if (res["result"].toString() == "false") {
+                        // ignore: use_build_context_synchronously
+                        dialog(
+                          context,
+                          Text(
+                            res["message"].toString(),
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return const LoginPage();
+                                  },
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              "OK",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        );
                       }
                     },
                     icon: const Icon(Icons.login),
@@ -285,6 +312,20 @@ class _LoginPageState extends State<LoginPage> {
               ],
             )
           ],
+        );
+      },
+    );
+  }
+
+  Future<void> dialog(BuildContext context, Widget content_, Widget actions_) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          actionsAlignment: MainAxisAlignment.center,
+          title: const Text("MESSAGE"),
+          content: content_,
+          actions: <Widget>[actions_],
         );
       },
     );

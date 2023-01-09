@@ -9,14 +9,6 @@ import 'package:shelf_mobil_frontend/services/api_service.dart';
 class MyInfoPage extends StatefulWidget {
   const MyInfoPage({super.key});
 
-  static void changeField(String name, String email, String phone,
-      String password, String address) {
-    _MyInfoPageState.name_ = name;
-    _MyInfoPageState.email_ = email;
-    _MyInfoPageState.phone_ = phone;
-    _MyInfoPageState.address_ = address;
-  }
-
   @override
   State<MyInfoPage> createState() => _MyInfoPageState();
 }
@@ -46,7 +38,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
       address_ = "";
       phone_ = data["phone"];
     }
-    setState(() {});
   }
 
   @override

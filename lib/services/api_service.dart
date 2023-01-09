@@ -111,7 +111,7 @@ class ApiService {
   static Future<http.Response> updateUser(User user) async {
     return await http.put(
         Uri.parse(
-            "${ApiConstants.baseUrl}${ApiConstants.user}${user.userId}/${ApiConstants.update}"),
+            "${ApiConstants.baseUrl}${ApiConstants.user}/${user.userId}${ApiConstants.update}"),
         headers: requestHeaders,
         body: jsonEncode(user.toJson()));
   }

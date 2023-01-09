@@ -5,6 +5,7 @@ import 'package:shelf_mobil_frontend/pages/user_received_books_page.dart';
 import 'package:shelf_mobil_frontend/pages/user_uploaded_books_page.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
+import 'package:shelf_mobil_frontend/services/api_service.dart';
 import 'package:shelf_mobil_frontend/services/storage_service.dart';
 
 import 'login_page.dart';
@@ -57,58 +58,61 @@ class _AccountPageState extends State<AccountPage> {
 
   Widget myAccount() {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: 20),
-          button(0.6, 50, 5, 18, null, "My Informations", (() {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return const MyInfoPage();
-                },
-              ),
-            );
-          })),
-          const SizedBox(height: 10),
-          button(0.6, 50, 5, 18, null, "My Reviews", (() {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return const MyReviewsPage();
-                },
-              ),
-            );
-          })),
-          const SizedBox(height: 10),
-          button(0.6, 50, 5, 18, null, "Uploaded Books", (() {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return const UserUploadedBooks();
-                },
-              ),
-            );
-          })),
-          const SizedBox(height: 10),
-          button(0.6, 50, 5, 18, null, "Received Books", (() {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return const UserReceivedBooks();
-                },
-              ),
-            );
-          })),
-          const SizedBox(height: 10),
-          button(0.25, 35, 5, 15, Colors.grey.shade600, "Log Out", () {
-            setState(() {
-              StorageService.deleteToken();
-              token = null;
-            });
-          }),
-          const SizedBox(height: 20),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            button(0.6, 50, 5, 18, null, "My Informations", (() {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return const MyInfoPage();
+                  },
+                ),
+              );
+            })),
+            const SizedBox(height: 10),
+            button(0.6, 50, 5, 18, null, "My Reviews", (() {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return const MyReviewsPage();
+                  },
+                ),
+              );
+            })),
+            const SizedBox(height: 10),
+            button(0.6, 50, 5, 18, null, "Uploaded Books", (() {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return const UserUploadedBooks();
+                  },
+                ),
+              );
+            })),
+            const SizedBox(height: 10),
+            button(0.6, 50, 5, 18, null, "Received Books", (() {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return const UserReceivedBooks();
+                  },
+                ),
+              );
+            })),
+            const SizedBox(height: 10),
+            button(0.25, 35, 5, 15, Colors.grey.shade600, "Log Out", () {
+              ApiService.logout();
+              setState(() {
+                StorageService.deleteToken();
+                token = null;
+              });
+            }),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
