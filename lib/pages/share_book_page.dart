@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shelf_mobil_frontend/enums.dart';
 import 'package:shelf_mobil_frontend/models/author.dart';
 import 'package:shelf_mobil_frontend/models/book.dart';
+import 'package:shelf_mobil_frontend/models/user.dart';
 import 'package:shelf_mobil_frontend/screens/alert_dialog.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
@@ -33,6 +34,8 @@ class _ShareBookPageState extends State<ShareBookPage> {
   List<Author>? _authorList = [];
   Author? _selectedAuthor;
 
+  User _user = User.getWithID(userId: 0, name: "");
+
   CargoPaymentType _cargoPaymentType = CargoPaymentType.senderPays;
 
   final _formKey = GlobalKey<FormState>();
@@ -51,11 +54,18 @@ class _ShareBookPageState extends State<ShareBookPage> {
   @override
   void initState() {
     super.initState();
+    getUser();
     getCategoryList();
     getAuthorList();
     noImageBase64Converter(0);
     noImageBase64Converter(1);
     noImageBase64Converter(2);
+  }
+
+  void getUser() async {
+    var response = await ApiService.getLoggedUser();
+    _user = User.fromJsonID(jsonDecode(response.body));
+    setState(() {});
   }
 
   @override
@@ -591,7 +601,7 @@ class _ShareBookPageState extends State<ShareBookPage> {
                 _cargoPaymentType == CargoPaymentType.senderPays ? "S" : "R";
             Book book = Book.shareBook(
                 bookNameInput.text.toString(),
-                68,
+                _user.userId,
                 _selectedAuthor!.authorID,
                 _selectedCategory!.categoryID,
                 int.parse(numberOfPagesInput.text.toString()),

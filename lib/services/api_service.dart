@@ -125,7 +125,6 @@ class ApiService {
     var response = await http.get(
         Uri.parse("${ApiConstants.baseUrl}${ApiConstants.user}/$id"),
         headers: requestHeaders);
-    print(response.statusCode);
     return response;
   }
 
@@ -197,6 +196,11 @@ class ApiService {
         Uri.parse(ApiConstants.baseUrl + ApiConstants.books + ApiConstants.add),
         headers: requestHeaders,
         body: jsonEncode(book.toJson()));
+  }
+
+  static Future<http.Response> deleteBook(int id) async {
+    return await http.get(Uri.parse("${ApiConstants.baseUrl}${ApiConstants.books}/$id${ApiConstants.delete}"),
+        headers: requestHeaders);
   }
 
   static Future<http.Response> getBooks(

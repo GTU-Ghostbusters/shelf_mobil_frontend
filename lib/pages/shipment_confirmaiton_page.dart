@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shelf_mobil_frontend/models/address.dart';
 import 'package:shelf_mobil_frontend/models/book.dart';
 import 'package:shelf_mobil_frontend/screens/app_bar.dart';
 import 'package:shelf_mobil_frontend/screens/background.dart';
@@ -14,9 +13,6 @@ class ShipmentConfirmationPage extends StatefulWidget {
 }
 
 class _ShipmentConfirmationPageState extends State<ShipmentConfirmationPage> {
-  late City _selectedCity;
-  late Town _selectedTown;
-  late final List<City> _cityList = [];
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shelf_mobil_frontend/models/author.dart';
+import 'package:shelf_mobil_frontend/services/api_service.dart';
 
 class FilterDrawer extends StatefulWidget {
   const FilterDrawer({super.key});
@@ -117,11 +119,21 @@ class AuthorFilter extends StatefulWidget {
 
 class _AuthorFilterState extends State<AuthorFilter> {
   bool isSelectionMode = false;
-  final List<String> authorList = [
-    "İlber Ortaylı",
-    "Celal Şengör",
-    "Murat Bardakçı"
-  ];
+  List<Author> _authorList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getAuthorList();
+  }
+
+   void getAuthorList() async {
+    var response = await ApiService.getAuthors();
+    _authorList = authorFromJson(response.body);
+    _authorList.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    setState(() {});
+  }
+
   Map<int, bool> selectedFlag = {};
 
   @override
@@ -139,18 +151,18 @@ class _AuthorFilterState extends State<AuthorFilter> {
       ),
       body: ListView.builder(
         itemBuilder: (builder, index) {
-          var title = authorList[index];
+          var title = _authorList[index];
           selectedFlag[index] = selectedFlag[index] ?? false;
           bool isSelected = selectedFlag[index]!;
           return Container(
             color: isSelected ? const Color.fromARGB(70, 76, 185, 252) : null,
             child: ListTile(
               onTap: () => onTap(isSelected, index),
-              title: Text(title),
+              title: Text(title.name),
             ),
           );
         },
-        itemCount: authorList.length,
+        itemCount: _authorList.length,
       ),
     );
   }

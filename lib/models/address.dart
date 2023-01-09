@@ -34,31 +34,3 @@ class Address {
         "phoneNumber": phoneNumber
       };
 }
-
-// LOCAL DATA
-List<City> citiesFromJson(String str) =>
-    List<City>.from(json.decode(str).map((x) => City.fromMap(x)));
-
-class City {
-  City({
-    required this.cityName,
-    required this.townList,
-  });
-
-  final String cityName;
-  final List<Town> townList;
-
-  factory City.fromMap(Map<String, dynamic> json) => City(
-        cityName: json["name"],
-        townList: List<Town>.from(json["towns"].map((x) => Town.fromMap(x))),
-      );
-}
-
-class Town {
-  Town({required this.townName});
-
-  final String townName;
-
-  factory Town.fromMap(Map<String, dynamic> json) =>
-      Town(townName: json["name"]);
-}
